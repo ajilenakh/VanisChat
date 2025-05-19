@@ -1,28 +1,55 @@
-<!-- public/index.html -->
 <!DOCTYPE html>
-<html>
-<head><title>VanisChat</title></head>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="app.css">
+  <script src="script.js"></script>
+
+  <title>VanisChat</title>
+</head>
 <body>
-  <input id="msgInput" placeholder="Type a message">
-  <button onclick="send()">Send</button>
-  <ul id="messages"></ul>
+  <h1 class="center">Welcome To VanisChat</h1>
 
-  <script src="/socket.io/socket.io.js"></script>
+  <div class="toggle-mode-container">
+    <input hidden id="check" type="checkbox">
+    <label class="toggle" for="check">
+      <div class="toggle__circle">
+        <span class="icon">🌙</span>
+      </div>
+    </label>
+  </div>
+
+  <div class="form-container">
+    <div class="tabs">
+      <button class="tab active" onclick="switchForm('create')">Create Room</button>
+      <button class="tab" onclick="switchForm('join')">Join Room</button>
+    </div>
+
+    <form id="create-form" class="form-section">
+      <input type="text" placeholder="Your Nickname" required>
+      <input type="text" placeholder="Room Name" required>
+      <input type="password" placeholder="Set a Password (optional)">
+      <button type="submit">Create</button>
+    </form>
+
+    <form id="join-form" class="form-section hidden">
+      <input type="text" placeholder="Your Nickname" required>
+      <input type="text" placeholder="Room ID" required>
+      <input type="password" placeholder="Enter Room Password">
+      <button type="submit">Join</button>
+    </form>
+    </div>
+  </div>
   <script>
-    const socket = io();
-    const input = document.getElementById('msgInput');
-    const list = document.getElementById('messages');
+    function switchForm(formType) {
+      document.getElementById('create-form').classList.toggle('hidden', formType !== 'create');
+      document.getElementById('join-form').classList.toggle('hidden', formType !== 'join');
 
-    function send() {
-      socket.emit('message', input.value);
-      input.value = '';
+      const tabs = document.querySelectorAll('.tab');
+      tabs.forEach(tab => tab.classList.remove('active'));
+      document.querySelector(`.tab[onclick*="${formType}"]`).classList.add('active');
     }
-
-    socket.on('message', msg => {
-      const li = document.createElement('li');
-      li.textContent = msg;
-      list.appendChild(li);
-    });
   </script>
 </body>
 </html>
