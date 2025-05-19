@@ -1,0 +1,28 @@
+<!-- public/index.html -->
+<!DOCTYPE html>
+<html>
+<head><title>VanisChat</title></head>
+<body>
+  <input id="msgInput" placeholder="Type a message">
+  <button onclick="send()">Send</button>
+  <ul id="messages"></ul>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    const socket = io();
+    const input = document.getElementById('msgInput');
+    const list = document.getElementById('messages');
+
+    function send() {
+      socket.emit('message', input.value);
+      input.value = '';
+    }
+
+    socket.on('message', msg => {
+      const li = document.createElement('li');
+      li.textContent = msg;
+      list.appendChild(li);
+    });
+  </script>
+</body>
+</html>
