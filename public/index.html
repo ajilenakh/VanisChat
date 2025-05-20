@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="app.css">
-  <link rel="stylesheet" href="chat-room.css">
+  <link rel="stylesheet" href="/css/app.css">
+  <link rel="stylesheet" href="/css/chat-room.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-  <script src="script.js"></script>
+  <script src="/js/script.js"></script>
 
   <title>VanisChat</title>
 </head>
@@ -44,6 +44,16 @@
       <button type="submit">Join Room</button>
     </form>
   </div>
+  <script>
+    function switchForm(formType) {
+      document.getElementById('create-form').classList.toggle('hidden', formType !== 'create');
+      document.getElementById('join-form').classList.toggle('hidden', formType !== 'join');
+
+      const tabs = document.querySelectorAll('.tab');
+      tabs.forEach(tab => tab.classList.remove('active'));
+      document.querySelector(`.tab[onclick*="${formType}"]`).classList.add('active');
+    }
+  </script>
 
   <!-- Chat room -->
   <div id="chat-container" class="chat hidden">
@@ -73,15 +83,5 @@
     </form>
   </div>
 
-  <script>
-    function switchForm(formType) {
-      document.getElementById('create-form').classList.toggle('hidden', formType !== 'create');
-      document.getElementById('join-form').classList.toggle('hidden', formType !== 'join');
-
-      const tabs = document.querySelectorAll('.tab');
-      tabs.forEach(tab => tab.classList.remove('active'));
-      document.querySelector(`.tab[onclick*="${formType}"]`).classList.add('active');
-    }
-  </script>
 </body>
 </html>

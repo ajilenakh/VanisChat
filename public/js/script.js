@@ -23,3 +23,15 @@ document.addEventListener('DOMContentLoaded', () => {
     localStorage.setItem('theme', newTheme);
   });
 });
+
+// temp in memory chat-rooms
+const rooms = {
+  "room123":{
+    password: "password123",
+    users: ["Bob", "Jean"],
+    messages:[
+      {user: "Bob", text: "Hello this is bobbbb!!!"}
+    ],
+    createdAT: Date.now()
+  }
+}
