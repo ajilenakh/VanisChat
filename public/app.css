@@ -96,51 +96,86 @@ body {
 }
 
 .hidden {
-  display: none;
+  display: none !important;
 }
 
-/* dark mode toggle*/ 
+/* Toggle Mode Switch - Modern, Fixed Top Right */
 .toggle-mode-container {
   position: fixed;
-  top: 1rem;
-  right: 1rem;
-  z-index: 1000;
+  top: 1.5rem;
+  right: 1.5rem;
+  z-index: 100;
+  display: flex;
+  align-items: center;
 }
 
 .toggle {
-  width: 50px;
-  height: 26px;
-  background-color: var(--toggle-bg);
-  border: 2px solid var(--toggle-border);
-  border-radius: 999px;
-  padding: 0.25rem;
-  cursor: pointer;
+  width: 56px;
+  height: 32px;
+  background: #e0e0e0;
+  border-radius: 16px;
   display: flex;
   align-items: center;
-  transition: background-color 0.3s ease;
-  box-sizing: border-box;
+  cursor: pointer;
+  transition: background 0.3s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  position: relative;
+}
+
+body.dark .toggle {
+  background: #222;
 }
 
 .toggle__circle {
-  width: 20px;
-  height: 20px;
-  background-color: hsl(0, 0%, 95%);
+  width: 28px;
+  height: 28px;
+  background: #fff;
   border-radius: 50%;
+  position: absolute;
+  left: 2px;
+  top: 2px;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: transform 0.4s ease-in-out, background-color 0.3s;
-  font-size: 0.8rem;
+  transition: left 0.3s, background 0.3s;
+  font-size: 1.2rem;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.10);
 }
 
-.icon {
-  pointer-events: none;
+body.dark .toggle__circle {
+  left: 26px;
+  background: #333;
 }
 
-#check:checked + .toggle > .toggle__circle {
-  transform: translateX(24px);
+.toggle__circle .icon {
+  transition: color 0.3s;
 }
 
-#check:checked + .toggle > .toggle__circle .icon {
-  content: '☀️';
+body.dark .toggle__circle .icon {
+  color: #ffe066;
+}
+
+.toggle:active .toggle__circle {
+  box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+}
+
+/*Chat Room*/
+
+/* Mobile: toggle inside chat header, not fixed */
+@media (max-width: 768px) {
+  .toggle-mode-container {
+    position: static !important;
+    top: unset;
+    right: unset;
+    margin-left: auto;
+    margin-right: 0.5rem;
+    margin-top: 0;
+    z-index: 1;
+  }
+  .chat-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+  }
 }

@@ -4,13 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="app.css">
+  <link rel="stylesheet" href="chat-room.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <script src="script.js"></script>
 
   <title>VanisChat</title>
 </head>
 <body>
-  <h1 class="center">Welcome To VanisChat</h1>
-
   <!-- Dark mode toggle -->
   <div class="toggle-mode-container">
     <input hidden id="check" type="checkbox">
@@ -21,6 +21,8 @@
     </label>
   </div>
 
+  <h1 class="center">Welcome To VanisChat</h1>
+  
   <!-- Create/Join room form -->
   <div class="form-container">
     <div class="tabs">
@@ -32,17 +34,45 @@
       <input type="text" placeholder="Your Nickname" required>
       <input type="text" placeholder="Room Name" required>
       <input type="password" placeholder="Set a Password (optional)">
-      <button type="submit">Create</button>
+      <button type="submit">Create Room</button>
     </form>
 
     <form id="join-form" class="form-section hidden">
       <input type="text" placeholder="Your Nickname" required>
       <input type="text" placeholder="Room ID" required>
       <input type="password" placeholder="Enter Room Password">
-      <button type="submit">Join</button>
+      <button type="submit">Join Room</button>
     </form>
-    </div>
   </div>
+
+  <!-- Chat room -->
+  <div id="chat-container" class="chat hidden">
+    <header class="chat-header">
+      <div class="room-info">
+        <h2 id="room-title">Room: #RoomID</h2>
+        <span id="online-count" class="online-count">0 online</span>
+      </div>
+      <button id="leave-room" class="leave-button">Leave Room</button>
+    </header>
+
+    <div class="chat-messages" id="messages">
+      <!-- Messages appear here -->
+    </div>
+
+    <form id="message-form" class="chat-form">
+      <input 
+        type="text" 
+        id="message-input" 
+        placeholder="Type a message..." 
+        autocomplete="off"
+        required 
+      />
+      <button type="submit">
+        <span>Send</span>
+      </button>
+    </form>
+  </div>
+
   <script>
     function switchForm(formType) {
       document.getElementById('create-form').classList.toggle('hidden', formType !== 'create');
