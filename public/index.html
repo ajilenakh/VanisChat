@@ -6,7 +6,10 @@
   <link rel="stylesheet" href="/css/app.css">
   <link rel="stylesheet" href="/css/chat-room.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/crypto-js.min.js"></script>
   <script src="/js/script.js"></script>
+  <script src="/js/chat.js"></script>
 
   <title>VanisChat</title>
 </head>
@@ -33,14 +36,15 @@
     <form id="create-form" class="form-section">
       <input type="text" placeholder="Your Nickname" required>
       <input type="text" placeholder="Room Name" required>
-      <input type="password" placeholder="Set a Password (optional)">
+      <input type="password" placeholder="Set a Password" required>
+      <input type="number" placeholder="Expiration (minutes)" value="60" min="1" max="1440">
       <button type="submit">Create Room</button>
     </form>
 
     <form id="join-form" class="form-section hidden">
       <input type="text" placeholder="Your Nickname" required>
       <input type="text" placeholder="Room ID" required>
-      <input type="password" placeholder="Enter Room Password">
+      <input type="password" placeholder="Room Password" required>
       <button type="submit">Join Room</button>
     </form>
   </div>

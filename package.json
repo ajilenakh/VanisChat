@@ -6,7 +6,9 @@
   "author": "Ajilenakh <107887918+ajilenakh@users.noreply.github.com>",
   "license": "MIT",
   "dependencies": {
+    "crypto-js": "^4.2.0",
     "express": "^5.1.0",
-    "socket.io": "^4.8.1"
+    "socket.io": "^4.8.1",
+    "uuid": "^11.1.0"
   }
 }
