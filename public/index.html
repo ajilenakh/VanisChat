@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/app.css">
+  <link rel="stylesheet" href="/css/chat-room.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/crypto-js.min.js"></script>
+  <script src="/js/script.js"></script>
+  <script src="/js/chat.js"></script>
+
+  <title>VanisChat</title>
+</head>
+<body>
+  <!-- Dark mode toggle -->
+  <div class="toggle-mode-container">
+    <input hidden id="check" type="checkbox">
+    <label class="toggle" for="check">
+      <div class="toggle__circle">
+        <span class="icon">🌙</span>
+      </div>
+    </label>
+  </div>
+
+  <h1 class="center">Welcome To VanisChat</h1>
+  
+  <!-- Create/Join room form -->
+  <div class="form-container">
+    <div class="tabs">
+      <button class="tab active" onclick="switchForm('create')">Create Room</button>
+      <button class="tab" onclick="switchForm('join')">Join Room</button>
+    </div>
+
+    <form id="create-form" class="form-section">
+      <input type="text" placeholder="Your Nickname" required>
+      <input type="text" placeholder="Room Name" required>
+      <input type="password" placeholder="Set a Password" required>
+      <input type="number" placeholder="Expiration (minutes)" value="60" min="1" max="1440">
+      <button type="submit">Create Room</button>
+    </form>
+
+    <form id="join-form" class="form-section hidden">
+      <input type="text" placeholder="Your Nickname" required>
+      <input type="text" placeholder="Room ID" required>
+      <input type="password" placeholder="Room Password" required>
+      <button type="submit">Join Room</button>
+    </form>
+  </div>
+  <script>
+    function switchForm(formType) {
+      document.getElementById('create-form').classList.toggle('hidden', formType !== 'create');
+      document.getElementById('join-form').classList.toggle('hidden', formType !== 'join');
+
+      const tabs = document.querySelectorAll('.tab');
+      tabs.forEach(tab => tab.classList.remove('active'));
+      document.querySelector(`.tab[onclick*="${formType}"]`).classList.add('active');
+    }
+  </script>
+
+  <!-- Chat room -->
+  <div id="chat-container" class="chat hidden">
+    <header class="chat-header">
+      <div class="room-info">
+        <h2 id="room-title">Room: #RoomID</h2>
+        <span id="online-count" class="online-count">0 online</span>
+      </div>
+      <button id="leave-room" class="leave-button">Leave Room</button>
+    </header>
+
+    <div class="chat-messages" id="messages">
+      <!-- Messages appear here -->
+    </div>
+
+    <form id="message-form" class="chat-form">
+      <input 
+        type="text" 
+        id="message-input" 
+        placeholder="Type a message..." 
+        autocomplete="off"
+        required 
+      />
+      <button type="submit">
+        <span>Send</span>
+      </button>
+    </form>
+  </div>
+
+</body>
+</html>
