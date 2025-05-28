@@ -22,6 +22,20 @@ let currentRoom = {
     expirationTime: null // Added for expiration tracking
 };
 
+// Invite link auto-fill logic
+const urlParams = new URLSearchParams(window.location.search);
+const prefillRoomId = urlParams.get('room');
+const prefillPassword = urlParams.get('pw');
+if (prefillRoomId && prefillPassword) {
+    // Pre-fill the join form
+    document.querySelector('#join-form input[placeholder="Room ID"]').value = prefillRoomId;
+    document.querySelector('#join-form input[placeholder="Room Password"]').value = prefillPassword;
+    // Switch to join tab
+    switchForm('join');
+    // Focus nickname input
+    document.querySelector('#join-form input[placeholder="Your Nickname"]').focus();
+}
+
 // Create room
 createForm.addEventListener('submit', async (e) => {
     e.preventDefault(); // Prevent form submission
@@ -90,7 +104,7 @@ function joinRoom(roomId, password, nickname, roomName = null, expirationTime = 
 
 function updateRoomHeader() {
     if (!roomTitle) return;
-    if (currentRoom.name && currentRoom.id) {
+    if (currentRoom.name && currentRoom.id && currentRoom.password) {
         // Calculate time remaining (if available)
         let timeText = '';
         if (currentRoom.expirationTime) {
@@ -101,27 +115,43 @@ function updateRoomHeader() {
                 timeText = `<span class='room-timer'>Time left: ${min}m ${sec}s</span>`;
             }
         }
+        // Generate invite link
+        const inviteLink = `${window.location.origin}/?room=${encodeURIComponent(currentRoom.id)}&pw=${encodeURIComponent(currentRoom.password)}`;
         roomTitle.innerHTML = `
             <div class="room-header-flex">
                 <span class="room-label">
                   Room: <span class="room-name">${currentRoom.name}</span>
-                  <button id="copy-room-id" class="copy-id-btn" title="Copy Room ID" style="margin-left:0.5em;">
-                    <span class="room-id-btn-label">ID</span>
+                  <button id="copy-invite-link" class="copy-id-btn" title="Copy Invite Link" style="margin-left:0.5em;">
+                    <span class="room-id-btn-label">
+                      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M15.5 8.5V6.5C15.5 4.84315 14.1569 3.5 12.5 3.5H7.5C5.84315 3.5 4.5 4.84315 4.5 6.5V8.5" stroke="currentColor" stroke-width="1.5"/>
+                        <rect x="4.5" y="8.5" width="11" height="8" rx="2" stroke="currentColor" stroke-width="1.5"/>
+                        <path d="M10 12V10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                        <path d="M10 14H10.01" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                      </svg>
+                    </span>
                   </button>
                 </span>
                 <span class="room-header-timer">${timeText}</span>
             </div>
         `;
         // Add copy event
-        const copyBtn = document.getElementById('copy-room-id');
+        const copyBtn = document.getElementById('copy-invite-link');
         if (copyBtn) {
             copyBtn.onclick = function() {
-                navigator.clipboard.writeText(currentRoom.id);
+                navigator.clipboard.writeText(inviteLink);
                 copyBtn.innerHTML = `<span class='room-id-btn-label'>
                   <svg width='20' height='20' viewBox='0 0 20 20' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M5 11l4 4L15 7' stroke='#22c55e' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/></svg>
                 </span>`;
                 setTimeout(() => {
-                    copyBtn.innerHTML = `<span class='room-id-btn-label'>(ID)</span>`;
+                    copyBtn.innerHTML = `<span class='room-id-btn-label'>
+                      <svg width='20' height='20' viewBox='0 0 20 20' fill='none' xmlns='http://www.w3.org/2000/svg'>
+                        <path d='M15.5 8.5V6.5C15.5 4.84315 14.1569 3.5 12.5 3.5H7.5C5.84315 3.5 4.5 4.84315 4.5 6.5V8.5' stroke='currentColor' stroke-width='1.5'/>
+                        <rect x='4.5' y='8.5' width='11' height='8' rx='2' stroke='currentColor' stroke-width='1.5'/>
+                        <path d='M10 12V10' stroke='currentColor' stroke-width='1.5' stroke-linecap='round'/>
+                        <path d='M10 14H10.01' stroke='currentColor' stroke-width='1.5' stroke-linecap='round'/>
+                      </svg>
+                    </span>`;
                 }, 1200);
             };
         }
