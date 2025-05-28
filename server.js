@@ -89,6 +89,12 @@ io.on('connection', socket => {
         socket.join(roomId);
         // Store user info
         room.users.set(socket.id, { nickname });
+        // Store join notification in history
+        room.messages.push({
+            type: 'notification',
+            text: `${nickname} joined the room`,
+            timestamp: Date.now()
+        });
         // Notify others
         socket.to(roomId).emit('userJoined', { nickname });
         // Emit updated user count to all in room
@@ -129,6 +135,12 @@ io.on('connection', socket => {
         if (room && room.users.has(socket.id)) {
             const user = room.users.get(socket.id);
             room.users.delete(socket.id);
+            // Store leave notification in history
+            room.messages.push({
+                type: 'notification',
+                text: `${user.nickname} left the room`,
+                timestamp: Date.now()
+            });
             socket.to(roomId).emit('userLeft', { nickname: user.nickname });
             // Emit updated user count to all in room
             io.to(roomId).emit('userCount', { count: room.users.size });
@@ -143,6 +155,12 @@ io.on('connection', socket => {
             if (room.users.has(socket.id)) {
                 const user = room.users.get(socket.id);
                 room.users.delete(socket.id);
+                // Store leave notification in history
+                room.messages.push({
+                    type: 'notification',
+                    text: `${user.nickname} left the room`,
+                    timestamp: Date.now()
+                });
                 socket.to(roomId).emit('userLeft', { nickname: user.nickname });
                 // Emit updated user count to all in room
                 io.to(roomId).emit('userCount', { count: room.users.size });

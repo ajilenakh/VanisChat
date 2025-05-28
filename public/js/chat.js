@@ -194,9 +194,16 @@ messageForm.addEventListener('submit', (e) => {
 
 // Display message
 function displayMessage(message) {
+    if (message.type === 'notification') {
+        const notification = document.createElement('div');
+        notification.classList.add('notification');
+        notification.textContent = message.text;
+        messagesContainer.appendChild(notification);
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        return;
+    }
     const messageElement = document.createElement('div');
     messageElement.classList.add('message');
-
     // Always try to decrypt
     let content = message.content;
     try {
@@ -206,7 +213,6 @@ function displayMessage(message) {
     } catch (e) {
         console.error('Failed to decrypt message:', e);
     }
-
     messageElement.innerHTML = `
         <div class="message-header">
             <span class="sender">${message.sender}</span>
@@ -214,7 +220,6 @@ function displayMessage(message) {
         </div>
         <div class="message-content">${content}</div>
     `;
-
     messagesContainer.appendChild(messageElement);
     messagesContainer.scrollTop = messagesContainer.scrollHeight;
 }
