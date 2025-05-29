@@ -10,6 +10,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/crypto-js.min.js"></script>
   <script src="/js/script.js"></script>
   <script src="/js/chat.js"></script>
+  <script src="/js/supabase.js" type="module"></script>
 
   <title>VanisChat</title>
 </head>
@@ -37,7 +38,9 @@
       <input type="text" placeholder="Your Nickname" required>
       <input type="text" placeholder="Room Name" required>
       <input type="password" placeholder="Set a Password" required>
-      <input type="number" placeholder="Expiration (minutes)" value="60" min="1" max="1440">
+      <div class="expiration-input-container">
+        <input type="number" placeholder="Expiration (minutes)" value="60" min="1" max="1440"> <span>minutes</span>
+      </div>
       <button type="submit">Create Room</button>
     </form>
 

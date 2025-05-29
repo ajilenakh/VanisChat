@@ -104,6 +104,26 @@ body {
   display: none !important;
 }
 
+/* Add styling for the expiration input container */
+.expiration-input-container {
+    display: flex;
+    align-items: center; /* Vertically align the items */
+    margin: 0.5rem 0; /* Match the margin of other form elements */
+    flex-wrap: nowrap; /* Prevent wrapping */
+}
+
+.expiration-input-container input[type="number"] {
+    margin: 0; /* Remove default margin */
+    margin-right: 0.5rem; /* Add some space between input and text */
+    flex-grow: 1; /* Allow the input to take up available space */
+    min-width: 0; /* Allow the input to shrink below its content size in flex item */
+}
+
+.expiration-input-container span { /* Target the span we added */
+    /* Adjust styling for the text if needed */
+    flex-shrink: 0; /* Prevent the text from shrinking */
+}
+
 /* Toggle Mode Switch - Modern, Fixed Top Right */
 .toggle-mode-container {
   position: fixed;
