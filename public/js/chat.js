@@ -65,6 +65,37 @@ async function insertMessage(roomId, nickname, content, type = 'chat', fileUrl =
 let messageSubscription = null;
 let messageChannel = null; // Keep track of the channel
 
+// Get loading indicator element
+const loadingIndicator = document.getElementById('loading-indicator');
+
+// Helper functions to show/hide loading indicator
+function showLoading() {
+    if (loadingIndicator) {
+        // Make visible but initially transparent (display: flex handled by removing hidden)
+        loadingIndicator.classList.remove('hidden');
+
+        // Use requestAnimationFrame to allow display change to process before fading in
+        requestAnimationFrame(() => {
+            loadingIndicator.style.opacity = '1';
+            loadingIndicator.style.visibility = 'visible';
+        });
+    }
+}
+
+function hideLoading() {
+    if (loadingIndicator) {
+        // Start fade-out
+        loadingIndicator.style.opacity = '0';
+        loadingIndicator.style.visibility = 'hidden';
+
+        // Wait for transition to finish before setting display: none
+        const transitionDuration = 300; // Match CSS transition
+        setTimeout(() => {
+            loadingIndicator.classList.add('hidden');
+        }, transitionDuration);
+    }
+}
+
 function startMessageSubscription(roomId) {
     console.log(`Attempting to subscribe to messages for room: ${roomId}`);
     // Unsubscribe from previous channel if it exists
@@ -113,8 +144,11 @@ createForm.addEventListener('submit', async (e) => {
     const password = createForm.querySelector('input[placeholder="Set a Password"]').value;
     const expirationMinutes = parseInt(createForm.querySelector('input[placeholder="Expiration (minutes)"]').value) || 60;
     
+    showLoading(); // Show loading indicator
+
     // Create room with custom password (server still handles room metadata)
     socket.emit('createRoom', { expirationMinutes, password, roomName }, (response) => {
+        hideLoading(); // Hide loading indicator in the callback
         if (response.roomId) {
             currentRoom = {
                 id: response.roomId,
@@ -127,6 +161,7 @@ createForm.addEventListener('submit', async (e) => {
             // Join the room
             joinRoom(response.roomId, password, nickname, response.roomName, response.expirationTime);
         } else {
+            // Handle creation errors more explicitly if needed, for now just alert
             alert('Failed to create room. Please try again.');
         }
     });
@@ -139,11 +174,15 @@ joinForm.addEventListener('submit', (e) => {
     const roomId = joinForm.querySelector('input[placeholder="Room ID"]').value;
     const password = joinForm.querySelector('input[placeholder="Room Password"]').value;
     
+    showLoading(); // Show loading indicator
+
     joinRoom(roomId, password, nickname);
 });
 
 function joinRoom(roomId, password, nickname, roomName = null, expirationTime = null) {
     socket.emit('joinRoom', { roomId, password, nickname }, async (response) => { // Use async here
+        hideLoading(); // Hide loading indicator in the callback
+
         if (response.success) {
             currentRoom = {
                 id: roomId,
@@ -390,29 +429,48 @@ socket.on('userCount', ({ count }) => {
 
 // UI helpers
 function showChat() {
-    document.querySelector('.form-container').classList.add('hidden');
+    const formContainer = document.querySelector('.form-container');
+    const chatContainer = document.getElementById('chat-container');
+
+    // Start fading out the form and fading in the chat
+    formContainer.classList.add('hidden'); // This handles display: none and fade-out
+    chatContainer.classList.remove('hidden'); // This makes it display: flex, but still opacity 0 initially
+
+    // Use requestAnimationFrame to ensure display change is processed before triggering opacity transition
+    requestAnimationFrame(() => {
+        chatContainer.style.opacity = '1'; // Start fade-in
+    });
+
+    // Move focus and header update to happen shortly after fade-in starts
     setTimeout(() => {
-        chatContainer.classList.remove('hidden');
-        messageInput.focus();
+        if (messageInput) messageInput.focus();
         updateRoomHeader();
         startTimeLeftUpdater();
-    }, 300);
+    }, 50); // Small delay to ensure elements are visible and positioned
 }
 
 function hideChat() {
-    chatContainer.classList.add('hidden');
+    const formContainer = document.querySelector('.form-container');
+    const chatContainer = document.getElementById('chat-container');
+    const transitionDuration = 300; // Match CSS transition duration
+
+    // Start fading out the chat
+    chatContainer.style.opacity = '0';
+
+    // Wait for fade-out to complete before hiding with display: none
     setTimeout(() => {
-        document.querySelector('.form-container').classList.remove('hidden');
+        chatContainer.classList.add('hidden'); // This handles display: none
+        formContainer.classList.remove('hidden'); // Fade in form (handled by CSS)
+
+        // Clear room state and messages
         currentRoom = { id: null, password: null, nickname: null, name: null, expirationTime: null };
-        messagesContainer.innerHTML = '';
+        if (messagesContainer) messagesContainer.innerHTML = '';
         stopTimeLeftUpdater();
-        // Unsubscribe from Supabase Realtime channel on leaving
         if (messageChannel) {
-           messageChannel.unsubscribe();
-           // supabase.removeChannel(messageChannel); // Optional
-           messageChannel = null;
-       }
-    }, 300);
+            messageChannel.unsubscribe();
+            messageChannel = null;
+        }
+    }, transitionDuration); // Wait for the CSS transition to finish
 }
 
 function updateOnlineCount(count) {

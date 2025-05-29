@@ -25,7 +25,6 @@
 /* When chat is visible, adjust the body */
 body:has(.chat:not(.hidden)) {
   padding: 0;
-  overflow: hidden;
 }
 
 body.dark {
