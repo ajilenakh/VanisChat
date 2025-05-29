@@ -2,6 +2,33 @@ document.addEventListener('DOMContentLoaded', function() {
 // Initialize Socket.IO
 const socket = io();
 
+// Dark mode toggle logic
+const darkModeToggle = document.getElementById('check');
+if (darkModeToggle) {
+    darkModeToggle.addEventListener('change', function () {
+        // Toggle the 'dark' class on the body
+        document.body.classList.toggle('dark', this.checked);
+        
+        // Optional: Save the user's preference in localStorage
+        if (this.checked) {
+            localStorage.setItem('theme', 'dark');
+        } else {
+            localStorage.setItem('theme', 'light');
+        }
+    });
+
+    // Optional: Apply saved theme preference on page load
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+        document.body.classList.add('dark');
+        darkModeToggle.checked = true;
+    } else {
+         // Ensure light mode is default or explicitly set if no preference saved
+         document.body.classList.remove('dark');
+         darkModeToggle.checked = false; // Ensure toggle is off for light mode
+    }
+}
+
 // DOM Elements
 const createForm = document.getElementById('create-form');
 const joinForm = document.getElementById('join-form');
@@ -434,11 +461,14 @@ function showChat() {
 
     // Start fading out the form and fading in the chat
     formContainer.classList.add('hidden'); // This handles display: none and fade-out
-    chatContainer.classList.remove('hidden'); // This makes it display: flex, but still opacity 0 initially
+
+    // Make chat visible but initially transparent (display: flex handled by removing hidden)
+    chatContainer.classList.remove('hidden');
 
     // Use requestAnimationFrame to ensure display change is processed before triggering opacity transition
     requestAnimationFrame(() => {
         chatContainer.style.opacity = '1'; // Start fade-in
+        chatContainer.style.visibility = 'visible';
     });
 
     // Move focus and header update to happen shortly after fade-in starts
@@ -456,8 +486,9 @@ function hideChat() {
 
     // Start fading out the chat
     chatContainer.style.opacity = '0';
+    chatContainer.style.visibility = 'hidden';
 
-    // Wait for fade-out to complete before hiding with display: none
+    // Wait for transition to finish before hiding with display: none
     setTimeout(() => {
         chatContainer.classList.add('hidden'); // This handles display: none
         formContainer.classList.remove('hidden'); // Fade in form (handled by CSS)

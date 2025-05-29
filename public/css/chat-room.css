@@ -27,32 +27,6 @@ body:has(.chat:not(.hidden)) {
   padding: 0;
 }
 
-body.dark {
-  --message-bg: #2d2d2d;
-  --message-sent-bg: #0084ff;
-  --notification-bg: rgba(255, 255, 255, 0.1);
-  --input-bg: #1a1a1a;
-  --danger-color: #dc3545;
-  --primary-color: #0084ff;
-  --border-color: #404040;
-  --text-color: #ffffff;
-  --text-secondary: #a0a0a0;
-  --bg-color: #1a1a1a;
-}
-
-body {
-  --message-bg: #f0f2f5;
-  --message-sent-bg: #0084ff;
-  --notification-bg: rgba(0, 0, 0, 0.05);
-  --input-bg: #f8f9fa;
-  --danger-color: #dc3545;
-  --primary-color: #0084ff;
-  --border-color: #e0e0e0;
-  --text-color: #000000;
-  --text-secondary: #666666;
-  --bg-color: #ffffff;
-}
-
 /* Header */
 .chat-header {
   padding: 1rem;
@@ -140,6 +114,22 @@ body {
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  /* Firefox scrollbar support */
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-color) transparent;
+  /* Webkit scrollbar styling */
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--border-color);
+    border-radius: 4px;
+  }
 }
 
 /* Message styles */
@@ -429,4 +419,37 @@ body.dark .copy-id-btn:hover, body.dark .copy-id-btn:focus {
   margin-bottom: 1.2em;
   margin-top: 1.2em;
   text-align: center;
+}
+
+/* Suggested mobile responsiveness for smaller screens */
+@media (max-width: 600px) {
+  .form-container, .chat-form, .chat-header {
+    flex-direction: column; /* Stack items vertically */
+    align-items: stretch; /* Stretch items to fill container width */
+  }
+
+  .chat-header {
+    gap: 10px; /* Add space between stacked header items */
+  }
+
+  /* Adjust input and button width in forms */
+  .form-section input, .form-section button {
+    width: 100%;
+    box-sizing: border-box; /* Include padding and border in the element's total width */
+  }
+
+  /* Adjust chat form input and button width */
+  .chat-form input, .chat-form button {
+     width: 100%;
+     box-sizing: border-box;
+  }
+
+  /* Ensure tabs stack nicely if needed on very small screens */
+  .tabs {
+    flex-direction: column;
+  }
+  .tab {
+    width: 100%;
+    text-align: center;
+  }
 }
