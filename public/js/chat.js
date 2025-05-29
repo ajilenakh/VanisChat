@@ -22,6 +22,74 @@ let currentRoom = {
     expirationTime: null // Added for expiration tracking
 };
 
+// Invite link auto-fill logic
+const urlParams = new URLSearchParams(window.location.search);
+const prefillRoomId = urlParams.get('room');
+const prefillPassword = urlParams.get('pw');
+if (prefillRoomId && prefillPassword) {
+    // Pre-fill the join form
+    document.querySelector('#join-form input[placeholder="Room ID"]').value = prefillRoomId;
+    document.querySelector('#join-form input[placeholder="Room Password"]').value = prefillPassword;
+    // Switch to join tab
+    switchForm('join');
+    // Focus nickname input
+    document.querySelector('#join-form input[placeholder="Your Nickname"]').focus();
+}
+
+// Supabase Integration (Assuming supabase client is initialized in superbase.js)
+
+// Function to insert a message into Supabase
+async function insertMessage(roomId, nickname, content, type = 'chat', fileUrl = null, fileType = null) {
+    console.log('Inserting message into Supabase with content:', content);
+    const { data, error } = await supabase
+        .from('messages')
+        .insert([{
+            room_id: roomId,
+            sender_nickname: nickname,
+            content: content,
+            type: type,
+            file_url: fileUrl,
+            file_type: fileType,
+            timestamp: new Date().toISOString()
+        }]);
+    if (error) {
+        console.error('Error inserting message:', error);
+        return false;
+    }
+    console.log('Message insertion result:', data);
+    return true;
+}
+
+// Listen for new messages via Supabase Realtime
+let messageSubscription = null;
+let messageChannel = null; // Keep track of the channel
+
+function startMessageSubscription(roomId) {
+    // Unsubscribe from previous channel if it exists
+    if (messageChannel) {
+        messageChannel.unsubscribe();
+        // Optional: remove the channel completely if you won't reuse the name
+        // supabase.removeChannel(messageChannel);
+        messageChannel = null;
+    }
+
+    // Create a Realtime channel for the specific room and listen for inserts
+    messageChannel = supabase.channel(`room:${roomId}`)
+        .on(
+            'postgres_changes',
+            { event: 'INSERT', schema: 'public', table: 'messages', filter: `room_id=eq.${roomId}` },
+            (payload) => {
+                console.log('Realtime event received:', payload);
+                console.log('New message received from Supabase Realtime:', payload.new);
+                // Display the message received from Supabase
+                displayMessage(payload.new); // payload.new is the message object
+            }
+        )
+        .subscribe();
+    
+    console.log(`Subscribed to messages for room: ${roomId}`);
+}
+
 // Create room
 createForm.addEventListener('submit', async (e) => {
     e.preventDefault(); // Prevent form submission
@@ -30,11 +98,8 @@ createForm.addEventListener('submit', async (e) => {
     const password = createForm.querySelector('input[placeholder="Set a Password"]').value;
     const expirationMinutes = parseInt(createForm.querySelector('input[placeholder="Expiration (minutes)"]').value) || 60;
     
-    console.log('Creating room with:', { nickname, roomName, password, expirationMinutes }); // Debug log
-    
-    // Create room with custom password
+    // Create room with custom password (server still handles room metadata)
     socket.emit('createRoom', { expirationMinutes, password, roomName }, (response) => {
-        console.log('Room creation response:', response); // Debug log
         if (response.roomId) {
             currentRoom = {
                 id: response.roomId,
@@ -46,10 +111,6 @@ createForm.addEventListener('submit', async (e) => {
             
             // Join the room
             joinRoom(response.roomId, password, nickname, response.roomName, response.expirationTime);
-            
-            // Show room info
-            roomTitle.textContent = `Room: ${response.roomName}`;
-            showChat();
         } else {
             alert('Failed to create room. Please try again.');
         }
@@ -63,12 +124,11 @@ joinForm.addEventListener('submit', (e) => {
     const roomId = joinForm.querySelector('input[placeholder="Room ID"]').value;
     const password = joinForm.querySelector('input[placeholder="Room Password"]').value;
     
-    console.log('Joining room with:', { nickname, roomId }); // Debug log
     joinRoom(roomId, password, nickname);
 });
 
 function joinRoom(roomId, password, nickname, roomName = null, expirationTime = null) {
-    socket.emit('joinRoom', { roomId, password, nickname }, (response) => {
+    socket.emit('joinRoom', { roomId, password, nickname }, async (response) => { // Use async here
         if (response.success) {
             currentRoom = {
                 id: roomId,
@@ -78,10 +138,27 @@ function joinRoom(roomId, password, nickname, roomName = null, expirationTime = 
                 expirationTime: response.expirationTime || expirationTime
             };
             showChat();
-            // Display previous messages
-            response.messages.forEach(msg => displayMessage(msg));
-            // Update header
+
+            // Fetch message history from Supabase
+            const { data: messages, error } = await supabase
+                .from('messages')
+                .select('*')
+                .eq('room_id', roomId)
+                .order('timestamp', { ascending: true });
+
+            if (error) {
+                console.error('Error fetching message history:', error);
+            } else {
+                console.log('Fetched message history:', messages);
+                messages.forEach(msg => displayMessage(msg));
+            }
+
+            // Start Realtime subscription for new messages
+            startMessageSubscription(roomId);
+
+            // Update header (userCount is still handled by Socket.IO)
             updateRoomHeader();
+
         } else {
             alert(response.message || 'Failed to join room. Please check your credentials.');
         }
@@ -90,7 +167,7 @@ function joinRoom(roomId, password, nickname, roomName = null, expirationTime = 
 
 function updateRoomHeader() {
     if (!roomTitle) return;
-    if (currentRoom.name && currentRoom.id) {
+    if (currentRoom.name && currentRoom.id && currentRoom.password) {
         // Calculate time remaining (if available)
         let timeText = '';
         if (currentRoom.expirationTime) {
@@ -101,27 +178,43 @@ function updateRoomHeader() {
                 timeText = `<span class='room-timer'>Time left: ${min}m ${sec}s</span>`;
             }
         }
+        // Generate invite link
+        const inviteLink = `${window.location.origin}/?room=${encodeURIComponent(currentRoom.id)}&pw=${encodeURIComponent(currentRoom.password)}`;
         roomTitle.innerHTML = `
             <div class="room-header-flex">
                 <span class="room-label">
                   Room: <span class="room-name">${currentRoom.name}</span>
-                  <button id="copy-room-id" class="copy-id-btn" title="Copy Room ID" style="margin-left:0.5em;">
-                    <span class="room-id-btn-label">ID</span>
+                  <button id="copy-invite-link" class="copy-id-btn" title="Copy Invite Link" style="margin-left:0.5em;">
+                    <span class="room-id-btn-label">
+                      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M15.5 8.5V6.5C15.5 4.84315 14.1569 3.5 12.5 3.5H7.5C5.84315 3.5 4.5 4.84315 4.5 6.5V8.5" stroke="currentColor" stroke-width="1.5"/>
+                        <rect x="4.5" y="8.5" width="11" height="8" rx="2" stroke="currentColor" stroke-width="1.5"/>
+                        <path d="M10 12V10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                        <path d="M10 14H10.01" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                      </svg>
+                    </span>
                   </button>
                 </span>
                 <span class="room-header-timer">${timeText}</span>
             </div>
         `;
         // Add copy event
-        const copyBtn = document.getElementById('copy-room-id');
+        const copyBtn = document.getElementById('copy-invite-link');
         if (copyBtn) {
             copyBtn.onclick = function() {
-                navigator.clipboard.writeText(currentRoom.id);
+                navigator.clipboard.writeText(inviteLink);
                 copyBtn.innerHTML = `<span class='room-id-btn-label'>
                   <svg width='20' height='20' viewBox='0 0 20 20' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M5 11l4 4L15 7' stroke='#22c55e' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/></svg>
                 </span>`;
                 setTimeout(() => {
-                    copyBtn.innerHTML = `<span class='room-id-btn-label'>(ID)</span>`;
+                    copyBtn.innerHTML = `<span class='room-id-btn-label'>
+                      <svg width='20' height='20' viewBox='0 0 20 20' fill='none' xmlns='http://www.w3.org/2000/svg'>
+                        <path d='M15.5 8.5V6.5C15.5 4.84315 14.1569 3.5 12.5 3.5H7.5C5.84315 3.5 4.5 4.84315 4.5 6.5V8.5' stroke='currentColor' stroke-width='1.5'/>
+                        <rect x='4.5' y='8.5' width='11' height='8' rx='2' stroke='currentColor' stroke-width='1.5'/>
+                        <path d='M10 12V10' stroke='currentColor' stroke-width='1.5' stroke-linecap='round'/>
+                        <path d='M10 14H10.01' stroke='currentColor' stroke-width='1.5' stroke-linecap='round'/>
+                      </svg>
+                    </span>`;
                 }, 1200);
             };
         }
@@ -146,76 +239,106 @@ function stopTimeLeftUpdater() {
 }
 
 // Send message
-messageForm.addEventListener('submit', (e) => {
+messageForm.addEventListener('submit', async (e) => { // Made async for insertMessage
     e.preventDefault(); // Prevent form submission
-    const message = messageInput.value.trim();
-    if (!message || !currentRoom.id) return;
+    const messageText = messageInput.value.trim();
+    if (!messageText || !currentRoom.id || !currentRoom.password || !currentRoom.nickname) return;
 
     // Encrypt message (using room password as encryption key)
-    const encryptedMessage = CryptoJS.AES.encrypt(message, currentRoom.password).toString();
+    const encryptedContent = CryptoJS.AES.encrypt(messageText, currentRoom.password).toString();
     
-    socket.emit('message', {
-        roomId: currentRoom.id,
-        encryptedMessage
-    });
+    console.log('Sending encrypted content:', encryptedContent);
+
+    // Insert message into Supabase instead of emitting via Socket.IO
+    const success = await insertMessage(currentRoom.id, currentRoom.nickname, encryptedContent, 'chat');
     
-    messageInput.value = '';
+    if (success) {
+        messageInput.value = '';
+    }
 });
 
-// Display message
+// Display message (handles both chat and notification types)
 function displayMessage(message) {
-    const messageElement = document.createElement('div');
-    messageElement.classList.add('message');
-
-    // Always try to decrypt
-    let content = message.content;
-    try {
-        const decrypted = CryptoJS.AES.decrypt(message.content, currentRoom.password);
-        const plain = decrypted.toString(CryptoJS.enc.Utf8);
-        if (plain) content = plain;
-    } catch (e) {
-        console.error('Failed to decrypt message:', e);
+    console.log('Displaying message:', message);
+    if (message.type === 'notification') {
+        const notification = document.createElement('div');
+        notification.classList.add('notification');
+        notification.textContent = message.content;
+        messagesContainer.appendChild(notification);
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        return;
+    } else if (message.type === 'chat') {
+        const messageElement = document.createElement('div');
+        messageElement.classList.add('message');
+    
+        // Always try to decrypt
+        let content = message.content;
+        let decryptedContent = '';
+        if (content) {
+             try {
+                const bytes = CryptoJS.AES.decrypt(content, currentRoom.password);
+                decryptedContent = bytes.toString(CryptoJS.enc.Utf8);
+                if (!decryptedContent) {
+                    console.warn('Decryption resulted in empty string, showing encrypted content or placeholder.');
+                    decryptedContent = '(Undecryptable Message)';
+                }
+            } catch (e) {
+                console.error('Failed to decrypt message:', e);
+                decryptedContent = '(Error decrypting message)';
+            }
+        }
+    
+        messageElement.innerHTML = `
+            <div class="message-header">
+                <span class="sender">${message.sender_nickname || 'Unknown'}</span>
+                <span class="timestamp">${new Date(message.timestamp).toLocaleTimeString()}</span>
+            </div>
+            <div class="message-content">${decryptedContent}</div>
+        `;
+    
+        messagesContainer.appendChild(messageElement);
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    } else if (message.type === 'media') {
+         const messageElement = document.createElement('div');
+         messageElement.classList.add('message');
+         // For media, display the image
+         messageElement.innerHTML = `
+            <div class="message-header">
+                 <span class="sender">${message.sender_nickname || 'Unknown'}</span>
+                 <span class="timestamp">${new Date(message.timestamp).toLocaleTimeString()}</span>
+             </div>
+             <div class="message-content">
+                 <img src="${message.file_url}" alt="Media File" style="max-width: 100%; height: auto;"/>
+             </div>
+         `;
+        messagesContainer.appendChild(messageElement);
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
     }
-
-    messageElement.innerHTML = `
-        <div class="message-header">
-            <span class="sender">${message.sender}</span>
-            <span class="timestamp">${new Date(message.timestamp).toLocaleTimeString()}</span>
-        </div>
-        <div class="message-content">${content}</div>
-    `;
-
-    messagesContainer.appendChild(messageElement);
-    messagesContainer.scrollTop = messagesContainer.scrollHeight;
 }
 
-// Socket event handlers
+// Socket event handlers (Socket.IO is still used for presence and room metadata)
 socket.on('connect', () => {
-    console.log('Connected to server'); // Debug log
+    console.log('Connected to server');
 });
 
 socket.on('disconnect', () => {
-    console.log('Disconnected from server'); // Debug log
+    console.log('Disconnected from server');
 });
 
-socket.on('message', (message) => {
-    displayMessage(message);
-});
+// Remove: socket.on('message', ...); // Messages come from Supabase Realtime now
 
 socket.on('userJoined', ({ nickname }) => {
-    const notification = document.createElement('div');
-    notification.classList.add('notification');
-    notification.textContent = `${nickname} joined the room`;
-    messagesContainer.appendChild(notification);
-    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    // This event is still emitted by the server for real-time notifications
+    // but the history comes from Supabase
+    console.log(`${nickname} joined`);
+    // displayMessage({ type: 'notification', text: `${nickname} joined the room`, timestamp: Date.now() }); // Handled by history fetch now
 });
 
 socket.on('userLeft', ({ nickname }) => {
-    const notification = document.createElement('div');
-    notification.classList.add('notification');
-    notification.textContent = `${nickname} left the room`;
-    messagesContainer.appendChild(notification);
-    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    // This event is still emitted by the server for real-time notifications
+    // but the history comes from Supabase
+     console.log(`${nickname} left`);
+    // displayMessage({ type: 'notification', text: `${nickname} left the room`, timestamp: Date.now() }); // Handled by history fetch now
 });
 
 socket.on('roomExpired', () => {
@@ -239,14 +362,18 @@ function showChat() {
 }
 
 function hideChat() {
-    console.log('Hiding chat interface'); // Debug log
     chatContainer.classList.add('hidden');
-    
     setTimeout(() => {
         document.querySelector('.form-container').classList.remove('hidden');
         currentRoom = { id: null, password: null, nickname: null, name: null, expirationTime: null };
         messagesContainer.innerHTML = '';
         stopTimeLeftUpdater();
+        // Unsubscribe from Supabase Realtime channel on leaving
+        if (messageChannel) {
+           messageChannel.unsubscribe();
+           // supabase.removeChannel(messageChannel); // Optional
+           messageChannel = null;
+       }
     }, 300);
 }
 
@@ -259,6 +386,7 @@ leaveButton.addEventListener('click', () => {
     if (currentRoom.id) {
         socket.emit('leaveRoom', currentRoom.id);
     }
-    hideChat();
+    hideChat(); // Hide chat immediately on leave
 });
-}); 
+
+}); // End DOMContentLoaded 
