@@ -1,7 +1,7 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.43.4'
 
-const supabaseUrl = 'https://vqcjoimaqiydncgzlrzk.supabase.co'
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZxY2pvaW1hcWl5ZG5jZ3pscnprIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDg0NjU0NzQsImV4cCI6MjA2NDA0MTQ3NH0.R5FPzCERTZGrbUT1vu3pxuCgek0v_WOlof0Gq4ZsZ7Y'
+const supabaseUrl = 'https://xddulsxzqlwyzucyeywq.supabase.co'
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhkZHVsc3h6cWx3eXp1Y3lleXdxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDg1MTAwMzAsImV4cCI6MjA2NDA4NjAzMH0.kWsDza_2oD59Y4WpySUMLItCkGS0dS8PTFly67qMLEk'
 const supabase = createClient(supabaseUrl, supabaseKey)
 
 // Make the supabase client globally accessible

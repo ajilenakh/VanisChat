@@ -15,7 +15,7 @@ const server = http.createServer(app);
 const io = new Server(server);
 
 // Initialize Supabase client (using Service Role Key for server-side operations)
-const supabaseUrl = 'https://vqcjoimaqiydncgzlrzk.supabase.co';
+const supabaseUrl = 'https://xddulsxzqlwyzucyeywq.supabase.co';
 const supabaseServiceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
 const supabase = createClient(supabaseUrl, supabaseServiceRoleKey);
