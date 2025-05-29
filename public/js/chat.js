@@ -51,13 +51,14 @@ async function insertMessage(roomId, nickname, content, type = 'chat', fileUrl =
             file_url: fileUrl,
             file_type: fileType,
             timestamp: new Date().toISOString()
-        }]);
+        }])
+        .select(); // Add .select() to get the inserted data back
     if (error) {
         console.error('Error inserting message:', error);
         return false;
     }
     console.log('Message insertion result:', data);
-    return true;
+    return data !== null && data.length > 0; // Return true only if data is returned
 }
 
 // Listen for new messages via Supabase Realtime
@@ -65,8 +66,10 @@ let messageSubscription = null;
 let messageChannel = null; // Keep track of the channel
 
 function startMessageSubscription(roomId) {
+    console.log(`Attempting to subscribe to messages for room: ${roomId}`);
     // Unsubscribe from previous channel if it exists
     if (messageChannel) {
+        console.log('Unsubscribing from previous channel.');
         messageChannel.unsubscribe();
         // Optional: remove the channel completely if you won't reuse the name
         // supabase.removeChannel(messageChannel);
@@ -81,13 +84,25 @@ function startMessageSubscription(roomId) {
             (payload) => {
                 console.log('Realtime event received:', payload);
                 console.log('New message received from Supabase Realtime:', payload.new);
-                // Display the message received from Supabase
+
+                // Check if the message was sent by the current user
+                if (currentRoom.nickname && payload.new.sender_nickname === currentRoom.nickname) {
+                    console.log('Skipping display for message sent by current user.');
+                    return; // Don't display messages sent by the current user via Realtime
+                }
+
+                // Display the message received from Supabase (if not sent by current user)
                 displayMessage(payload.new); // payload.new is the message object
             }
         )
-        .subscribe();
+        .subscribe((status, err) => {
+            console.log(`Subscription status for room:${roomId}: ${status}`);
+            if (err) {
+                console.error(`Subscription error for room:${roomId}:`, err);
+            }
+        });
     
-    console.log(`Subscribed to messages for room: ${roomId}`);
+    console.log(`Subscription process initiated for room: ${roomId}`);
 }
 
 // Create room
@@ -250,10 +265,33 @@ messageForm.addEventListener('submit', async (e) => { // Made async for insertMe
     console.log('Sending encrypted content:', encryptedContent);
 
     // Insert message into Supabase instead of emitting via Socket.IO
-    const success = await insertMessage(currentRoom.id, currentRoom.nickname, encryptedContent, 'chat');
-    
-    if (success) {
-        messageInput.value = '';
+    // Wait for insertion to complete and get the inserted message object
+    const { data: insertedMessages, error: insertError } = await supabase
+        .from('messages')
+        .insert([{
+            room_id: currentRoom.id,
+            sender_nickname: currentRoom.nickname,
+            content: encryptedContent,
+            type: 'chat',
+            timestamp: new Date().toISOString()
+        }])
+        .select(); // Get the inserted data back
+
+    if (insertError) {
+        console.error('Error inserting message:', insertError);
+        alert('Failed to send message.');
+        return;
+    }
+
+    console.log('Message insertion result:', insertedMessages);
+
+    // Display the message locally immediately after successful insertion
+    if (insertedMessages && insertedMessages.length > 0) {
+        displayMessage(insertedMessages[0]);
+        messageInput.value = ''; // Clear input only if message sent
+    } else {
+        console.warn('Message inserted but no data returned.', insertedMessages);
+         alert('Failed to confirm message sent.');
     }
 });
 
