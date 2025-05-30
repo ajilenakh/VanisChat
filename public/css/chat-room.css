@@ -396,6 +396,7 @@ body:has(.chat:not(.hidden)) {
   .chat-form {
     border-radius: 0;
     padding: 1rem 0; /* Adjust padding to align with new container padding */
+    display: flex; /* Ensure flex display */
     flex-direction: column; /* Stack items vertically */
     align-items: stretch; /* Stretch items to fill container width */
     gap: 1rem; /* Add space between form elements */
@@ -408,7 +409,7 @@ body:has(.chat:not(.hidden)) {
 
   .chat-form input,
   .chat-form button {
-    /* width: 100%; /* Handled by align-items: stretch on parent */
+    width: 100%; /* Ensure full width */
     box-sizing: border-box; /* Ensure padding is included */
     padding: 0.75rem 1rem; /* Keep existing padding */
   }
@@ -425,7 +426,7 @@ body:has(.chat:not(.hidden)) {
 
   body:has(.chat:not(.hidden)) {
     /* Ensure body styles don't interfere */
-    /* Removed padding: 0; height: 100vh; overflow: hidden; */
+    /* Removed padding: 0; height: 10vh; overflow: hidden; */
   }
 
   /* Ensure elements within header and form take full width if needed */
@@ -451,10 +452,10 @@ body:has(.chat:not(.hidden)) {
     /* Ensure these don't override the 768px rules unless specifically needed */
     padding: initial;
     gap: initial;
-    flex-direction: initial;
-    align-items: initial;
-    width: initial;
-    box-sizing: initial;
+    /* flex-direction: initial; */ /* Remove this line */
+    /* align-items: initial; */ /* Remove this line */
+    /* width: initial; */ /* Remove this line */
+    /* box-sizing: initial; */ /* Remove this line */
   }
   /* Re-apply or adjust specific 480px styles if necessary, e.g., font sizes */
    .chat-header {
@@ -581,12 +582,16 @@ body.dark .copy-id-btn:hover, body.dark .copy-id-btn:focus {
     align-items: flex-start;
     gap: 0.1em;
     width: 100%;
+    min-height: 1.5em;
   }
   .room-label {
     font-size: 1.05em;
     gap: 0.15em;
     font-weight: 700;
     margin-bottom: 0.1em;
+    height: 1.3em;
+    display: flex;
+    align-items: center;
   }
   .copy-id-btn {
     font-size: 0.93em;

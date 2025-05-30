@@ -47,8 +47,8 @@
       <!-- Create/Join room form -->
       <div class="form-container">
         <div class="tabs">
-          <button class="tab active" onclick="switchForm('create')">Create Room</button>
-          <button class="tab" onclick="switchForm('join')">Join Room</button>
+          <button class="tab active" data-form="create">Create Room</button>
+          <button class="tab" data-form="join">Join Room</button>
         </div>
 
         <form id="create-form" class="form-section">
@@ -70,17 +70,6 @@
       </div>
     </div>
   </div>
-
-  <script>
-    function switchForm(formType) {
-      document.getElementById('create-form').classList.toggle('hidden', formType !== 'create');
-      document.getElementById('join-form').classList.toggle('hidden', formType !== 'join');
-
-      const tabs = document.querySelectorAll('.tab');
-      tabs.forEach(tab => tab.classList.remove('active'));
-      document.querySelector(`.tab[onclick*="${formType}"]`).classList.add('active');
-    }
-  </script>
 
   <!-- Chat room -->
   <div id="chat-container" class="chat hidden">

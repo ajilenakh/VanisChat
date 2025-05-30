@@ -10,6 +10,34 @@ const body = document.body;
 const toggle = document.querySelector("#theme-toggle");
 const html = document.documentElement;
 
+// Add event listeners for tab buttons
+document.querySelectorAll('.tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+        const formType = tab.getAttribute('data-form');
+        switchForm(formType);
+    });
+});
+
+// Function to switch between create and join forms
+function switchForm(formType) {
+    const createForm = document.getElementById('create-form');
+    const joinForm = document.getElementById('join-form');
+    const createTab = document.querySelector('.tab[data-form="create"]');
+    const joinTab = document.querySelector('.tab[data-form="join"]');
+
+    if (formType === 'create') {
+        createForm.classList.remove('hidden');
+        joinForm.classList.add('hidden');
+        createTab.classList.add('active');
+        joinTab.classList.remove('active');
+    } else if (formType === 'join') {
+        createForm.classList.add('hidden');
+        joinForm.classList.remove('hidden');
+        createTab.classList.remove('active');
+        joinTab.classList.add('active');
+    }
+}
+
 // Function to apply theme and update toggle state
 function applyTheme(theme) {
     if (theme === 'dark') {
@@ -119,7 +147,6 @@ if (prefillRoomId && prefillPassword) {
 
 // Function to insert a message into Supabase
 async function insertMessage(roomId, nickname, content, type = 'chat', fileUrl = null, fileType = null) {
-    console.log('Inserting message into Supabase with content:', content);
     const { data, error } = await supabase
         .from('messages')
         .insert([{
@@ -133,10 +160,8 @@ async function insertMessage(roomId, nickname, content, type = 'chat', fileUrl =
         }])
         .select(); // Add .select() to get the inserted data back
     if (error) {
-        console.error('Error inserting message:', error);
         return false;
     }
-    console.log('Message insertion result:', data);
     return data !== null && data.length > 0; // Return true only if data is returned
 }
 
@@ -180,13 +205,9 @@ function hideLoading() {
 }
 
 function startMessageSubscription(roomId) {
-    console.log(`Attempting to subscribe to messages for room: ${roomId}`);
     // Unsubscribe from previous channel if it exists
     if (messageChannel) {
-        console.log('Unsubscribing from previous channel.');
         messageChannel.unsubscribe();
-        // Optional: remove the channel completely if you won't reuse the name
-        // supabase.removeChannel(messageChannel);
         messageChannel = null;
     }
 
@@ -196,12 +217,8 @@ function startMessageSubscription(roomId) {
             'postgres_changes',
             { event: 'INSERT', schema: 'public', table: 'messages', filter: `room_id=eq.${roomId}` },
             (payload) => {
-                console.log('Realtime event received:', payload);
-                console.log('New message received from Supabase Realtime:', payload.new);
-
                 // Check if the message was sent by the current user
                 if (currentRoom.nickname && payload.new.sender_nickname === currentRoom.nickname) {
-                    console.log('Skipping display for message sent by current user.');
                     return; // Don't display messages sent by the current user via Realtime
                 }
 
@@ -210,13 +227,9 @@ function startMessageSubscription(roomId) {
             }
         )
         .subscribe((status, err) => {
-            console.log(`Subscription status for room:${roomId}: ${status}`);
             if (err) {
-                console.error(`Subscription error for room:${roomId}:`, err);
             }
         });
-    
-    console.log(`Subscription process initiated for room: ${roomId}`);
 }
 
 // Create room
@@ -284,9 +297,7 @@ function joinRoom(roomId, password, nickname, roomName = null, expirationTime = 
                 .order('timestamp', { ascending: true });
 
             if (error) {
-                console.error('Error fetching message history:', error);
             } else {
-                console.log('Fetched message history:', messages);
                 messages.forEach(msg => displayMessage(msg));
             }
 
@@ -400,8 +411,6 @@ messageForm.addEventListener('submit', async (e) => { // Made async for insertMe
     // Encrypt message (using room password as encryption key)
     const encryptedContent = CryptoJS.AES.encrypt(messageText, currentRoom.password).toString();
     
-    console.log('Sending encrypted content:', encryptedContent);
-
     // Insert message into Supabase instead of emitting via Socket.IO
     // Wait for insertion to complete and get the inserted message object
     const { data: insertedMessages, error: insertError } = await supabase
@@ -416,26 +425,21 @@ messageForm.addEventListener('submit', async (e) => { // Made async for insertMe
         .select(); // Get the inserted data back
 
     if (insertError) {
-        console.error('Error inserting message:', insertError);
         alert('Failed to send message.');
         return;
     }
-
-    console.log('Message insertion result:', insertedMessages);
 
     // Display the message locally immediately after successful insertion
     if (insertedMessages && insertedMessages.length > 0) {
         displayMessage(insertedMessages[0]);
         messageInput.value = ''; // Clear input only if message sent
     } else {
-        console.warn('Message inserted but no data returned.', insertedMessages);
-         alert('Failed to confirm message sent.');
+        alert('Failed to confirm message sent.');
     }
 });
 
 // Display message (handles both chat and notification types)
 function displayMessage(message) {
-    console.log('Displaying message:', message);
     if (message.type === 'notification') {
         const notification = document.createElement('div');
         notification.classList.add('notification');
@@ -455,11 +459,9 @@ function displayMessage(message) {
                 const bytes = CryptoJS.AES.decrypt(content, currentRoom.password);
                 decryptedContent = bytes.toString(CryptoJS.enc.Utf8);
                 if (!decryptedContent) {
-                    console.warn('Decryption resulted in empty string, showing encrypted content or placeholder.');
                     decryptedContent = '(Undecryptable Message)';
                 }
             } catch (e) {
-                console.error('Failed to decrypt message:', e);
                 decryptedContent = '(Error decrypting message)';
             }
         }
@@ -494,11 +496,11 @@ function displayMessage(message) {
 
 // Socket event handlers (Socket.IO is still used for presence and room metadata)
 socket.on('connect', () => {
-    console.log('Connected to server');
+    // console.log('Connected to server');
 });
 
 socket.on('disconnect', () => {
-    console.log('Disconnected from server');
+    // console.log('Disconnected from server');
 });
 
 // Remove: socket.on('message', ...); // Messages come from Supabase Realtime now
@@ -506,14 +508,14 @@ socket.on('disconnect', () => {
 socket.on('userJoined', ({ nickname }) => {
     // This event is still emitted by the server for real-time notifications
     // but the history comes from Supabase
-    console.log(`${nickname} joined`);
+    // console.log(`${nickname} joined`);
     // displayMessage({ type: 'notification', text: `${nickname} joined the room`, timestamp: Date.now() }); // Handled by history fetch now
 });
 
 socket.on('userLeft', ({ nickname }) => {
     // This event is still emitted by the server for real-time notifications
     // but the history comes from Supabase
-     console.log(`${nickname} left`);
+     // console.log(`${nickname} left`);
     // displayMessage({ type: 'notification', text: `${nickname} left the room`, timestamp: Date.now() }); // Handled by history fetch now
 });
 
@@ -528,7 +530,7 @@ socket.on('userCount', ({ count }) => {
 
 // UI helpers
 function showChat() {
-    console.log('Showing chat...');
+    // console.log('Showing chat...');
     // hide form container and main container
     if (createForm) createForm.classList.add('hidden');
     if (joinForm) joinForm.classList.add('hidden');
@@ -543,6 +545,8 @@ function showChat() {
         chatContainer.classList.remove('hidden');
         // Adjust display for transitions if necessary
         chatContainer.style.display = 'flex'; // Or block, depending on layout
+         // Scroll to chat container
+        chatContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
     // Scroll to the bottom of the messages
     if (messagesContainer) {
@@ -551,12 +555,16 @@ function showChat() {
 }
 
 function hideChat() {
-    console.log('Hiding chat...');
+    // console.log('Hiding chat...');
     // Show form container and main container
     if (document.querySelector('.form-container')) document.querySelector('.form-container').classList.remove('hidden');
     if (createForm) createForm.classList.remove('hidden');
     // Ensure only the active form is shown after hiding chat
-    const activeFormType = document.querySelector('.tabs .tab.active').onclick.toString().match(/switchForm\('(.*?)'\)/)[1];
+    const activeTab = document.querySelector('.tabs .tab.active');
+    let activeFormType = 'create'; // Default to create form if no active tab found
+    if (activeTab) {
+        activeFormType = activeTab.getAttribute('data-form') || 'create';
+    }
     switchForm(activeFormType);
 
     // show page title and main container
@@ -592,8 +600,8 @@ function hideChat() {
         messageChannel = null;
     }
 
-    // Optional: Reload page or navigate back if desired
-    // window.location.reload();
+    // Scroll to the top of the page
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function updateOnlineCount(count) {
