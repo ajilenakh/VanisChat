@@ -2,6 +2,85 @@ document.addEventListener('DOMContentLoaded', function() {
 // Initialize Socket.IO
 const socket = io();
 
+// Dark mode toggle logic
+const darkModeToggle = document.getElementById('check');
+const body = document.body;
+
+// Theme toggle logic
+const toggle = document.querySelector("#theme-toggle");
+const html = document.documentElement;
+
+// Function to apply theme and update toggle state
+function applyTheme(theme) {
+    if (theme === 'dark') {
+        body.classList.add('dark');
+        body.classList.remove('light-mode-explicit'); // Remove explicit light mode class
+        if (darkModeToggle) darkModeToggle.checked = true;
+    } else {
+        body.classList.remove('dark');
+        body.classList.add('light-mode-explicit'); // Add explicit light mode class
+        if (darkModeToggle) darkModeToggle.checked = false;
+    }
+}
+
+// Apply theme on page load
+const savedTheme = localStorage.getItem('theme');
+
+// Check for saved preference first, then system preference
+if (savedTheme) {
+    applyTheme(savedTheme);
+    html.setAttribute("data-theme", savedTheme);
+} else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    // Apply dark mode if system preference is dark and no saved theme
+    applyTheme('dark');
+    html.setAttribute("data-theme", 'dark');
+} else {
+    // Default to light mode if no saved theme and system preference is not dark
+    applyTheme('light');
+    html.setAttribute("data-theme", 'light');
+}
+
+// Listen for changes in system preference
+if (window.matchMedia) {
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+        // Only change if no explicit theme is set by the user
+        if (!localStorage.getItem('theme')) {
+            applyTheme(event.matches ? 'dark' : 'light');
+            html.setAttribute("data-theme", event.matches ? 'dark' : 'light');
+        }
+    });
+}
+
+if (darkModeToggle) {
+    darkModeToggle.addEventListener('change', function () {
+        // Temporarily disable transitions for smoother toggle
+        body.classList.add('no-transition');
+
+        if (this.checked) {
+            applyTheme('dark');
+            localStorage.setItem('theme', 'dark');
+            html.setAttribute("data-theme", 'dark');
+        } else {
+            applyTheme('light');
+            localStorage.setItem('theme', 'light');
+            html.setAttribute("data-theme", 'light');
+        }
+
+        // Re-enable transitions after a short delay
+        setTimeout(() => {
+            body.classList.remove('no-transition');
+        }, 0);
+    });
+}
+
+if (toggle) { // Check if toggle element exists
+  toggle.addEventListener("click", () => {
+    const current = html.getAttribute("data-theme") === "dark" ? "light" : "dark";
+    html.setAttribute("data-theme", current);
+    localStorage.setItem("theme", current);
+  });
+}
+
 // DOM Elements
 const createForm = document.getElementById('create-form');
 const joinForm = document.getElementById('join-form');
@@ -65,6 +144,41 @@ async function insertMessage(roomId, nickname, content, type = 'chat', fileUrl =
 let messageSubscription = null;
 let messageChannel = null; // Keep track of the channel
 
+// Get loading indicator element
+const loadingIndicator = document.getElementById('loading-indicator');
+
+// Get page title and main container elements
+const pageTitle = document.querySelector('.page-title');
+const mainContainer = document.querySelector('.main-container');
+
+// Helper functions to show/hide loading indicator
+function showLoading() {
+    if (loadingIndicator) {
+        // Make visible but initially transparent (display: flex handled by removing hidden)
+        loadingIndicator.classList.remove('hidden');
+
+        // Use requestAnimationFrame to allow display change to process before fading in
+        requestAnimationFrame(() => {
+            loadingIndicator.style.opacity = '1';
+            loadingIndicator.style.visibility = 'visible';
+        });
+    }
+}
+
+function hideLoading() {
+    if (loadingIndicator) {
+        // Start fade-out
+        loadingIndicator.style.opacity = '0';
+        loadingIndicator.style.visibility = 'hidden';
+
+        // Wait for transition to finish before setting display: none
+        const transitionDuration = 300; // Match CSS transition
+        setTimeout(() => {
+            loadingIndicator.classList.add('hidden');
+        }, transitionDuration);
+    }
+}
+
 function startMessageSubscription(roomId) {
     console.log(`Attempting to subscribe to messages for room: ${roomId}`);
     // Unsubscribe from previous channel if it exists
@@ -113,8 +227,11 @@ createForm.addEventListener('submit', async (e) => {
     const password = createForm.querySelector('input[placeholder="Set a Password"]').value;
     const expirationMinutes = parseInt(createForm.querySelector('input[placeholder="Expiration (minutes)"]').value) || 60;
     
+    showLoading(); // Show loading indicator
+
     // Create room with custom password (server still handles room metadata)
     socket.emit('createRoom', { expirationMinutes, password, roomName }, (response) => {
+        hideLoading(); // Hide loading indicator in the callback
         if (response.roomId) {
             currentRoom = {
                 id: response.roomId,
@@ -127,6 +244,7 @@ createForm.addEventListener('submit', async (e) => {
             // Join the room
             joinRoom(response.roomId, password, nickname, response.roomName, response.expirationTime);
         } else {
+            // Handle creation errors more explicitly if needed, for now just alert
             alert('Failed to create room. Please try again.');
         }
     });
@@ -139,11 +257,15 @@ joinForm.addEventListener('submit', (e) => {
     const roomId = joinForm.querySelector('input[placeholder="Room ID"]').value;
     const password = joinForm.querySelector('input[placeholder="Room Password"]').value;
     
+    showLoading(); // Show loading indicator
+
     joinRoom(roomId, password, nickname);
 });
 
 function joinRoom(roomId, password, nickname, roomName = null, expirationTime = null) {
     socket.emit('joinRoom', { roomId, password, nickname }, async (response) => { // Use async here
+        hideLoading(); // Hide loading indicator in the callback
+
         if (response.success) {
             currentRoom = {
                 id: roomId,
@@ -173,6 +295,9 @@ function joinRoom(roomId, password, nickname, roomName = null, expirationTime = 
 
             // Update header (userCount is still handled by Socket.IO)
             updateRoomHeader();
+
+            // Start the time left updater
+            startTimeLeftUpdater();
 
         } else {
             alert(response.message || 'Failed to join room. Please check your credentials.');
@@ -217,7 +342,20 @@ function updateRoomHeader() {
         const copyBtn = document.getElementById('copy-invite-link');
         if (copyBtn) {
             copyBtn.onclick = function() {
-                navigator.clipboard.writeText(inviteLink);
+                // Create a temporary input element
+                const tempInput = document.createElement('input');
+                tempInput.value = inviteLink; // Set the text to be copied
+                document.body.appendChild(tempInput); // Add to the DOM
+
+                // Select the text and copy
+                tempInput.select();
+                tempInput.setSelectionRange(0, 99999); // For mobile devices
+                document.execCommand('copy'); // Execute copy command
+
+                // Clean up
+                document.body.removeChild(tempInput);
+
+                // Provide visual feedback
                 copyBtn.innerHTML = `<span class='room-id-btn-label'>
                   <svg width='20' height='20' viewBox='0 0 20 20' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M5 11l4 4L15 7' stroke='#22c55e' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/></svg>
                 </span>`;
@@ -390,29 +528,72 @@ socket.on('userCount', ({ count }) => {
 
 // UI helpers
 function showChat() {
-    document.querySelector('.form-container').classList.add('hidden');
-    setTimeout(() => {
+    console.log('Showing chat...');
+    // hide form container and main container
+    if (createForm) createForm.classList.add('hidden');
+    if (joinForm) joinForm.classList.add('hidden');
+    if (document.querySelector('.form-container')) document.querySelector('.form-container').classList.add('hidden');
+
+    // hide page title and main container
+    if (pageTitle) pageTitle.classList.add('hidden');
+    if (mainContainer) mainContainer.classList.add('hidden');
+
+    // Show chat container
+    if (chatContainer) {
         chatContainer.classList.remove('hidden');
-        messageInput.focus();
-        updateRoomHeader();
-        startTimeLeftUpdater();
-    }, 300);
+        // Adjust display for transitions if necessary
+        chatContainer.style.display = 'flex'; // Or block, depending on layout
+    }
+    // Scroll to the bottom of the messages
+    if (messagesContainer) {
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }
 }
 
 function hideChat() {
-    chatContainer.classList.add('hidden');
-    setTimeout(() => {
-        document.querySelector('.form-container').classList.remove('hidden');
-        currentRoom = { id: null, password: null, nickname: null, name: null, expirationTime: null };
+    console.log('Hiding chat...');
+    // Show form container and main container
+    if (document.querySelector('.form-container')) document.querySelector('.form-container').classList.remove('hidden');
+    if (createForm) createForm.classList.remove('hidden');
+    // Ensure only the active form is shown after hiding chat
+    const activeFormType = document.querySelector('.tabs .tab.active').onclick.toString().match(/switchForm\('(.*?)'\)/)[1];
+    switchForm(activeFormType);
+
+    // show page title and main container
+    if (pageTitle) pageTitle.classList.remove('hidden');
+    if (mainContainer) mainContainer.classList.remove('hidden');
+
+    // Hide chat container
+    if (chatContainer) {
+        chatContainer.classList.add('hidden');
+         // Adjust display after transitions if necessary
+         // chatContainer.style.display = 'none'; // This will be handled by the .hidden class CSS
+    }
+     // Clear messages
+     if (messagesContainer) {
         messagesContainer.innerHTML = '';
-        stopTimeLeftUpdater();
-        // Unsubscribe from Supabase Realtime channel on leaving
-        if (messageChannel) {
-           messageChannel.unsubscribe();
-           // supabase.removeChannel(messageChannel); // Optional
-           messageChannel = null;
-       }
-    }, 300);
+     }
+
+    // Clear room state
+    currentRoom = {
+        id: null,
+        password: null,
+        nickname: null,
+        name: null,
+        expirationTime: null
+    };
+
+    // Stop any active timers
+    stopTimeLeftUpdater();
+
+    // Unsubscribe from the message channel
+    if (messageChannel) {
+        messageChannel.unsubscribe();
+        messageChannel = null;
+    }
+
+    // Optional: Reload page or navigate back if desired
+    // window.location.reload();
 }
 
 function updateOnlineCount(count) {
