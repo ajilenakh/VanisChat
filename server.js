@@ -193,7 +193,9 @@ io.on('connection', socket => {
 
     // Create a new room
     socket.on('createRoom', async ({ expirationMinutes, password, roomName }, callback) => {
-        console.log('Server: Create room request:', { expirationMinutes, password, roomName });
+        console.log('Server: Create room request received.');
+        console.log('Server: Room Name:', roomName);
+        console.log('Server: Expiration Minutes:', expirationMinutes);
         try {
             // Use the updated createRoom function that interacts with Supabase
             const { roomId, expirationTime, roomName: createdRoomName } = await createRoom(expirationMinutes, password, roomName);
@@ -210,7 +212,9 @@ io.on('connection', socket => {
 
     // Join a room
     socket.on('joinRoom', async ({ roomId, password, nickname }, callback) => {
-        console.log('Server: Join room request:', { roomId, nickname });
+        console.log('Server: Join room request received.');
+        console.log('Server: Room ID:', roomId);
+        console.log('Server: Nickname:', nickname);
         
         // 1. Verify room existence and password against the database
         const isPasswordValid = await verifyRoomPassword(roomId, password);
@@ -315,8 +319,21 @@ io.on('connection', socket => {
         // Join socket.io room
         socket.join(roomId);
         // Store user info in-memory
-         const currentRoom = rooms.get(roomId); // Get the potentially re-populated room
-         currentRoom.users.set(socket.id, { nickname });
+        
+        try {
+             const currentRoom = rooms.get(roomId); // Get the potentially re-populated room
+             if (!currentRoom) {
+                  console.error('Server: In-memory room not found after successful verification!', roomId);
+                  callback({ success: false, message: 'An internal error occurred.' });
+                  return;
+             }
+             currentRoom.users.set(socket.id, { nickname });
+             console.log('Server: User added to in-memory room users.', { roomId, nickname });
+        } catch (e) {
+             console.error('Server: Error adding user to in-memory map:', e, { roomId, nickname });
+             callback({ success: false, message: 'An internal error occurred during user session setup.' });
+             return;
+        }
 
         // 3. Fetch message history from Supabase 'messages' table
         const { data: messages, error: fetchError } = await supabase
@@ -381,10 +398,19 @@ io.on('connection', socket => {
              return;
          }
 
+        // Get the most up-to-date room object from the in-memory map
+        const roomAfterUserAdd = rooms.get(roomId);
+
+        if (!roomAfterUserAdd) {
+            console.error('Server: In-memory room disappeared before sending join callback!', roomId);
+            callback({ success: false, message: 'An internal error occurred after joining.' });
+            return;
+        }
+
         callback({ 
             success: true, 
             messages: messages || [], // Send fetched messages
-            users: Array.from(currentRoom.users.values()), // Send active users in memory
+            users: Array.from(roomAfterUserAdd.users.values()), // Send active users in memory from updated map
             roomName: finalRoomDetails.room_name,
             expirationTime: new Date(finalRoomDetails.expires_at).getTime() // Send expiration time
         });

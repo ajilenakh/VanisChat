@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/css/app.css">
   <link rel="stylesheet" href="/css/chat-room.css">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
   <script src="/socket.io/socket.io.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/crypto-js.min.js"></script>
   <script src="/js/script.js"></script>
@@ -15,6 +15,9 @@
   <title>VanisChat</title>
 </head>
 <body>
+  <div class="background"></div>
+  <div class="overlay"></div>
+
   <!-- Loading Indicator -->
   <div id="loading-indicator" class="loading-indicator hidden">
     <div class="spinner"></div>
@@ -31,32 +34,43 @@
     </label>
   </div>
 
-  <h1 class="center">Welcome To VanisChat</h1>
-  
-  <!-- Create/Join room form -->
-  <div class="form-container">
-    <div class="tabs">
-      <button class="tab active" onclick="switchForm('create')">Create Room</button>
-      <button class="tab" onclick="switchForm('join')">Join Room</button>
-    </div>
+  <div class="content-wrapper">
+    <h1 class="page-title">Welcome to VanisChat</h1>
 
-    <form id="create-form" class="form-section">
-      <input type="text" placeholder="Your Nickname" required>
-      <input type="text" placeholder="Room Name" required>
-      <input type="password" placeholder="Set a Password" required>
-      <div class="expiration-input-container">
-        <input type="number" placeholder="Expiration (minutes)" value="60" min="1" max="1440"> <span>minutes</span>
+    <div class="main-container">
+      <!-- Welcome text section -->
+      <div class="intro-text">
+        <h2>Private. Temporary. <br>Encrypted.</h2>
+        <p>Chat without accounts. Just create, share, and talk — no traces left behind.</p>
       </div>
-      <button type="submit">Create Room</button>
-    </form>
 
-    <form id="join-form" class="form-section hidden">
-      <input type="text" placeholder="Your Nickname" required>
-      <input type="text" placeholder="Room ID" required>
-      <input type="password" placeholder="Room Password" required>
-      <button type="submit">Join Room</button>
-    </form>
+      <!-- Create/Join room form -->
+      <div class="form-container">
+        <div class="tabs">
+          <button class="tab active" onclick="switchForm('create')">Create Room</button>
+          <button class="tab" onclick="switchForm('join')">Join Room</button>
+        </div>
+
+        <form id="create-form" class="form-section">
+          <input type="text" placeholder="Your Nickname" required maxlength="30">
+          <input type="text" placeholder="Room Name" required>
+          <input type="password" placeholder="Set a Password" required>
+          <div class="expiration-input-container">
+            <input type="number" placeholder="Expiration (minutes)" value="60" min="1" max="1440"> <span>minutes</span>
+          </div>
+          <button type="submit">Create Room</button>
+        </form>
+
+        <form id="join-form" class="form-section hidden">
+          <input type="text" placeholder="Your Nickname" required maxlength="30">
+          <input type="text" placeholder="Room ID" required>
+          <input type="password" placeholder="Room Password" required>
+          <button type="submit">Join Room</button>
+        </form>
+      </div>
+    </div>
   </div>
+
   <script>
     function switchForm(formType) {
       document.getElementById('create-form').classList.toggle('hidden', formType !== 'create');

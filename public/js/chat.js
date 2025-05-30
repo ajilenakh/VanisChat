@@ -4,29 +4,81 @@ const socket = io();
 
 // Dark mode toggle logic
 const darkModeToggle = document.getElementById('check');
-if (darkModeToggle) {
-    darkModeToggle.addEventListener('change', function () {
-        // Toggle the 'dark' class on the body
-        document.body.classList.toggle('dark', this.checked);
-        
-        // Optional: Save the user's preference in localStorage
-        if (this.checked) {
-            localStorage.setItem('theme', 'dark');
-        } else {
-            localStorage.setItem('theme', 'light');
+const body = document.body;
+
+// Theme toggle logic
+const toggle = document.querySelector("#theme-toggle");
+const html = document.documentElement;
+
+// Function to apply theme and update toggle state
+function applyTheme(theme) {
+    if (theme === 'dark') {
+        body.classList.add('dark');
+        body.classList.remove('light-mode-explicit'); // Remove explicit light mode class
+        if (darkModeToggle) darkModeToggle.checked = true;
+    } else {
+        body.classList.remove('dark');
+        body.classList.add('light-mode-explicit'); // Add explicit light mode class
+        if (darkModeToggle) darkModeToggle.checked = false;
+    }
+}
+
+// Apply theme on page load
+const savedTheme = localStorage.getItem('theme');
+
+// Check for saved preference first, then system preference
+if (savedTheme) {
+    applyTheme(savedTheme);
+    html.setAttribute("data-theme", savedTheme);
+} else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    // Apply dark mode if system preference is dark and no saved theme
+    applyTheme('dark');
+    html.setAttribute("data-theme", 'dark');
+} else {
+    // Default to light mode if no saved theme and system preference is not dark
+    applyTheme('light');
+    html.setAttribute("data-theme", 'light');
+}
+
+// Listen for changes in system preference
+if (window.matchMedia) {
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+        // Only change if no explicit theme is set by the user
+        if (!localStorage.getItem('theme')) {
+            applyTheme(event.matches ? 'dark' : 'light');
+            html.setAttribute("data-theme", event.matches ? 'dark' : 'light');
         }
     });
+}
 
-    // Optional: Apply saved theme preference on page load
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'dark') {
-        document.body.classList.add('dark');
-        darkModeToggle.checked = true;
-    } else {
-         // Ensure light mode is default or explicitly set if no preference saved
-         document.body.classList.remove('dark');
-         darkModeToggle.checked = false; // Ensure toggle is off for light mode
-    }
+if (darkModeToggle) {
+    darkModeToggle.addEventListener('change', function () {
+        // Temporarily disable transitions for smoother toggle
+        body.classList.add('no-transition');
+
+        if (this.checked) {
+            applyTheme('dark');
+            localStorage.setItem('theme', 'dark');
+            html.setAttribute("data-theme", 'dark');
+        } else {
+            applyTheme('light');
+            localStorage.setItem('theme', 'light');
+            html.setAttribute("data-theme", 'light');
+        }
+
+        // Re-enable transitions after a short delay
+        setTimeout(() => {
+            body.classList.remove('no-transition');
+        }, 0);
+    });
+}
+
+if (toggle) { // Check if toggle element exists
+  toggle.addEventListener("click", () => {
+    const current = html.getAttribute("data-theme") === "dark" ? "light" : "dark";
+    html.setAttribute("data-theme", current);
+    localStorage.setItem("theme", current);
+  });
 }
 
 // DOM Elements
@@ -94,6 +146,10 @@ let messageChannel = null; // Keep track of the channel
 
 // Get loading indicator element
 const loadingIndicator = document.getElementById('loading-indicator');
+
+// Get page title and main container elements
+const pageTitle = document.querySelector('.page-title');
+const mainContainer = document.querySelector('.main-container');
 
 // Helper functions to show/hide loading indicator
 function showLoading() {
@@ -240,6 +296,9 @@ function joinRoom(roomId, password, nickname, roomName = null, expirationTime = 
             // Update header (userCount is still handled by Socket.IO)
             updateRoomHeader();
 
+            // Start the time left updater
+            startTimeLeftUpdater();
+
         } else {
             alert(response.message || 'Failed to join room. Please check your credentials.');
         }
@@ -283,7 +342,20 @@ function updateRoomHeader() {
         const copyBtn = document.getElementById('copy-invite-link');
         if (copyBtn) {
             copyBtn.onclick = function() {
-                navigator.clipboard.writeText(inviteLink);
+                // Create a temporary input element
+                const tempInput = document.createElement('input');
+                tempInput.value = inviteLink; // Set the text to be copied
+                document.body.appendChild(tempInput); // Add to the DOM
+
+                // Select the text and copy
+                tempInput.select();
+                tempInput.setSelectionRange(0, 99999); // For mobile devices
+                document.execCommand('copy'); // Execute copy command
+
+                // Clean up
+                document.body.removeChild(tempInput);
+
+                // Provide visual feedback
                 copyBtn.innerHTML = `<span class='room-id-btn-label'>
                   <svg width='20' height='20' viewBox='0 0 20 20' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M5 11l4 4L15 7' stroke='#22c55e' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/></svg>
                 </span>`;
@@ -456,52 +528,72 @@ socket.on('userCount', ({ count }) => {
 
 // UI helpers
 function showChat() {
-    const formContainer = document.querySelector('.form-container');
-    const chatContainer = document.getElementById('chat-container');
+    console.log('Showing chat...');
+    // hide form container and main container
+    if (createForm) createForm.classList.add('hidden');
+    if (joinForm) joinForm.classList.add('hidden');
+    if (document.querySelector('.form-container')) document.querySelector('.form-container').classList.add('hidden');
 
-    // Start fading out the form and fading in the chat
-    formContainer.classList.add('hidden'); // This handles display: none and fade-out
+    // hide page title and main container
+    if (pageTitle) pageTitle.classList.add('hidden');
+    if (mainContainer) mainContainer.classList.add('hidden');
 
-    // Make chat visible but initially transparent (display: flex handled by removing hidden)
-    chatContainer.classList.remove('hidden');
-
-    // Use requestAnimationFrame to ensure display change is processed before triggering opacity transition
-    requestAnimationFrame(() => {
-        chatContainer.style.opacity = '1'; // Start fade-in
-        chatContainer.style.visibility = 'visible';
-    });
-
-    // Move focus and header update to happen shortly after fade-in starts
-    setTimeout(() => {
-        if (messageInput) messageInput.focus();
-        updateRoomHeader();
-        startTimeLeftUpdater();
-    }, 50); // Small delay to ensure elements are visible and positioned
+    // Show chat container
+    if (chatContainer) {
+        chatContainer.classList.remove('hidden');
+        // Adjust display for transitions if necessary
+        chatContainer.style.display = 'flex'; // Or block, depending on layout
+    }
+    // Scroll to the bottom of the messages
+    if (messagesContainer) {
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }
 }
 
 function hideChat() {
-    const formContainer = document.querySelector('.form-container');
-    const chatContainer = document.getElementById('chat-container');
-    const transitionDuration = 300; // Match CSS transition duration
+    console.log('Hiding chat...');
+    // Show form container and main container
+    if (document.querySelector('.form-container')) document.querySelector('.form-container').classList.remove('hidden');
+    if (createForm) createForm.classList.remove('hidden');
+    // Ensure only the active form is shown after hiding chat
+    const activeFormType = document.querySelector('.tabs .tab.active').onclick.toString().match(/switchForm\('(.*?)'\)/)[1];
+    switchForm(activeFormType);
 
-    // Start fading out the chat
-    chatContainer.style.opacity = '0';
-    chatContainer.style.visibility = 'hidden';
+    // show page title and main container
+    if (pageTitle) pageTitle.classList.remove('hidden');
+    if (mainContainer) mainContainer.classList.remove('hidden');
 
-    // Wait for transition to finish before hiding with display: none
-    setTimeout(() => {
-        chatContainer.classList.add('hidden'); // This handles display: none
-        formContainer.classList.remove('hidden'); // Fade in form (handled by CSS)
+    // Hide chat container
+    if (chatContainer) {
+        chatContainer.classList.add('hidden');
+         // Adjust display after transitions if necessary
+         // chatContainer.style.display = 'none'; // This will be handled by the .hidden class CSS
+    }
+     // Clear messages
+     if (messagesContainer) {
+        messagesContainer.innerHTML = '';
+     }
 
-        // Clear room state and messages
-        currentRoom = { id: null, password: null, nickname: null, name: null, expirationTime: null };
-        if (messagesContainer) messagesContainer.innerHTML = '';
-        stopTimeLeftUpdater();
-        if (messageChannel) {
-            messageChannel.unsubscribe();
-            messageChannel = null;
-        }
-    }, transitionDuration); // Wait for the CSS transition to finish
+    // Clear room state
+    currentRoom = {
+        id: null,
+        password: null,
+        nickname: null,
+        name: null,
+        expirationTime: null
+    };
+
+    // Stop any active timers
+    stopTimeLeftUpdater();
+
+    // Unsubscribe from the message channel
+    if (messageChannel) {
+        messageChannel.unsubscribe();
+        messageChannel = null;
+    }
+
+    // Optional: Reload page or navigate back if desired
+    // window.location.reload();
 }
 
 function updateOnlineCount(count) {
