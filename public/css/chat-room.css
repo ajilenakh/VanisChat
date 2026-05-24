@@ -47,14 +47,6 @@
   display: none;
 }
 
-/* When chat is visible, adjust the body */
-body:has(.chat:not(.hidden)) {
-  /* Removed padding: 0; */
-  /* Removed height: 100vh; */
-  /* Removed overflow: hidden; */
-  /* Let the body's default styles or app.css handle these */
-}
-
 /* Header */
 .chat-header {
   padding: 1.5rem;
@@ -334,10 +326,23 @@ body:has(.chat:not(.hidden)) {
   border: none;
   border-radius: 12px;
   background: var(--accent-color);
-  color: white;
+  color: #ffffff;
+  font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
   box-shadow: 0 4px 12px rgba(var(--accent-color-rgb, 59, 130, 246), 0.2);
+}
+
+/* Add specific styles for light mode */
+body:not(.dark) .chat-form button {
+  background: #005BFF;
+  color: #ffffff;
+}
+
+/* Keep dark mode styles */
+body.dark .chat-form button {
+  background: var(--accent-color);
+  color: #ffffff;
 }
 
 .chat-form button:hover {
@@ -424,10 +429,6 @@ body:has(.chat:not(.hidden)) {
     font-size: 0.8rem;
   }
 
-  body:has(.chat:not(.hidden)) {
-    /* Ensure body styles don't interfere */
-    /* Removed padding: 0; height: 10vh; overflow: hidden; */
-  }
 
   /* Ensure elements within header and form take full width if needed */
   .room-header-flex,
@@ -622,7 +623,7 @@ body.dark .copy-id-btn:hover, body.dark .copy-id-btn:focus {
     font-size: 0.97em;
     padding: 0.45em 1.1em;
     border-radius: 6px;
-    display: inline-block;
+    display: block;
     float: right;
   }
   .center {
