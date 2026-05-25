@@ -9,6 +9,7 @@ function generateSalt(): Uint8Array {
   return crypto.getRandomValues(new Uint8Array(16));
 }
 import { createRoomSchema, joinRoomSchema } from '../lib/validate';
+import { requireSession } from '../middleware/auth';
 import { rateLimit } from '../middleware/rate-limit';
 
 const roomRoutes = new Hono();
@@ -133,6 +134,84 @@ roomRoutes.post('/rooms/:id/join', rateLimit({ max: 20, windowMs: 60_000 }), asy
       type: m.type,
       createdAt: m.createdAt,
     })),
+    room: {
+      name: room.name,
+      expiresAt: room.expiresAt,
+      salt: room.salt,
+    },
+  });
+});
+
+// POST /api/rooms/:id/leave
+roomRoutes.post('/rooms/:id/leave', requireSession, async (c) => {
+  // Session is already validated by requireSession middleware
+  // For now, just acknowledge (WS presence is handled separately)
+  return c.json({ ok: true });
+});
+
+// GET /api/rooms/:id/messages — paginated message history
+roomRoutes.get('/rooms/:id/messages', requireSession, async (c) => {
+  const roomId = c.req.param('id');
+  const limit = Math.min(Number(c.req.query('limit')) || 50, 100);
+  const db = getDb();
+
+  const rows = await db
+    .select()
+    .from(schema.messages)
+    .where(eq(schema.messages.roomId, roomId))
+    .orderBy(schema.messages.createdAt, 'desc')
+    .limit(limit + 1); // Fetch one extra to detect hasMore
+
+  const hasMore = rows.length > limit;
+  const messages = (hasMore ? rows.slice(0, limit) : rows).reverse();
+
+  return c.json({
+    messages: messages.map((m) => ({
+      id: m.id,
+      senderName: m.senderName,
+      content: m.content,
+      iv: m.iv,
+      type: m.type,
+      createdAt: m.createdAt,
+    })),
+    hasMore,
+  });
+});
+
+// POST /api/rooms/:id/validate-session
+roomRoutes.post('/rooms/:id/validate-session', async (c) => {
+  const sessionToken = c.req.header('x-session-token');
+  if (!sessionToken) {
+    return c.json({ valid: false }, 401);
+  }
+
+  const db = getDb();
+  const now = Math.floor(Date.now() / 1000);
+
+  const tokenRows = await db
+    .select()
+    .from(schema.roomTokens)
+    .where(eq(schema.roomTokens.id, sessionToken))
+    .limit(1);
+
+  const token = tokenRows[0];
+  if (!token || token.type !== 'session' || token.expiresAt < now) {
+    return c.json({ valid: false }, 200);
+  }
+
+  const roomRows = await db
+    .select()
+    .from(schema.rooms)
+    .where(eq(schema.rooms.id, token.roomId))
+    .limit(1);
+
+  const room = roomRows[0];
+  if (!room || room.expiresAt < now) {
+    return c.json({ valid: false, room: null }, 200);
+  }
+
+  return c.json({
+    valid: true,
     room: {
       name: room.name,
       expiresAt: room.expiresAt,
