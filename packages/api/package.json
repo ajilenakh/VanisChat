@@ -8,11 +8,10 @@
   "scripts": {
     "test": "vitest run",
     "build": "tsup src/index.ts --format esm --outDir dist",
-    "dev": "bun run src/dev.ts",
-    "dev:wrangler": "wrangler dev src/index.ts",
-    "db:push": "drizzle-kit push",
-    "db:generate": "drizzle-kit generate",
-    "db:migrate": "drizzle-kit migrate"
+    "dev": "bun --env-file=../../.env run src/dev.ts",
+    "db:push": "bun --env-file=../../.env drizzle-kit push",
+    "db:generate": "bun --env-file=../../.env drizzle-kit generate",
+    "db:migrate": "bun --env-file=../../.env drizzle-kit migrate"
   },
   "dependencies": {
     "@vanischat/crypto": "workspace:*",

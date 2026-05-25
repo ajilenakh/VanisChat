@@ -1,0 +1,447 @@
+{
+  "/home/ajilenakh/D/currently_working_projects/VanisChat/biome.json": {
+    "mtime": 1779670438.956583,
+    "ast_hash": "be448b1e65322615ca6ab87c10c83792",
+    "semantic_hash": "be448b1e65322615ca6ab87c10c83792"
+  },
+  "/home/ajilenakh/D/currently_working_projects/VanisChat/package.json": {
+    "mtime": 1779713130.9791875,
+    "ast_hash": "f86cea8dc96b08066e42a22d3d5c1bb8",
+    "semantic_hash": "f86cea8dc96b08066e42a22d3d5c1bb8"
+  },
+  "/home/ajilenakh/D/currently_working_projects/VanisChat/apps/web/tsconfig.json": {
+    "mtime": 1779670402.2859395,
+    "ast_hash": "dc7645011260d3dc8bcc0dec48cfb939",
+    "semantic_hash": "dc7645011260d3dc8bcc0dec48cfb939"
+  },
+  "/home/ajilenakh/D/currently_working_projects/VanisChat/apps/web/vite.config.ts": {
+    "mtime": 1779729179.703722,
+    "ast_hash": "6deb95145707326a64db0e43c911f6af",
+    "semantic_hash": "6deb95145707326a64db0e43c911f6af"
+  },
+  "/home/ajilenakh/D/currently_working_projects/VanisChat/apps/web/biome.json": {
+    "mtime": 1779670405.9593372,
+    "ast_hash": "31127ac8702d139c60ce50c38f8696c3",
+    "semantic_hash": "31127ac8702d139c60ce50c38f8696c3"
+  },
+  "/home/ajilenakh/D/currently_working_projects/VanisChat/apps/web/package.json": {
+    "mtime": 1779729179.702634,
+    "ast_hash": "46d8cd0f9dc77d9b0817c10d0b0d6a13",
+    "semantic_hash": "46d8cd0f9dc77d9b0817c10d0b0d6a13"
+  },
+  "/home/ajilenakh/D/currently_working_projects/VanisChat/apps/web/src/App.tsx": {
+    "mtime": 1779736199.061789,
+    "ast_hash": "940bc60fc64d5d1e58df8b96105ded44",
+    "semantic_hash": "940bc60fc64d5d1e58df8b96105ded44"
+  },
+  "/home/ajilenakh/D/currently_working_projects/VanisChat/apps/web/src/main.tsx": {
+    "mtime": 1779736199.062111,
+    "ast_hash": "95210b6bac1f687ab276df98d5ceb0fd",
+    "semantic_hash": "95210b6bac1f687ab276df98d5ceb0fd"
+  },
+  "/home/ajilenakh/D/currently_working_projects/VanisChat/apps/web/src/lib/toast.tsx": {
+    "mtime": 1779736171.987,
+    "ast_hash": "a049b92ab11f5f812cc07fa4622e83ef",
+    "semantic_hash": "a049b92ab11f5f812cc07fa4622e83ef"
+  },
+  "/home/ajilenakh/D/currently_working_projects/VanisChat/apps/web/src/lib/api.ts": {
+    "mtime": 1779736883.2168837,
+    "ast_hash": "c17027cd204653c3de9ec14f2b1b2e28",
+    "semantic_hash": "c17027cd204653c3de9ec14f2b1b2e28"
+  },
+  "/home/ajilenakh/D/currently_working_projects/VanisChat/apps/web/src/lib/ws.ts": {
+    "mtime": 1779736891.4903734,
+    "ast_hash": "5ffcbc88611d16e1ca38ecf5ed164136",
+    "semantic_hash": "5ffcbc88611d16e1ca38ecf5ed164136"
+  },
+  "/home/ajilenakh/D/currently_working_projects/VanisChat/apps/web/src/context/RoomContext.tsx": {
+    "mtime": 1779732265.807915,
+    "ast_hash": "8290edbf1eb07e00261c86eee34d32eb",
+    "semantic_hash": "8290edbf1eb07e00261c86eee34d32eb"
+  },
+  "/home/ajilenakh/D/currently_working_projects/VanisChat/apps/web/src/context/ThemeContext.tsx": {
+    "mtime": 1779736171.987,
+    "ast_hash": "b6c8fd4881bbca93bbde7d4f7427af8d",
+    "semantic_hash": "b6c8fd4881bbca93bbde7d4f7427af8d"
+  },
+  "/home/ajilenakh/D/currently_working_projects/VanisChat/apps/web/src/hooks/useMessages.ts": {
+    "mtime": 1779736975.2619588,
+    "ast_hash": "393b5d6b731dd700caaa3370fd082587",
+    "semantic_hash": "393b5d6b731dd700caaa3370fd082587"
+  },
+  "/home/ajilenakh/D/currently_working_projects/VanisChat/apps/web/src/hooks/useCryptoKey.ts": {
+    "mtime": 1779732604.711065,
+    "ast_hash": "b960dd4c0c00eed377bf5c0c3fcdd583",
+    "semantic_hash": "b960dd4c0c00eed377bf5c0c3fcdd583"
+  },
+  "/home/ajilenakh/D/currently_working_projects/VanisChat/apps/web/src/hooks/useRoom.ts": {
+    "mtime": 1779737122.9180906,
+    "ast_hash": "cd8561165d3faa8339ee1ea616c0530d",
+    "semantic_hash": "cd8561165d3faa8339ee1ea616c0530d"
+  },
+  "/home/ajilenakh/D/currently_working_projects/VanisChat/apps/web/src/hooks/usePresence.ts": {
+    "mtime": 1779730141.0349185,
+    "ast_hash": "b2c13d907d164ed68832e7aa68ac3189",
+    "semantic_hash": "b2c13d907d164ed68832e7aa68ac3189"
+  },
+  "/home/ajilenakh/D/currently_working_projects/VanisChat/apps/web/src/components/Toast.tsx": {
+    "mtime": 1779735979.6467113,
+    "ast_hash": "4919a752cae4c5cea7b9fd17cb538587",
+    "semantic_hash": "4919a752cae4c5cea7b9fd17cb538587"
+  },
+  "/home/ajilenakh/D/currently_working_projects/VanisChat/apps/web/src/components/ErrorFallback.tsx": {
+    "mtime": 1779736069.5483499,
+    "ast_hash": "ae1bc0f1f71fa2caddd62faa877f3420",
+    "semantic_hash": "ae1bc0f1f71fa2caddd62faa877f3420"
+  },
+  "/home/ajilenakh/D/currently_working_projects/VanisChat/apps/web/src/components/ErrorBoundary.tsx": {
+    "mtime": 1779736069.5450163,
+    "ast_hash": "a067d0ca0889906c5ad811994479c533",
+    "semantic_hash": "a067d0ca0889906c5ad811994479c533"
+  },
+  "/home/ajilenakh/D/currently_working_projects/VanisChat/apps/web/src/components/Skeleton.tsx": {
+    "mtime": 1779736755.771143,
+    "ast_hash": "0e884506557eeb86a5179fabab1784c8",
+    "semantic_hash": "0e884506557eeb86a5179fabab1784c8"
+  },
+  "/home/ajilenakh/D/currently_working_projects/VanisChat/apps/web/src/components/Lobby/CreateRoomForm.tsx": {
+    "mtime": 1779736675.063108,
+    "ast_hash": "16843270d057db6a96f3fd014905cae4",
+    "semantic_hash": "16843270d057db6a96f3fd014905cae4"
+  },
+  "/home/ajilenakh/D/currently_working_projects/VanisChat/apps/web/src/components/Lobby/JoinRoomForm.tsx": {
+    "mtime": 1779736675.063108,
+    "ast_hash": "37703c12a8ce4daf9e09828724a75700",
+    "semantic_hash": "37703c12a8ce4daf9e09828724a75700"
+  },
+  "/home/ajilenakh/D/currently_working_projects/VanisChat/apps/web/src/components/Lobby/LobbyPage.tsx": {
+    "mtime": 1779736510.4265285,
+    "ast_hash": "5f285dab03e0de2554b2c721e53cb6a5",
+    "semantic_hash": "5f285dab03e0de2554b2c721e53cb6a5"
+  },
+  "/home/ajilenakh/D/currently_working_projects/VanisChat/apps/web/src/components/Chat/ChatPage.tsx": {
+    "mtime": 1779737048.2000072,
+    "ast_hash": "8d0fb64ddb0bdb19d97d18c157554a2a",
+    "semantic_hash": "8d0fb64ddb0bdb19d97d18c157554a2a"
+  },
+  "/home/ajilenakh/D/currently_working_projects/VanisChat/apps/web/src/components/Chat/FileMessage.tsx": {
+    "mtime": 1779737122.911424,
+    "ast_hash": "7d9ab66bba4c93fb7c475a0b48590a00",
+    "semantic_hash": "7d9ab66bba4c93fb7c475a0b48590a00"
+  },
+  "/home/ajilenakh/D/currently_working_projects/VanisChat/apps/web/src/components/Chat/MessageInput.tsx": {
+    "mtime": 1779737122.9169245,
+    "ast_hash": "85ca68d8c58d0c41f7681862a833e96a",
+    "semantic_hash": "85ca68d8c58d0c41f7681862a833e96a"
+  },
+  "/home/ajilenakh/D/currently_working_projects/VanisChat/apps/web/src/components/Chat/ChatHeader.tsx": {
+    "mtime": 1779736199.061789,
+    "ast_hash": "b81a7c9632dafe15f6c007fc27f0ca7d",
+    "semantic_hash": "b81a7c9632dafe15f6c007fc27f0ca7d"
+  },
+  "/home/ajilenakh/D/currently_working_projects/VanisChat/apps/web/src/components/Chat/MessageItem.tsx": {
+    "mtime": 1779737122.911424,
+    "ast_hash": "850366ab786146e3499de5310fa23959",
+    "semantic_hash": "850366ab786146e3499de5310fa23959"
+  },
+  "/home/ajilenakh/D/currently_working_projects/VanisChat/apps/web/src/components/Chat/ErrorBoundary.tsx": {
+    "mtime": 1779733029.1630795,
+    "ast_hash": "3b4349c6a1bb8452abba32b14b0135a7",
+    "semantic_hash": "3b4349c6a1bb8452abba32b14b0135a7"
+  },
+  "/home/ajilenakh/D/currently_working_projects/VanisChat/apps/web/src/components/Chat/MessageList.tsx": {
+    "mtime": 1779736675.0596216,
+    "ast_hash": "76a3e300b3917ba71ec339b47aa37093",
+    "semantic_hash": "76a3e300b3917ba71ec339b47aa37093"
+  },
+  "/home/ajilenakh/D/currently_working_projects/VanisChat/.husky/_/applypatch-msg": {
+    "mtime": 1779733368.740401,
+    "ast_hash": "0b71c2e7d39daa010985d529f1320b37",
+    "semantic_hash": "0b71c2e7d39daa010985d529f1320b37"
+  },
+  "/home/ajilenakh/D/currently_working_projects/VanisChat/.husky/_/prepare-commit-msg": {
+    "mtime": 1779733368.740401,
+    "ast_hash": "0b71c2e7d39daa010985d529f1320b37",
+    "semantic_hash": "0b71c2e7d39daa010985d529f1320b37"
+  },
+  "/home/ajilenakh/D/currently_working_projects/VanisChat/.husky/_/post-checkout": {
+    "mtime": 1779733368.740401,
+    "ast_hash": "0b71c2e7d39daa010985d529f1320b37",
+    "semantic_hash": "0b71c2e7d39daa010985d529f1320b37"
+  },
+  "/home/ajilenakh/D/currently_working_projects/VanisChat/.husky/_/pre-commit": {
+    "mtime": 1779733368.740401,
+    "ast_hash": "0b71c2e7d39daa010985d529f1320b37",
+    "semantic_hash": "0b71c2e7d39daa010985d529f1320b37"
+  },
+  "/home/ajilenakh/D/currently_working_projects/VanisChat/.husky/_/pre-push": {
+    "mtime": 1779733368.740401,
+    "ast_hash": "0b71c2e7d39daa010985d529f1320b37",
+    "semantic_hash": "0b71c2e7d39daa010985d529f1320b37"
+  },
+  "/home/ajilenakh/D/currently_working_projects/VanisChat/.husky/_/pre-applypatch": {
+    "mtime": 1779733368.740401,
+    "ast_hash": "0b71c2e7d39daa010985d529f1320b37",
+    "semantic_hash": "0b71c2e7d39daa010985d529f1320b37"
+  },
+  "/home/ajilenakh/D/currently_working_projects/VanisChat/.husky/_/post-commit": {
+    "mtime": 1779733368.740401,
+    "ast_hash": "0b71c2e7d39daa010985d529f1320b37",
+    "semantic_hash": "0b71c2e7d39daa010985d529f1320b37"
+  },
+  "/home/ajilenakh/D/currently_working_projects/VanisChat/.husky/_/pre-auto-gc": {
+    "mtime": 1779733368.740401,
+    "ast_hash": "0b71c2e7d39daa010985d529f1320b37",
+    "semantic_hash": "0b71c2e7d39daa010985d529f1320b37"
+  },
+  "/home/ajilenakh/D/currently_working_projects/VanisChat/.husky/_/pre-merge-commit": {
+    "mtime": 1779733368.740401,
+    "ast_hash": "0b71c2e7d39daa010985d529f1320b37",
+    "semantic_hash": "0b71c2e7d39daa010985d529f1320b37"
+  },
+  "/home/ajilenakh/D/currently_working_projects/VanisChat/.husky/_/pre-rebase": {
+    "mtime": 1779733368.740401,
+    "ast_hash": "0b71c2e7d39daa010985d529f1320b37",
+    "semantic_hash": "0b71c2e7d39daa010985d529f1320b37"
+  },
+  "/home/ajilenakh/D/currently_working_projects/VanisChat/.husky/_/commit-msg": {
+    "mtime": 1779733368.740401,
+    "ast_hash": "0b71c2e7d39daa010985d529f1320b37",
+    "semantic_hash": "0b71c2e7d39daa010985d529f1320b37"
+  },
+  "/home/ajilenakh/D/currently_working_projects/VanisChat/.husky/_/post-applypatch": {
+    "mtime": 1779733368.740401,
+    "ast_hash": "0b71c2e7d39daa010985d529f1320b37",
+    "semantic_hash": "0b71c2e7d39daa010985d529f1320b37"
+  },
+  "/home/ajilenakh/D/currently_working_projects/VanisChat/.husky/_/post-rewrite": {
+    "mtime": 1779733368.740401,
+    "ast_hash": "0b71c2e7d39daa010985d529f1320b37",
+    "semantic_hash": "0b71c2e7d39daa010985d529f1320b37"
+  },
+  "/home/ajilenakh/D/currently_working_projects/VanisChat/.husky/_/h": {
+    "mtime": 1779733368.740401,
+    "ast_hash": "15239a01c5554e56ff745570fb583a91",
+    "semantic_hash": "15239a01c5554e56ff745570fb583a91"
+  },
+  "/home/ajilenakh/D/currently_working_projects/VanisChat/.husky/_/post-merge": {
+    "mtime": 1779733368.740401,
+    "ast_hash": "0b71c2e7d39daa010985d529f1320b37",
+    "semantic_hash": "0b71c2e7d39daa010985d529f1320b37"
+  },
+  "/home/ajilenakh/D/currently_working_projects/VanisChat/.husky/_/husky.sh": {
+    "mtime": 1779733368.7419183,
+    "ast_hash": "13871d2ab13e8423790ecb2c01c78c18",
+    "semantic_hash": "13871d2ab13e8423790ecb2c01c78c18"
+  },
+  "/home/ajilenakh/D/currently_working_projects/VanisChat/tooling/biome-config.json": {
+    "mtime": 1779736750.2977064,
+    "ast_hash": "5590b507568aff49e60b29349dcb0471",
+    "semantic_hash": "5590b507568aff49e60b29349dcb0471"
+  },
+  "/home/ajilenakh/D/currently_working_projects/VanisChat/tooling/ts-base.json": {
+    "mtime": 1779670275.000373,
+    "ast_hash": "937962d5c75641ce5afa00813dd27f9e",
+    "semantic_hash": "937962d5c75641ce5afa00813dd27f9e"
+  },
+  "/home/ajilenakh/D/currently_working_projects/VanisChat/packages/api/tsconfig.json": {
+    "mtime": 1779670511.251185,
+    "ast_hash": "93efde42513af45dba9427a0fab7d234",
+    "semantic_hash": "93efde42513af45dba9427a0fab7d234"
+  },
+  "/home/ajilenakh/D/currently_working_projects/VanisChat/packages/api/drizzle.config.ts": {
+    "mtime": 1779670598.8360555,
+    "ast_hash": "d62106e709be1e19e345b5c414d86937",
+    "semantic_hash": "d62106e709be1e19e345b5c414d86937"
+  },
+  "/home/ajilenakh/D/currently_working_projects/VanisChat/packages/api/vitest.config.ts": {
+    "mtime": 1779733709.379761,
+    "ast_hash": "6ecb9db2386e4fe526df980add178f18",
+    "semantic_hash": "6ecb9db2386e4fe526df980add178f18"
+  },
+  "/home/ajilenakh/D/currently_working_projects/VanisChat/packages/api/package.json": {
+    "mtime": 1779738183.4593577,
+    "ast_hash": "756e56df9def2c4dc0cc1f537a70ff23",
+    "semantic_hash": "756e56df9def2c4dc0cc1f537a70ff23"
+  },
+  "/home/ajilenakh/D/currently_working_projects/VanisChat/packages/api/src/dev.ts": {
+    "mtime": 1779733943.178875,
+    "ast_hash": "459938905dd24c69dff251389fe7ef6c",
+    "semantic_hash": "459938905dd24c69dff251389fe7ef6c"
+  },
+  "/home/ajilenakh/D/currently_working_projects/VanisChat/packages/api/src/index.ts": {
+    "mtime": 1779729544.7217207,
+    "ast_hash": "778c0fca1c64f7cb4c4f3a265088c1e0",
+    "semantic_hash": "778c0fca1c64f7cb4c4f3a265088c1e0"
+  },
+  "/home/ajilenakh/D/currently_working_projects/VanisChat/packages/api/src/ws/room.ts": {
+    "mtime": 1779736975.2752924,
+    "ast_hash": "7661bf22a87eb1229efefc2394cf5c7f",
+    "semantic_hash": "7661bf22a87eb1229efefc2394cf5c7f"
+  },
+  "/home/ajilenakh/D/currently_working_projects/VanisChat/packages/api/src/__tests__/room.test.ts": {
+    "mtime": 1779733190.3131404,
+    "ast_hash": "7538c5eb6e2f53cef637c29696bc0b70",
+    "semantic_hash": "7538c5eb6e2f53cef637c29696bc0b70"
+  },
+  "/home/ajilenakh/D/currently_working_projects/VanisChat/packages/api/src/__tests__/setup.ts": {
+    "mtime": 1779733990.0961378,
+    "ast_hash": "e2bbdf122c2a7375bbe2d4136ceb921f",
+    "semantic_hash": "e2bbdf122c2a7375bbe2d4136ceb921f"
+  },
+  "/home/ajilenakh/D/currently_working_projects/VanisChat/packages/api/src/__tests__/health.test.ts": {
+    "mtime": 1779672989.7979848,
+    "ast_hash": "ad4537ca54ae463ad509424f50b9ffd4",
+    "semantic_hash": "ad4537ca54ae463ad509424f50b9ffd4"
+  },
+  "/home/ajilenakh/D/currently_working_projects/VanisChat/packages/api/src/middleware/auth.ts": {
+    "mtime": 1779729310.4611528,
+    "ast_hash": "c0270e43b23447ca8a19e3c93eb7d7b4",
+    "semantic_hash": "c0270e43b23447ca8a19e3c93eb7d7b4"
+  },
+  "/home/ajilenakh/D/currently_working_projects/VanisChat/packages/api/src/middleware/rate-limit.ts": {
+    "mtime": 1779732604.711065,
+    "ast_hash": "7a224459aa6fecf9d508a7428da32e1a",
+    "semantic_hash": "7a224459aa6fecf9d508a7428da32e1a"
+  },
+  "/home/ajilenakh/D/currently_working_projects/VanisChat/packages/api/src/lib/validate.ts": {
+    "mtime": 1779736975.2686255,
+    "ast_hash": "337c472e060b94857ef65eeb34256708",
+    "semantic_hash": "337c472e060b94857ef65eeb34256708"
+  },
+  "/home/ajilenakh/D/currently_working_projects/VanisChat/packages/api/src/lib/errors.ts": {
+    "mtime": 1779729254.689241,
+    "ast_hash": "26e591a8c0408fc1e50cf70bd00d8870",
+    "semantic_hash": "26e591a8c0408fc1e50cf70bd00d8870"
+  },
+  "/home/ajilenakh/D/currently_working_projects/VanisChat/packages/api/src/lib/r2.ts": {
+    "mtime": 1779736975.2652922,
+    "ast_hash": "5b40d156fb444838c1fdb08a131faaf8",
+    "semantic_hash": "5b40d156fb444838c1fdb08a131faaf8"
+  },
+  "/home/ajilenakh/D/currently_working_projects/VanisChat/packages/api/src/db/schema.ts": {
+    "mtime": 1779736858.9664252,
+    "ast_hash": "c6ce5f6c21287fa7f8f1e207e848efa3",
+    "semantic_hash": "c6ce5f6c21287fa7f8f1e207e848efa3"
+  },
+  "/home/ajilenakh/D/currently_working_projects/VanisChat/packages/api/src/db/index.ts": {
+    "mtime": 1779670448.6300862,
+    "ast_hash": "4236daf5d234c0837aa98fa288deccd8",
+    "semantic_hash": "4236daf5d234c0837aa98fa288deccd8"
+  },
+  "/home/ajilenakh/D/currently_working_projects/VanisChat/packages/api/src/routes/room.ts": {
+    "mtime": 1779736975.2752924,
+    "ast_hash": "62a677c54498284628709672faaccfae",
+    "semantic_hash": "62a677c54498284628709672faaccfae"
+  },
+  "/home/ajilenakh/D/currently_working_projects/VanisChat/packages/api/src/routes/health.ts": {
+    "mtime": 1779670448.6334195,
+    "ast_hash": "248218055189c6b8ff6d906d0676031d",
+    "semantic_hash": "248218055189c6b8ff6d906d0676031d"
+  },
+  "/home/ajilenakh/D/currently_working_projects/VanisChat/packages/crypto/tsconfig.json": {
+    "mtime": 1779670303.8375454,
+    "ast_hash": "6714f4c7195690241c31d1fa71723d6b",
+    "semantic_hash": "6714f4c7195690241c31d1fa71723d6b"
+  },
+  "/home/ajilenakh/D/currently_working_projects/VanisChat/packages/crypto/package.json": {
+    "mtime": 1779670303.3608704,
+    "ast_hash": "53aeeb224fb73536d589f428e78aad6d",
+    "semantic_hash": "53aeeb224fb73536d589f428e78aad6d"
+  },
+  "/home/ajilenakh/D/currently_working_projects/VanisChat/packages/crypto/src/encrypt.ts": {
+    "mtime": 1779670448.6334195,
+    "ast_hash": "57f9815390795754b3451ae611ac2c5d",
+    "semantic_hash": "57f9815390795754b3451ae611ac2c5d"
+  },
+  "/home/ajilenakh/D/currently_working_projects/VanisChat/packages/crypto/src/derive-key.ts": {
+    "mtime": 1779670641.6401403,
+    "ast_hash": "12bd6aeccd4848409bd8d584d3c82c33",
+    "semantic_hash": "12bd6aeccd4848409bd8d584d3c82c33"
+  },
+  "/home/ajilenakh/D/currently_working_projects/VanisChat/packages/crypto/src/decrypt.ts": {
+    "mtime": 1779670448.6300862,
+    "ast_hash": "60739efb0d3b68717f7e370a1b0525ca",
+    "semantic_hash": "60739efb0d3b68717f7e370a1b0525ca"
+  },
+  "/home/ajilenakh/D/currently_working_projects/VanisChat/packages/crypto/src/utils.ts": {
+    "mtime": 1779670632.016638,
+    "ast_hash": "31f81c4494b111be9cf143db02f7e5ff",
+    "semantic_hash": "31f81c4494b111be9cf143db02f7e5ff"
+  },
+  "/home/ajilenakh/D/currently_working_projects/VanisChat/packages/crypto/src/index.ts": {
+    "mtime": 1779670448.6300862,
+    "ast_hash": "7ec930609f0a8a276da0eb082a8722fb",
+    "semantic_hash": "7ec930609f0a8a276da0eb082a8722fb"
+  },
+  "/home/ajilenakh/D/currently_working_projects/VanisChat/packages/crypto/src/__tests__/crypto.test.ts": {
+    "mtime": 1779670448.6334195,
+    "ast_hash": "364ff43ea35ae4511c9d955fbaba8b65",
+    "semantic_hash": "364ff43ea35ae4511c9d955fbaba8b65"
+  },
+  "/home/ajilenakh/D/currently_working_projects/VanisChat/packages/crypto/src/__tests__/utils.test.ts": {
+    "mtime": 1779670448.6367528,
+    "ast_hash": "c4020e7f10a6e9c78e433ec9ead911f1",
+    "semantic_hash": "c4020e7f10a6e9c78e433ec9ead911f1"
+  },
+  "/home/ajilenakh/D/currently_working_projects/VanisChat/AGENTS.md": {
+    "mtime": 1779734798.2792947,
+    "ast_hash": "d6aac12718ede3009f1122efb375eff7",
+    "semantic_hash": "d6aac12718ede3009f1122efb375eff7"
+  },
+  "/home/ajilenakh/D/currently_working_projects/VanisChat/overhaul.md": {
+    "mtime": 1779669777.592503,
+    "ast_hash": "5de1d03e953768787595f3956d1e39bf",
+    "semantic_hash": "5de1d03e953768787595f3956d1e39bf"
+  },
+  "/home/ajilenakh/D/currently_working_projects/VanisChat/apps/web/index.html": {
+    "mtime": 1779736199.061789,
+    "ast_hash": "ff38baba16cc338a5dbcdf5c87213a69",
+    "semantic_hash": "ff38baba16cc338a5dbcdf5c87213a69"
+  },
+  "/home/ajilenakh/D/currently_working_projects/VanisChat/.github/workflows/ci.yml": {
+    "mtime": 1779670438.606577,
+    "ast_hash": "f3ea63ef900aa72b66e5d14114f60322",
+    "semantic_hash": "f3ea63ef900aa72b66e5d14114f60322"
+  },
+  "/home/ajilenakh/D/currently_working_projects/VanisChat/docs/superpowers/specs/2026-05-25-phase-3-polish.md": {
+    "mtime": 1779669279.64961,
+    "ast_hash": "d3a23fa74fe6eace20aa399b059f5135",
+    "semantic_hash": "d3a23fa74fe6eace20aa399b059f5135"
+  },
+  "/home/ajilenakh/D/currently_working_projects/VanisChat/docs/superpowers/specs/2026-05-25-phase-5-decommission.md": {
+    "mtime": 1779669304.570045,
+    "ast_hash": "5cfc3af55d2bff2193217c40edc9acaa",
+    "semantic_hash": "5cfc3af55d2bff2193217c40edc9acaa"
+  },
+  "/home/ajilenakh/D/currently_working_projects/VanisChat/docs/superpowers/specs/2026-05-25-phase-4-quality.md": {
+    "mtime": 1779669293.7031887,
+    "ast_hash": "c6b3831ad4eae32b2f5dbd87f8de7bf2",
+    "semantic_hash": "c6b3831ad4eae32b2f5dbd87f8de7bf2"
+  },
+  "/home/ajilenakh/D/currently_working_projects/VanisChat/docs/superpowers/specs/2026-05-25-phase-1-foundation.md": {
+    "mtime": 1779669252.4091349,
+    "ast_hash": "70f511f408bdb7802807a86903c9f21f",
+    "semantic_hash": "70f511f408bdb7802807a86903c9f21f"
+  },
+  "/home/ajilenakh/D/currently_working_projects/VanisChat/docs/superpowers/specs/2026-05-25-phase-2-core-features.md": {
+    "mtime": 1779669328.5837975,
+    "ast_hash": "b7cec7c273959564063f22b50761942a",
+    "semantic_hash": "b7cec7c273959564063f22b50761942a"
+  },
+  "/home/ajilenakh/D/currently_working_projects/VanisChat/docs/superpowers/plans/2026-05-25-phase-3-polish.md": {
+    "mtime": 1779731223.703749,
+    "ast_hash": "1ddf761a499e85b54736e3f8585ae93a",
+    "semantic_hash": "1ddf761a499e85b54736e3f8585ae93a"
+  },
+  "/home/ajilenakh/D/currently_working_projects/VanisChat/docs/superpowers/plans/2026-05-25-phase-1-foundation.md": {
+    "mtime": 1779670119.322822,
+    "ast_hash": "ccc3bb4bfd73fd5447c18d242a137240",
+    "semantic_hash": "ccc3bb4bfd73fd5447c18d242a137240"
+  },
+  "/home/ajilenakh/D/currently_working_projects/VanisChat/docs/superpowers/plans/2026-05-25-phase-2-core-features.md": {
+    "mtime": 1779713586.8170385,
+    "ast_hash": "a53a5ba938ee32bd221c0a08676e2a0f",
+    "semantic_hash": "a53a5ba938ee32bd221c0a08676e2a0f"
+  }
+}

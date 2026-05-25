@@ -1,0 +1,2692 @@
+{
+  "nodes": [
+    {
+      "id": "biome_biome_config",
+      "label": "Root Biome Config",
+      "file_type": "code",
+      "source_file": "biome.json",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "package_json_vanischat",
+      "label": "VanisChat Project",
+      "file_type": "code",
+      "source_file": "package.json",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "Ajilenakh",
+      "contributor": null
+    },
+    {
+      "id": "web_tsconfig_web_tsconfig",
+      "label": "Web TypeScript Config",
+      "file_type": "code",
+      "source_file": "apps/web/tsconfig.json",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "web_vite_config_vite_config",
+      "label": "Vite Configuration",
+      "file_type": "code",
+      "source_file": "apps/web/vite.config.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "web_biome_biome_config",
+      "label": "Web Biome Config",
+      "file_type": "code",
+      "source_file": "apps/web/biome.json",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "web_package_json_vanischat_web",
+      "label": "@vanischat/web Package",
+      "file_type": "code",
+      "source_file": "apps/web/package.json",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "src_main_main",
+      "label": "Main Entry Point",
+      "file_type": "code",
+      "source_file": "apps/web/src/main.tsx",
+      "source_location": 1,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "src_app_app",
+      "label": "App Component",
+      "file_type": "code",
+      "source_file": "apps/web/src/App.tsx",
+      "source_location": 8,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "lib_toast_toast_provider",
+      "label": "ToastProvider",
+      "file_type": "code",
+      "source_file": "apps/web/src/lib/toast.tsx",
+      "source_location": 19,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "lib_toast_use_toast",
+      "label": "useToast Hook",
+      "file_type": "code",
+      "source_file": "apps/web/src/lib/toast.tsx",
+      "source_location": 42,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "lib_toast_toast",
+      "label": "Toast Interface",
+      "file_type": "code",
+      "source_file": "apps/web/src/lib/toast.tsx",
+      "source_location": 3,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "lib_api_request",
+      "label": "API Request Helper",
+      "file_type": "code",
+      "source_file": "apps/web/src/lib/api.ts",
+      "source_location": 42,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "lib_api_api_error",
+      "label": "ApiError Class",
+      "file_type": "code",
+      "source_file": "apps/web/src/lib/api.ts",
+      "source_location": 61,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "lib_api_create_room",
+      "label": "createRoom API",
+      "file_type": "code",
+      "source_file": "apps/web/src/lib/api.ts",
+      "source_location": 72,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "lib_api_join_room",
+      "label": "joinRoom API",
+      "file_type": "code",
+      "source_file": "apps/web/src/lib/api.ts",
+      "source_location": 84,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "lib_api_leave_room",
+      "label": "leaveRoom API",
+      "file_type": "code",
+      "source_file": "apps/web/src/lib/api.ts",
+      "source_location": 94,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "lib_api_get_messages",
+      "label": "getMessages API",
+      "file_type": "code",
+      "source_file": "apps/web/src/lib/api.ts",
+      "source_location": 102,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "lib_api_validate_session",
+      "label": "validateSession API",
+      "file_type": "code",
+      "source_file": "apps/web/src/lib/api.ts",
+      "source_location": 136,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "lib_api_request_upload_url",
+      "label": "requestUploadUrl API",
+      "file_type": "code",
+      "source_file": "apps/web/src/lib/api.ts",
+      "source_location": 124,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "lib_api_message",
+      "label": "Message Interface",
+      "file_type": "code",
+      "source_file": "apps/web/src/lib/api.ts",
+      "source_location": 21,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "lib_ws_room_socket",
+      "label": "RoomSocket Class",
+      "file_type": "code",
+      "source_file": "apps/web/src/lib/ws.ts",
+      "source_location": 28,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "lib_ws_ws_in_message",
+      "label": "WSInMessage Type",
+      "file_type": "code",
+      "source_file": "apps/web/src/lib/ws.ts",
+      "source_location": 1,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "lib_ws_ws_out_message",
+      "label": "WSOutMessage Type",
+      "file_type": "code",
+      "source_file": "apps/web/src/lib/ws.ts",
+      "source_location": 20,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "context_room_context_room_provider",
+      "label": "RoomProvider",
+      "file_type": "code",
+      "source_file": "apps/web/src/context/RoomContext.tsx",
+      "source_location": 33,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "context_room_context_use_room_context",
+      "label": "useRoomContext Hook",
+      "file_type": "code",
+      "source_file": "apps/web/src/context/RoomContext.tsx",
+      "source_location": 49,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "context_room_context_room_state",
+      "label": "RoomState Interface",
+      "file_type": "code",
+      "source_file": "apps/web/src/context/RoomContext.tsx",
+      "source_location": 3,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "context_theme_context_theme_provider",
+      "label": "ThemeProvider",
+      "file_type": "code",
+      "source_file": "apps/web/src/context/ThemeContext.tsx",
+      "source_location": 21,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "context_theme_context_use_theme",
+      "label": "useTheme Hook",
+      "file_type": "code",
+      "source_file": "apps/web/src/context/ThemeContext.tsx",
+      "source_location": 51,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "hooks_use_messages_use_messages",
+      "label": "useMessages Hook",
+      "file_type": "code",
+      "source_file": "apps/web/src/hooks/useMessages.ts",
+      "source_location": 6,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "hooks_use_crypto_key_use_crypto_key",
+      "label": "useCryptoKey Hook",
+      "file_type": "code",
+      "source_file": "apps/web/src/hooks/useCryptoKey.ts",
+      "source_location": 14,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "hooks_use_room_use_room",
+      "label": "useRoom Hook",
+      "file_type": "code",
+      "source_file": "apps/web/src/hooks/useRoom.ts",
+      "source_location": 11,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "hooks_use_presence_use_presence",
+      "label": "usePresence Hook",
+      "file_type": "code",
+      "source_file": "apps/web/src/hooks/usePresence.ts",
+      "source_location": 4,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "components_toast_toast_container",
+      "label": "ToastContainer Component",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/Toast.tsx",
+      "source_location": 16,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "components_error_fallback_error_fallback",
+      "label": "ErrorFallback Component",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/ErrorFallback.tsx",
+      "source_location": 10,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "components_error_fallback_room_error_fallback",
+      "label": "RoomErrorFallback Component",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/ErrorFallback.tsx",
+      "source_location": 52,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "components_error_boundary_error_boundary",
+      "label": "ErrorBoundary Class",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/ErrorBoundary.tsx",
+      "source_location": 13,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "components_skeleton_message_skeleton",
+      "label": "MessageSkeleton Component",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/Skeleton.tsx",
+      "source_location": 1,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "components_skeleton_chat_skeleton",
+      "label": "ChatSkeleton Component",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/Skeleton.tsx",
+      "source_location": 13,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "lobby_create_room_form_create_room_form",
+      "label": "CreateRoomForm Component",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/Lobby/CreateRoomForm.tsx",
+      "source_location": 6,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "lobby_join_room_form_join_room_form",
+      "label": "JoinRoomForm Component",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/Lobby/JoinRoomForm.tsx",
+      "source_location": 7,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "lobby_lobby_page_lobby_page",
+      "label": "LobbyPage Component",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/Lobby/LobbyPage.tsx",
+      "source_location": 9,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "vanischat_e2ee_architecture",
+      "label": "End-to-End Encryption Architecture",
+      "file_type": "rationale",
+      "source_file": "apps/web/src/hooks/useCryptoKey.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "vanischat_password_derived_key",
+      "label": "Password-Derived Key Scheme",
+      "file_type": "concept",
+      "source_file": "apps/web/src/hooks/useCryptoKey.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "vanischat_room_architecture",
+      "label": "Room-Based Chat Architecture",
+      "file_type": "rationale",
+      "source_file": "apps/web/src/context/RoomContext.tsx",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "chat_chatpage_chatpage",
+      "label": "ChatPage",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/Chat/ChatPage.tsx"
+    },
+    {
+      "id": "chat_filemessage_imagemessage",
+      "label": "ImageMessage",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/Chat/FileMessage.tsx"
+    },
+    {
+      "id": "chat_filemessage_filedownload",
+      "label": "FileDownload",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/Chat/FileMessage.tsx"
+    },
+    {
+      "id": "chat_messageinput_messageinput",
+      "label": "MessageInput",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/Chat/MessageInput.tsx"
+    },
+    {
+      "id": "chat_chatheader_chatheader",
+      "label": "ChatHeader",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/Chat/ChatHeader.tsx"
+    },
+    {
+      "id": "chat_messageitem_messageitem",
+      "label": "MessageItem",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/Chat/MessageItem.tsx"
+    },
+    {
+      "id": "chat_errorboundary_errorboundary",
+      "label": "ErrorBoundary",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/Chat/ErrorBoundary.tsx"
+    },
+    {
+      "id": "chat_messagelist_messagelist",
+      "label": "MessageList",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/Chat/MessageList.tsx"
+    },
+    {
+      "id": "tooling_biomeconfig_biomeconfig",
+      "label": "Biome linter/formatter configuration",
+      "file_type": "code",
+      "source_file": "tooling/biome-config.json"
+    },
+    {
+      "id": "_h_runner",
+      "label": "Husky git hook runner (h)",
+      "file_type": "code",
+      "source_file": ".husky/_/h"
+    },
+    {
+      "id": "_huskysh_deprecation",
+      "label": "Husky v10 deprecation warning",
+      "file_type": "code",
+      "source_file": ".husky/_/husky.sh"
+    },
+    {
+      "id": "chat_chatpage_e2ee_derivation",
+      "label": "E2EE key derivation from room password",
+      "file_type": "concept",
+      "source_file": "apps/web/src/components/Chat/ChatPage.tsx"
+    },
+    {
+      "id": "chat_chatpage_component_orchestrator",
+      "label": "ChatPage orchestrates crypto, presence, message, connection hooks",
+      "file_type": "concept",
+      "source_file": "apps/web/src/components/Chat/ChatPage.tsx"
+    },
+    {
+      "id": "chat_messagelist_async_decryption",
+      "label": "Async per-message decryption with Map cache",
+      "file_type": "concept",
+      "source_file": "apps/web/src/components/Chat/MessageList.tsx"
+    },
+    {
+      "id": "chat_messageinput_upload_flow",
+      "label": "Presigned URL upload with XHR progress tracking",
+      "file_type": "concept",
+      "source_file": "apps/web/src/components/Chat/MessageInput.tsx"
+    },
+    {
+      "id": "chat_chatheader_expiry_timer",
+      "label": "Room expiry countdown with live 1s update interval",
+      "file_type": "concept",
+      "source_file": "apps/web/src/components/Chat/ChatHeader.tsx"
+    },
+    {
+      "id": "_h_hook_system",
+      "label": "Husky git hook lifecycle (14 hooks source this runner)",
+      "file_type": "concept",
+      "source_file": ".husky/_/h"
+    },
+    {
+      "id": "tooling_ts_base_sharedconfig",
+      "label": "Shared TypeScript Base Config",
+      "file_type": "code",
+      "source_file": "tooling/ts-base.json",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "api_tsconfig_config",
+      "label": "API TSConfig",
+      "file_type": "code",
+      "source_file": "packages/api/tsconfig.json",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "crypto_tsconfig_config",
+      "label": "Crypto TSConfig",
+      "file_type": "code",
+      "source_file": "packages/crypto/tsconfig.json",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "api_drizzle_config",
+      "label": "Drizzle ORM Config",
+      "file_type": "code",
+      "source_file": "packages/api/drizzle.config.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "api_vitest_config",
+      "label": "Vitest Test Config",
+      "file_type": "code",
+      "source_file": "packages/api/vitest.config.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "api_package_manifest",
+      "label": "@vanischat/api Package",
+      "file_type": "code",
+      "source_file": "packages/api/package.json",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "api_src_dev_entry",
+      "label": "Dev Server Entry (Bun.serve)",
+      "file_type": "code",
+      "source_file": "packages/api/src/dev.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "api_src_index_app",
+      "label": "Hono Application",
+      "file_type": "code",
+      "source_file": "packages/api/src/index.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "api_src_ws_room_handler",
+      "label": "WebSocket Room Handler",
+      "file_type": "code",
+      "source_file": "packages/api/src/ws/room.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "api_src_middleware_auth",
+      "label": "Session Auth Middleware",
+      "file_type": "code",
+      "source_file": "packages/api/src/middleware/auth.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "api_src_middleware_rate_limit",
+      "label": "Rate Limit Middleware",
+      "file_type": "code",
+      "source_file": "packages/api/src/middleware/rate-limit.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "api_src_lib_validate",
+      "label": "Zod Validation Schemas",
+      "file_type": "code",
+      "source_file": "packages/api/src/lib/validate.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "api_src_lib_errors",
+      "label": "HTTP Error Factory",
+      "file_type": "code",
+      "source_file": "packages/api/src/lib/errors.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "api_src_lib_r2",
+      "label": "R2 Presigned URL Generator",
+      "file_type": "code",
+      "source_file": "packages/api/src/lib/r2.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "api_src_db_schema",
+      "label": "DB Schema (rooms,messages,room_tokens)",
+      "file_type": "code",
+      "source_file": "packages/api/src/db/schema.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "api_src_db_index",
+      "label": "DB Client Factory (getDb)",
+      "file_type": "code",
+      "source_file": "packages/api/src/db/index.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "api_src_routes_room",
+      "label": "Room CRUD Routes",
+      "file_type": "code",
+      "source_file": "packages/api/src/routes/room.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "api_src_routes_health",
+      "label": "Health Check Route",
+      "file_type": "code",
+      "source_file": "packages/api/src/routes/health.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "api_src_tests_room_test",
+      "label": "Room Integration Tests",
+      "file_type": "code",
+      "source_file": "packages/api/src/__tests__/room.test.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "api_src_tests_setup",
+      "label": "Test Setup (Bun Shim+SQLite)",
+      "file_type": "code",
+      "source_file": "packages/api/src/__tests__/setup.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "api_src_tests_health_test",
+      "label": "Health Check Tests",
+      "file_type": "code",
+      "source_file": "packages/api/src/__tests__/health.test.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "api_concept_config_inheritance",
+      "label": "Workspace TSConfig Inheritance",
+      "file_type": "concept",
+      "source_file": "tooling/ts-base.json",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "api_concept_route_architecture",
+      "label": "Hono Mounted Routes Pattern",
+      "file_type": "concept",
+      "source_file": "packages/api/src/index.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "api_concept_ws_system",
+      "label": "WS Room System (In-Memory State)",
+      "file_type": "concept",
+      "source_file": "packages/api/src/ws/room.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "api_concept_token_auth",
+      "label": "Invite+Session Token Auth",
+      "file_type": "concept",
+      "source_file": "packages/api/src/routes/room.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "api_concept_r2_upload",
+      "label": "R2 Presigned Upload Pattern",
+      "file_type": "concept",
+      "source_file": "packages/api/src/lib/r2.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "api_concept_test_infra",
+      "label": "Test Infra (Bun Shim+File SQLite)",
+      "file_type": "concept",
+      "source_file": "packages/api/src/__tests__/setup.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "api_concept_drizzle_layer",
+      "label": "Drizzle ORM Data Layer",
+      "file_type": "concept",
+      "source_file": "packages/api/src/db/index.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "api_concept_in_memory_state",
+      "label": "In-Memory State (WS+RateLimit)",
+      "file_type": "concept",
+      "source_file": "packages/api/src/ws/room.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "crypto_package",
+      "label": "@vanischat/crypto",
+      "file_type": "code",
+      "source_file": "packages/crypto/package.json",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "crypto_encrypt_function",
+      "label": "encrypt()",
+      "file_type": "code",
+      "source_file": "packages/crypto/src/encrypt.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "crypto_decrypt_function",
+      "label": "decrypt()",
+      "file_type": "code",
+      "source_file": "packages/crypto/src/decrypt.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "crypto_derivekey_function",
+      "label": "deriveKey()",
+      "file_type": "code",
+      "source_file": "packages/crypto/src/derive-key.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "crypto_generatesalt_function",
+      "label": "generateSalt()",
+      "file_type": "code",
+      "source_file": "packages/crypto/src/index.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "crypto_arraybuffertobase64_function",
+      "label": "arrayBufferToBase64()",
+      "file_type": "code",
+      "source_file": "packages/crypto/src/utils.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "crypto_base64toarraybuffer_function",
+      "label": "base64ToArrayBuffer()",
+      "file_type": "code",
+      "source_file": "packages/crypto/src/utils.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "crypto_index_re_exports",
+      "label": "@vanischat/crypto index.ts",
+      "file_type": "code",
+      "source_file": "packages/crypto/src/index.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "crypto_crypto_test_suite",
+      "label": "crypto.test.ts",
+      "file_type": "code",
+      "source_file": "packages/crypto/src/__tests__/crypto.test.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "crypto_utils_test_suite",
+      "label": "utils.test.ts",
+      "file_type": "code",
+      "source_file": "packages/crypto/src/__tests__/utils.test.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "web_index_html",
+      "label": "VanisChat web index.html",
+      "file_type": "code",
+      "source_file": "apps/web/index.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "ci_yml_workflow",
+      "label": "GitHub Actions CI/CD",
+      "file_type": "code",
+      "source_file": ".github/workflows/ci.yml",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "agents_md_document",
+      "label": "VanisChat Agents Guide",
+      "file_type": "document",
+      "source_file": "AGENTS.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "overhaul_md_document",
+      "label": "VanisChat Overhaul System Design",
+      "file_type": "document",
+      "source_file": "overhaul.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "overhaul_md_web_crypto_api",
+      "label": "Web Crypto API (SubtleCrypto)",
+      "file_type": "rationale",
+      "source_file": "overhaul.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "overhaul_md_pbkdf2_aesgcm",
+      "label": "PBKDF2 + AES-GCM encryption scheme",
+      "file_type": "rationale",
+      "source_file": "overhaul.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "overhaul_md_zero_budget",
+      "label": "$0 Budget constraint",
+      "file_type": "rationale",
+      "source_file": "overhaul.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "overhaul_md_hono_stack",
+      "label": "Hono + Drizzle + Turso stack",
+      "file_type": "rationale",
+      "source_file": "overhaul.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "overhaul_md_invite_token_system",
+      "label": "Token-based invite system",
+      "file_type": "rationale",
+      "source_file": "overhaul.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "overhaul_md_e2ee_architecture",
+      "label": "Hybrid E2EE with Web Crypto",
+      "file_type": "rationale",
+      "source_file": "overhaul.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "overhaul_md_phase_migration",
+      "label": "5-phase migration strategy (Phase 1-5)",
+      "file_type": "rationale",
+      "source_file": "overhaul.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "phase1_foundation_spec",
+      "label": "Phase 1 Foundation Spec",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-05-25-phase-1-foundation.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "phase2_core_features_spec",
+      "label": "Phase 2 Core Features Spec",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-05-25-phase-2-core-features.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "phase3_polish_spec",
+      "label": "Phase 3 Polish Spec",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-05-25-phase-3-polish.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "phase4_quality_spec",
+      "label": "Phase 4 Quality Spec",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-05-25-phase-4-quality.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "phase5_decommission_spec",
+      "label": "Phase 5 Decommission Spec",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-05-25-phase-5-decommission.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "phase1_foundation_plan",
+      "label": "Phase 1 Foundation Plan",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/2026-05-25-phase-1-foundation.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "phase2_core_features_plan",
+      "label": "Phase 2 Core Features Plan",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/2026-05-25-phase-2-core-features.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "phase3_polish_plan",
+      "label": "Phase 3 Polish Plan",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/2026-05-25-phase-3-polish.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    }
+  ],
+  "edges": [
+    {
+      "source": "src_main_main",
+      "target": "context_theme_context_theme_provider",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/web/src/main.tsx",
+      "source_location": 14,
+      "weight": 1.0
+    },
+    {
+      "source": "src_main_main",
+      "target": "lib_toast_toast_provider",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/web/src/main.tsx",
+      "source_location": 15,
+      "weight": 1.0
+    },
+    {
+      "source": "src_main_main",
+      "target": "src_app_app",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/web/src/main.tsx",
+      "source_location": 16,
+      "weight": 1.0
+    },
+    {
+      "source": "src_app_app",
+      "target": "context_room_context_room_provider",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/web/src/App.tsx",
+      "source_location": 11,
+      "weight": 1.0
+    },
+    {
+      "source": "src_app_app",
+      "target": "lobby_lobby_page_lobby_page",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/web/src/App.tsx",
+      "source_location": 17,
+      "weight": 1.0
+    },
+    {
+      "source": "src_app_app",
+      "target": "components_error_boundary_error_boundary",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/web/src/App.tsx",
+      "source_location": 16,
+      "weight": 1.0
+    },
+    {
+      "source": "src_app_app",
+      "target": "components_error_fallback_error_fallback",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/web/src/App.tsx",
+      "source_location": 16,
+      "weight": 1.0
+    },
+    {
+      "source": "lobby_lobby_page_lobby_page",
+      "target": "context_theme_context_use_theme",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/web/src/components/Lobby/LobbyPage.tsx",
+      "source_location": 11,
+      "weight": 1.0
+    },
+    {
+      "source": "lobby_lobby_page_lobby_page",
+      "target": "lobby_create_room_form_create_room_form",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/web/src/components/Lobby/LobbyPage.tsx",
+      "source_location": 53,
+      "weight": 1.0
+    },
+    {
+      "source": "lobby_lobby_page_lobby_page",
+      "target": "lobby_join_room_form_join_room_form",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/web/src/components/Lobby/LobbyPage.tsx",
+      "source_location": 53,
+      "weight": 1.0
+    },
+    {
+      "source": "lobby_create_room_form_create_room_form",
+      "target": "context_room_context_use_room_context",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/web/src/components/Lobby/CreateRoomForm.tsx",
+      "source_location": 3,
+      "weight": 1.0
+    },
+    {
+      "source": "lobby_create_room_form_create_room_form",
+      "target": "lib_api_create_room",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/web/src/components/Lobby/CreateRoomForm.tsx",
+      "source_location": 23,
+      "weight": 1.0
+    },
+    {
+      "source": "lobby_join_room_form_join_room_form",
+      "target": "context_room_context_use_room_context",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/web/src/components/Lobby/JoinRoomForm.tsx",
+      "source_location": 4,
+      "weight": 1.0
+    },
+    {
+      "source": "lobby_join_room_form_join_room_form",
+      "target": "lib_api_join_room",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/web/src/components/Lobby/JoinRoomForm.tsx",
+      "source_location": 41,
+      "weight": 1.0
+    },
+    {
+      "source": "hooks_use_messages_use_messages",
+      "target": "lib_api_get_messages",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/web/src/hooks/useMessages.ts",
+      "source_location": 17,
+      "weight": 1.0
+    },
+    {
+      "source": "hooks_use_room_use_room",
+      "target": "lib_ws_room_socket",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/web/src/hooks/useRoom.ts",
+      "source_location": 21,
+      "weight": 1.0
+    },
+    {
+      "source": "hooks_use_crypto_key_use_crypto_key",
+      "target": "vanischat_password_derived_key",
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/web/src/hooks/useCryptoKey.ts",
+      "source_location": 30,
+      "weight": 1.0
+    },
+    {
+      "source": "components_toast_toast_container",
+      "target": "lib_toast_use_toast",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/web/src/components/Toast.tsx",
+      "source_location": 2,
+      "weight": 1.0
+    },
+    {
+      "source": "components_error_fallback_error_fallback",
+      "target": "components_error_fallback_room_error_fallback",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/web/src/components/ErrorFallback.tsx",
+      "source_location": 53,
+      "weight": 1.0
+    },
+    {
+      "source": "lib_api_create_room",
+      "target": "lib_api_request",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/web/src/lib/api.ts",
+      "source_location": 78,
+      "weight": 1.0
+    },
+    {
+      "source": "lib_api_join_room",
+      "target": "lib_api_request",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/web/src/lib/api.ts",
+      "source_location": 88,
+      "weight": 1.0
+    },
+    {
+      "source": "lib_api_leave_room",
+      "target": "lib_api_request",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/web/src/lib/api.ts",
+      "source_location": 95,
+      "weight": 1.0
+    },
+    {
+      "source": "lib_api_get_messages",
+      "target": "lib_api_request",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/web/src/lib/api.ts",
+      "source_location": 112,
+      "weight": 1.0
+    },
+    {
+      "source": "lib_api_validate_session",
+      "target": "lib_api_request",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/web/src/lib/api.ts",
+      "source_location": 140,
+      "weight": 1.0
+    },
+    {
+      "source": "lib_api_request_upload_url",
+      "target": "lib_api_request",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/web/src/lib/api.ts",
+      "source_location": 129,
+      "weight": 1.0
+    },
+    {
+      "source": "lib_api_message",
+      "target": "lib_ws_ws_in_message",
+      "relation": "shares_data_with",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "apps/web/src/hooks/useMessages.ts",
+      "source_location": 30,
+      "weight": 1.0
+    },
+    {
+      "source": "hooks_use_messages_use_messages",
+      "target": "lib_ws_ws_in_message",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/web/src/hooks/useMessages.ts",
+      "source_location": 4,
+      "weight": 1.0
+    },
+    {
+      "source": "hooks_use_presence_use_presence",
+      "target": "lib_ws_ws_in_message",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/web/src/hooks/usePresence.ts",
+      "source_location": 2,
+      "weight": 1.0
+    },
+    {
+      "source": "hooks_use_room_use_room",
+      "target": "lib_ws_ws_out_message",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/web/src/hooks/useRoom.ts",
+      "source_location": 47,
+      "weight": 1.0
+    },
+    {
+      "source": "vanischat_e2ee_architecture",
+      "target": "vanischat_password_derived_key",
+      "relation": "rationale_for",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "apps/web/src/hooks/useCryptoKey.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "lobby_create_room_form_create_room_form",
+      "target": "lobby_join_room_form_join_room_form",
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": null,
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "lib_ws_room_socket",
+      "target": "lib_ws_ws_in_message",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/web/src/lib/ws.ts",
+      "source_location": 54,
+      "weight": 1.0
+    },
+    {
+      "source": "lib_ws_room_socket",
+      "target": "lib_ws_ws_out_message",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/web/src/lib/ws.ts",
+      "source_location": 75,
+      "weight": 1.0
+    },
+    {
+      "source": "context_room_context_room_state",
+      "target": "vanischat_room_architecture",
+      "relation": "implements",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "apps/web/src/context/RoomContext.tsx",
+      "source_location": 3,
+      "weight": 1.0
+    },
+    {
+      "source": "chat_chatpage_chatpage",
+      "target": "chat_chatheader_chatheader",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/web/src/components/Chat/ChatPage.tsx",
+      "weight": 1.0
+    },
+    {
+      "source": "chat_chatpage_chatpage",
+      "target": "chat_messagelist_messagelist",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/web/src/components/Chat/ChatPage.tsx",
+      "weight": 1.0
+    },
+    {
+      "source": "chat_chatpage_chatpage",
+      "target": "chat_messageinput_messageinput",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/web/src/components/Chat/ChatPage.tsx",
+      "weight": 1.0
+    },
+    {
+      "source": "chat_messagelist_messagelist",
+      "target": "chat_messageitem_messageitem",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/web/src/components/Chat/MessageList.tsx",
+      "weight": 1.0
+    },
+    {
+      "source": "chat_messageitem_messageitem",
+      "target": "chat_filemessage_imagemessage",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/web/src/components/Chat/MessageItem.tsx",
+      "weight": 1.0
+    },
+    {
+      "source": "chat_messageitem_messageitem",
+      "target": "chat_filemessage_filedownload",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/web/src/components/Chat/MessageItem.tsx",
+      "weight": 1.0
+    },
+    {
+      "source": "chat_chatpage_chatpage",
+      "target": "chat_chatpage_e2ee_derivation",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/web/src/components/Chat/ChatPage.tsx",
+      "weight": 1.0
+    },
+    {
+      "source": "chat_chatpage_chatpage",
+      "target": "chat_chatpage_component_orchestrator",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/web/src/components/Chat/ChatPage.tsx",
+      "weight": 1.0
+    },
+    {
+      "source": "chat_messagelist_messagelist",
+      "target": "chat_messagelist_async_decryption",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/web/src/components/Chat/MessageList.tsx",
+      "weight": 1.0
+    },
+    {
+      "source": "chat_messageinput_messageinput",
+      "target": "chat_messageinput_upload_flow",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/web/src/components/Chat/MessageInput.tsx",
+      "weight": 1.0
+    },
+    {
+      "source": "chat_chatheader_chatheader",
+      "target": "chat_chatheader_expiry_timer",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/web/src/components/Chat/ChatHeader.tsx",
+      "weight": 1.0
+    },
+    {
+      "source": "_h_runner",
+      "target": "_h_hook_system",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".husky/_/h",
+      "weight": 1.0
+    },
+    {
+      "source": "_huskysh_deprecation",
+      "target": "_h_hook_system",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".husky/_/husky.sh",
+      "weight": 1.0
+    },
+    {
+      "source": "chat_chatpage_chatpage",
+      "target": "chat_messagelist_messagelist",
+      "relation": "shares_data_with",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "apps/web/src/components/Chat/ChatPage.tsx",
+      "weight": 1.0
+    },
+    {
+      "source": "chat_chatpage_chatpage",
+      "target": "chat_messageinput_messageinput",
+      "relation": "shares_data_with",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "apps/web/src/components/Chat/ChatPage.tsx",
+      "weight": 1.0
+    },
+    {
+      "source": "chat_chatpage_chatpage",
+      "target": "chat_chatheader_chatheader",
+      "relation": "shares_data_with",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "apps/web/src/components/Chat/ChatPage.tsx",
+      "weight": 1.0
+    },
+    {
+      "source": "chat_messagelist_messagelist",
+      "target": "chat_messageitem_messageitem",
+      "relation": "shares_data_with",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "apps/web/src/components/Chat/MessageList.tsx",
+      "weight": 1.0
+    },
+    {
+      "source": "chat_errorboundary_errorboundary",
+      "target": "chat_chatpage_chatpage",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "apps/web/src/components/Chat/ErrorBoundary.tsx",
+      "weight": 1.0
+    },
+    {
+      "source": "chat_chatpage_e2ee_derivation",
+      "target": "chat_messagelist_async_decryption",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "apps/web/src/components/Chat/ChatPage.tsx",
+      "weight": 1.0
+    },
+    {
+      "source": "chat_chatpage_component_orchestrator",
+      "target": "chat_chatheader_expiry_timer",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "apps/web/src/components/Chat/ChatPage.tsx",
+      "weight": 1.0
+    },
+    {
+      "source": "chat_chatpage_component_orchestrator",
+      "target": "chat_messageinput_upload_flow",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "apps/web/src/components/Chat/ChatPage.tsx",
+      "weight": 1.0
+    },
+    {
+      "source": "tooling_biomeconfig_biomeconfig",
+      "target": "chat_chatpage_chatpage",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.65,
+      "source_file": "tooling/biome-config.json",
+      "weight": 1.0
+    },
+    {
+      "source": "_h_runner",
+      "target": "_huskysh_deprecation",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.65,
+      "source_file": ".husky/_/h",
+      "weight": 1.0
+    },
+    {
+      "source": "api_tsconfig_config",
+      "target": "tooling_ts_base_sharedconfig",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/api/tsconfig.json",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "crypto_tsconfig_config",
+      "target": "tooling_ts_base_sharedconfig",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/crypto/tsconfig.json",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "api_src_dev_entry",
+      "target": "api_src_index_app",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/api/src/dev.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "api_src_dev_entry",
+      "target": "api_src_ws_room_handler",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/api/src/dev.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "api_src_index_app",
+      "target": "api_src_routes_health",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/api/src/index.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "api_src_index_app",
+      "target": "api_src_routes_room",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/api/src/index.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "api_src_routes_room",
+      "target": "api_src_middleware_auth",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/api/src/routes/room.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "api_src_routes_room",
+      "target": "api_src_middleware_rate_limit",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/api/src/routes/room.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "api_src_routes_room",
+      "target": "api_src_db_index",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/api/src/routes/room.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "api_src_routes_room",
+      "target": "api_src_db_schema",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/api/src/routes/room.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "api_src_routes_room",
+      "target": "api_src_lib_validate",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/api/src/routes/room.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "api_src_routes_room",
+      "target": "api_src_lib_r2",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/api/src/routes/room.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "api_src_ws_room_handler",
+      "target": "api_src_db_index",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/api/src/ws/room.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "api_src_ws_room_handler",
+      "target": "api_src_db_schema",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/api/src/ws/room.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "api_src_middleware_auth",
+      "target": "api_src_db_index",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/api/src/middleware/auth.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "api_src_middleware_auth",
+      "target": "api_src_db_schema",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/api/src/middleware/auth.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "api_src_db_index",
+      "target": "api_src_db_schema",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/api/src/db/index.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "api_src_tests_room_test",
+      "target": "api_src_index_app",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/api/src/__tests__/room.test.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "api_src_tests_health_test",
+      "target": "api_src_index_app",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/api/src/__tests__/health.test.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "api_drizzle_config",
+      "target": "api_src_db_schema",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/api/drizzle.config.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "api_vitest_config",
+      "target": "api_src_tests_setup",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/api/vitest.config.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "api_package_manifest",
+      "target": "api_src_index_app",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/api/package.json",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "api_src_db_schema",
+      "target": "api_src_db_index",
+      "relation": "shares_data_with",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/api/src/db/index.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "api_src_tests_setup",
+      "target": "api_src_db_index",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "packages/api/src/__tests__/setup.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "api_src_routes_room",
+      "target": "api_concept_token_auth",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "packages/api/src/routes/room.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "api_src_ws_room_handler",
+      "target": "api_concept_ws_system",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "packages/api/src/ws/room.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "api_src_ws_room_handler",
+      "target": "api_concept_in_memory_state",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "packages/api/src/ws/room.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "api_src_middleware_rate_limit",
+      "target": "api_concept_in_memory_state",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "packages/api/src/middleware/rate-limit.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "api_src_index_app",
+      "target": "api_concept_route_architecture",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "packages/api/src/index.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "api_src_routes_room",
+      "target": "api_concept_r2_upload",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "packages/api/src/lib/r2.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "api_src_db_index",
+      "target": "api_concept_drizzle_layer",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "packages/api/src/db/index.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "api_src_tests_setup",
+      "target": "api_concept_test_infra",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "packages/api/src/__tests__/setup.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "tooling_ts_base_sharedconfig",
+      "target": "api_concept_config_inheritance",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "tooling/ts-base.json",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "crypto_encrypt_function",
+      "target": "crypto_arraybuffertobase64_function",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/crypto/src/encrypt.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "crypto_decrypt_function",
+      "target": "crypto_base64toarraybuffer_function",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/crypto/src/decrypt.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "crypto_index_re_exports",
+      "target": "crypto_encrypt_function",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/crypto/src/index.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "crypto_index_re_exports",
+      "target": "crypto_decrypt_function",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/crypto/src/index.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "crypto_index_re_exports",
+      "target": "crypto_derivekey_function",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/crypto/src/index.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "crypto_index_re_exports",
+      "target": "crypto_generatesalt_function",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/crypto/src/index.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "crypto_index_re_exports",
+      "target": "crypto_arraybuffertobase64_function",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/crypto/src/index.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "crypto_index_re_exports",
+      "target": "crypto_base64toarraybuffer_function",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/crypto/src/index.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "crypto_crypto_test_suite",
+      "target": "crypto_derivekey_function",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/crypto/src/__tests__/crypto.test.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "crypto_crypto_test_suite",
+      "target": "crypto_encrypt_function",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/crypto/src/__tests__/crypto.test.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "crypto_crypto_test_suite",
+      "target": "crypto_decrypt_function",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/crypto/src/__tests__/crypto.test.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "crypto_crypto_test_suite",
+      "target": "crypto_generatesalt_function",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/crypto/src/__tests__/crypto.test.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "crypto_utils_test_suite",
+      "target": "crypto_arraybuffertobase64_function",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/crypto/src/__tests__/utils.test.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "crypto_utils_test_suite",
+      "target": "crypto_base64toarraybuffer_function",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/crypto/src/__tests__/utils.test.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "crypto_derivekey_function",
+      "target": "overhaul_md_pbkdf2_aesgcm",
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/crypto/src/derive-key.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "crypto_encrypt_function",
+      "target": "overhaul_md_pbkdf2_aesgcm",
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/crypto/src/encrypt.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "crypto_decrypt_function",
+      "target": "overhaul_md_pbkdf2_aesgcm",
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/crypto/src/decrypt.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "crypto_generatesalt_function",
+      "target": "overhaul_md_pbkdf2_aesgcm",
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/crypto/src/index.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "overhaul_md_web_crypto_api",
+      "target": "overhaul_md_pbkdf2_aesgcm",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "overhaul.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "overhaul_md_zero_budget",
+      "target": "overhaul_md_hono_stack",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "overhaul.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "overhaul_md_zero_budget",
+      "target": "overhaul_md_web_crypto_api",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "overhaul.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "overhaul_md_e2ee_architecture",
+      "target": "overhaul_md_pbkdf2_aesgcm",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "overhaul.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "overhaul_md_e2ee_architecture",
+      "target": "overhaul_md_invite_token_system",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "overhaul.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "ci_yml_workflow",
+      "target": "agents_md_document",
+      "relation": "implements",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": ".github/workflows/ci.yml",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "overhaul_md_phase_migration",
+      "target": "phase1_foundation_spec",
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "overhaul.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "overhaul_md_phase_migration",
+      "target": "phase2_core_features_spec",
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "overhaul.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "phase1_foundation_spec",
+      "target": "phase2_core_features_spec",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/superpowers/specs/2026-05-25-phase-1-foundation.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "phase2_core_features_spec",
+      "target": "phase3_polish_spec",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/superpowers/specs/2026-05-25-phase-2-core-features.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "phase3_polish_spec",
+      "target": "phase4_quality_spec",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/superpowers/specs/2026-05-25-phase-3-polish.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "phase4_quality_spec",
+      "target": "phase5_decommission_spec",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/superpowers/specs/2026-05-25-phase-4-quality.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "phase1_foundation_plan",
+      "target": "phase1_foundation_spec",
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/superpowers/plans/2026-05-25-phase-1-foundation.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "phase2_core_features_plan",
+      "target": "phase2_core_features_spec",
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/superpowers/plans/2026-05-25-phase-2-core-features.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "phase3_polish_plan",
+      "target": "phase3_polish_spec",
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/superpowers/plans/2026-05-25-phase-3-polish.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "overhaul_md_document",
+      "target": "overhaul_md_zero_budget",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "overhaul.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "overhaul_md_document",
+      "target": "overhaul_md_web_crypto_api",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "overhaul.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "overhaul_md_document",
+      "target": "overhaul_md_hono_stack",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "overhaul.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "web_index_html",
+      "target": "phase3_polish_spec",
+      "relation": "implements",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "apps/web/index.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "agents_md_document",
+      "target": "overhaul_md_document",
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "AGENTS.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "crypto_package",
+      "target": "crypto_encrypt_function",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/crypto/package.json",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "crypto_package",
+      "target": "crypto_decrypt_function",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/crypto/package.json",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "crypto_package",
+      "target": "crypto_derivekey_function",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/crypto/package.json",
+      "source_location": null,
+      "weight": 1.0
+    }
+  ],
+  "hyperedges": [
+    {
+      "id": "room_entry_flow",
+      "label": "Room Entry Flow",
+      "nodes": [
+        "lobby_lobby_page_lobby_page",
+        "lobby_create_room_form_create_room_form",
+        "lobby_join_room_form_join_room_form",
+        "context_room_context_room_provider"
+      ],
+      "relation": "participate_in",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "apps/web/src/components/Lobby/LobbyPage.tsx"
+    },
+    {
+      "id": "real_time_messaging_protocol",
+      "label": "Real-Time Messaging Protocol",
+      "nodes": [
+        "lib_ws_room_socket",
+        "lib_ws_ws_in_message",
+        "lib_ws_ws_out_message",
+        "hooks_use_room_use_room",
+        "hooks_use_messages_use_messages"
+      ],
+      "relation": "participate_in",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "apps/web/src/lib/ws.ts"
+    },
+    {
+      "id": "api_client_layer",
+      "label": "API Client Layer",
+      "nodes": [
+        "lib_api_request",
+        "lib_api_create_room",
+        "lib_api_join_room",
+        "lib_api_leave_room",
+        "lib_api_get_messages",
+        "lib_api_validate_session",
+        "lib_api_request_upload_url",
+        "lib_api_api_error",
+        "lib_api_message"
+      ],
+      "relation": "participate_in",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/web/src/lib/api.ts"
+    },
+    {
+      "id": "chat_component_render_tree",
+      "label": "Chat UI component hierarchy (ChatPage -> Header, List, Input -> Item -> Image/File)",
+      "nodes": [
+        "chat_chatpage_chatpage",
+        "chat_chatheader_chatheader",
+        "chat_messagelist_messagelist",
+        "chat_messageinput_messageinput",
+        "chat_messageitem_messageitem",
+        "chat_filemessage_imagemessage",
+        "chat_filemessage_filedownload"
+      ],
+      "relation": "participate_in",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "apps/web/src/components/Chat/ChatPage.tsx"
+    },
+    {
+      "id": "chat_e2ee_data_pipeline",
+      "label": "E2EE pipeline: key derive from password -> encrypt message -> send -> async decrypt in MessageList",
+      "nodes": [
+        "chat_chatpage_e2ee_derivation",
+        "chat_chatpage_chatpage",
+        "chat_messagelist_messagelist",
+        "chat_messagelist_async_decryption"
+      ],
+      "relation": "participate_in",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "apps/web/src/components/Chat/ChatPage.tsx"
+    },
+    {
+      "id": "husky_git_hooks_system",
+      "label": "Husky internal git hook runner (14 hook files delegate to h)",
+      "nodes": ["_h_runner", "_huskysh_deprecation", "_h_hook_system"],
+      "relation": "form",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": ".husky/_/h"
+    },
+    {
+      "id": "api_core_runtime_stack",
+      "label": "API Core Runtime Stack",
+      "nodes": [
+        "api_src_dev_entry",
+        "api_src_index_app",
+        "api_src_routes_room",
+        "api_src_routes_health",
+        "api_src_ws_room_handler",
+        "api_src_middleware_auth",
+        "api_src_middleware_rate_limit",
+        "api_src_db_index",
+        "api_src_db_schema",
+        "api_src_lib_r2",
+        "api_src_lib_validate",
+        "api_src_lib_errors"
+      ],
+      "relation": "participate_in",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "packages/api/src/index.ts"
+    },
+    {
+      "id": "api_auth_subsystem",
+      "label": "Auth Subsystem (Tokens+Middleware+DB)",
+      "nodes": [
+        "api_src_routes_room",
+        "api_src_middleware_auth",
+        "api_src_ws_room_handler",
+        "api_src_db_schema",
+        "api_concept_token_auth"
+      ],
+      "relation": "implement",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "packages/api/src/routes/room.ts"
+    },
+    {
+      "id": "api_test_subsystem",
+      "label": "Test Infrastructure",
+      "nodes": [
+        "api_src_tests_room_test",
+        "api_src_tests_health_test",
+        "api_src_tests_setup",
+        "api_vitest_config",
+        "api_concept_test_infra"
+      ],
+      "relation": "participate_in",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "packages/api/src/__tests__/setup.ts"
+    },
+    {
+      "id": "crypto_pbkdf2_aesgcm_flow",
+      "label": "PBKDF2 key derivation + AES-GCM encrypt/decrypt flow",
+      "nodes": [
+        "crypto_derivekey_function",
+        "crypto_encrypt_function",
+        "crypto_decrypt_function",
+        "crypto_generatesalt_function",
+        "crypto_arraybuffertobase64_function",
+        "crypto_base64toarraybuffer_function"
+      ],
+      "relation": "participate_in",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/crypto/src/index.ts"
+    },
+    {
+      "id": "phase_chain_1_through_5",
+      "label": "VanisChat 5-phase migration sequence",
+      "nodes": [
+        "phase1_foundation_spec",
+        "phase2_core_features_spec",
+        "phase3_polish_spec",
+        "phase4_quality_spec",
+        "phase5_decommission_spec"
+      ],
+      "relation": "form",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "overhaul.md"
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}
