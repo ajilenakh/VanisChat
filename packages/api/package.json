@@ -15,6 +15,7 @@
     "db:migrate": "drizzle-kit migrate"
   },
   "dependencies": {
+    "@vanischat/crypto": "workspace:*",
     "@libsql/client": "^0.14.0",
     "@paralleldrive/cuid2": "^3.3.0",
     "drizzle-orm": "^0.38.0",

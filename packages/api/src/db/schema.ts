@@ -49,6 +49,7 @@ export const roomTokens = sqliteTable(
     type: text('type').notNull().$type<'invite' | 'session'>(),
     expiresAt: integer('expires_at').notNull(),
     usesLeft: integer('uses_left').default(1),
+    nickname: text('nickname'),
     createdAt: integer('created_at')
       .notNull()
       .$defaultFn(() => Math.floor(Date.now() / 1000)),

@@ -94,10 +94,12 @@ async function handleAuth(ws: ServerWebSocket, sessionToken: string) {
     rooms.get(token.roomId)?.delete(sessionToken);
   }
 
+  const nickname = token.nickname || `User_${sessionToken.slice(0, 6)}`;
+
   const client: RoomClient = {
     ws,
     userId: sessionToken,
-    nickname: existingClient?.nickname || `User_${sessionToken.slice(0, 6)}`,
+    nickname,
     roomId: token.roomId,
     alive: true,
   };

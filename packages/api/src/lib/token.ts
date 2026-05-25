@@ -1,4 +1,3 @@
-import { createId } from '@paralleldrive/cuid2';
 import { eq } from 'drizzle-orm';
 import { type getDb, schema } from '../db';
 
@@ -11,28 +10,25 @@ export function generateToken(): string {
 }
 
 export interface TokenRecord {
-  id: string;
   token: string;
   type: 'invite' | 'session';
   expiresAt: number;
 }
 
-export function createInviteToken(_roomId: string, expiresInMinutes: number): TokenRecord {
+export function createInviteToken(expiresInMinutes: number): TokenRecord {
   const now = Math.floor(Date.now() / 1000);
   return {
-    id: createId(),
     token: generateToken(),
-    type: 'invite',
+    type: 'invite' as const,
     expiresAt: now + expiresInMinutes * 60,
   };
 }
 
-export function createSessionToken(_roomId: string, expiresInMinutes: number): TokenRecord {
+export function createSessionToken(expiresInMinutes: number): TokenRecord {
   const now = Math.floor(Date.now() / 1000);
   return {
-    id: createId(),
     token: generateToken(),
-    type: 'session',
+    type: 'session' as const,
     expiresAt: now + expiresInMinutes * 60,
   };
 }

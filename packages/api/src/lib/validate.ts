@@ -10,6 +10,7 @@ export const createRoomSchema = z.object({
 export const joinRoomSchema = z.object({
   inviteToken: z.string().length(64),
   nickname: z.string().min(1).max(50),
+  password: z.string().min(1).max(256),
 });
 
 export const leaveRoomSchema = z.object({

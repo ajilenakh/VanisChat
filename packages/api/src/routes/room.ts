@@ -1,13 +1,9 @@
 import { createId } from '@paralleldrive/cuid2';
-import { eq } from 'drizzle-orm';
+import { generateSalt } from '@vanischat/crypto';
+import { eq, lt } from 'drizzle-orm';
 import { Hono } from 'hono';
 import { getDb, schema } from '../db';
 import { createInviteToken, createSessionToken } from '../lib/token';
-
-/** Generate 16 random bytes for use as a PBKDF2 salt. */
-function generateSalt(): Uint8Array {
-  return crypto.getRandomValues(new Uint8Array(16));
-}
 import { createRoomSchema, joinRoomSchema } from '../lib/validate';
 import { requireSession } from '../middleware/auth';
 import { rateLimit } from '../middleware/rate-limit';
@@ -31,7 +27,7 @@ roomRoutes.post('/rooms', rateLimit({ max: 20, windowMs: 60_000 }), async (c) =>
     .join('');
   const passwordHash = await Bun.password.hash(password);
 
-  const inviteToken = createInviteToken(roomId, expirationMinutes);
+  const inviteToken = createInviteToken(expirationMinutes);
 
   await db.insert(schema.rooms).values({
     id: roomId,
@@ -63,7 +59,7 @@ roomRoutes.post('/rooms/:id/join', rateLimit({ max: 20, windowMs: 60_000 }), asy
     return c.json({ error: 'validation_error', details: parsed.error }, 400);
   }
 
-  const { inviteToken } = parsed.data;
+  const { inviteToken, nickname, password } = parsed.data;
   const roomId = c.req.param('id');
   const db = getDb();
   const now = Math.floor(Date.now() / 1000);
@@ -100,6 +96,12 @@ roomRoutes.post('/rooms/:id/join', rateLimit({ max: 20, windowMs: 60_000 }), asy
     return c.json({ error: 'room_expired' }, 403);
   }
 
+  // Verify password
+  const passwordValid = await Bun.password.verify(password, room.password);
+  if (!passwordValid) {
+    return c.json({ error: 'invalid_token', message: 'Invalid room password' }, 401);
+  }
+
   // Mark invite token as used
   await db
     .update(schema.roomTokens)
@@ -107,13 +109,14 @@ roomRoutes.post('/rooms/:id/join', rateLimit({ max: 20, windowMs: 60_000 }), asy
     .where(eq(schema.roomTokens.id, inviteToken));
 
   // Create a session token for this user
-  const sessionToken = createSessionToken(roomId, 1440); // 24-hour session
+  const sessionToken = createSessionToken(1440); // 24-hour session
   await db.insert(schema.roomTokens).values({
     id: sessionToken.token,
     roomId,
     type: 'session',
     expiresAt: sessionToken.expiresAt,
     usesLeft: null, // unlimited for session tokens
+    nickname,
   });
 
   // Fetch recent messages
@@ -152,15 +155,26 @@ roomRoutes.post('/rooms/:id/leave', requireSession, async (c) => {
 // GET /api/rooms/:id/messages — paginated message history
 roomRoutes.get('/rooms/:id/messages', requireSession, async (c) => {
   const roomId = c.req.param('id');
+  const before = c.req.query('before');
   const limit = Math.min(Number(c.req.query('limit')) || 50, 100);
   const db = getDb();
 
-  const rows = await db
-    .select()
-    .from(schema.messages)
-    .where(eq(schema.messages.roomId, roomId))
-    .orderBy(schema.messages.createdAt, 'desc')
-    .limit(limit + 1); // Fetch one extra to detect hasMore
+  let query = db.select().from(schema.messages).where(eq(schema.messages.roomId, roomId));
+
+  // If before cursor is provided, fetch messages older than that message
+  if (before) {
+    const cursorRows = await db
+      .select({ createdAt: schema.messages.createdAt })
+      .from(schema.messages)
+      .where(eq(schema.messages.id, before))
+      .limit(1);
+
+    if (cursorRows[0]) {
+      query = query.where(lt(schema.messages.createdAt, cursorRows[0].createdAt));
+    }
+  }
+
+  const rows = await query.orderBy(schema.messages.createdAt, 'desc').limit(limit + 1); // Fetch one extra to detect hasMore
 
   const hasMore = rows.length > limit;
   const messages = (hasMore ? rows.slice(0, limit) : rows).reverse();
