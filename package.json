@@ -3,23 +3,10 @@
   "version": "2.0.0",
   "private": true,
   "workspaces": ["packages/*", "apps/*"],
-  "main": "index.js",
   "repository": "https://github.com/ajilenakh/VanisChat.git",
   "author": "Ajilenakh <107887918+ajilenakh@users.noreply.github.com>",
   "license": "MIT",
-  "dependencies": {
-    "@supabase/supabase-js": "^2.49.8",
-    "bcrypt": "^6.0.0",
-    "dotenv": "^16.5.0",
-    "express": "^5.1.0",
-    "express-rate-limit": "^7.5.0",
-    "helmet": "^8.1.0",
-    "socket.io": "^4.8.1",
-    "uuid": "^11.1.0"
-  },
   "scripts": {
-    "start": "node server.js",
-    "dev": "nodemon server.js",
     "lint": "biome check .",
     "typecheck": "tsc --noEmit --project apps/web/tsconfig.json && tsc --noEmit --project packages/api/tsconfig.json && tsc --noEmit --project packages/crypto/tsconfig.json",
     "test": "vitest run",
@@ -27,7 +14,6 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.0",
-    "nodemon": "^3.1.10",
     "typescript": "^5.7.0",
     "vitest": "^3.0.0",
     "wrangler": "^4.0.0",
