@@ -1,9 +1,9 @@
-import { Hono } from "hono";
-import { healthRoutes } from "./routes/health";
+import { Hono } from 'hono';
+import { healthRoutes } from './routes/health';
 
 const app = new Hono();
 
 // Mount routes
-app.route("/", healthRoutes);
+app.route('/', healthRoutes);
 
 export { app };

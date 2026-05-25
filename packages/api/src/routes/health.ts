@@ -1,10 +1,10 @@
-import { Hono } from "hono";
+import { Hono } from 'hono';
 
 const healthRoutes = new Hono();
 
-healthRoutes.get("/health", (c) => {
+healthRoutes.get('/health', (c) => {
   return c.json({
-    status: "ok",
+    status: 'ok',
     timestamp: Math.floor(Date.now() / 1000),
   });
 });
