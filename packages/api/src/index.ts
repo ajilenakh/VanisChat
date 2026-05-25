@@ -6,4 +6,4 @@ const app = new Hono();
 // Mount routes
 app.route('/', healthRoutes);
 
-export { app };
+export default app;
