@@ -1,0 +1,18 @@
+commit_msg=$(cat "$1")
+
+if ! echo "$commit_msg" | grep -qE '^(feat|fix|chore|docs|style|refactor|perf|test|ci|build|revert)(\(.+\))?: .+$'; then
+  echo ""
+  echo " ❌ Invalid commit message format."
+  echo ""
+  echo "    Expected: type(optional-scope): description"
+  echo ""
+  echo "    Examples:"
+  echo "      feat: add voice message support"
+  echo "      fix(api): handle empty room name"
+  echo "      chore: bump dependencies"
+  echo "      docs: update README"
+  echo ""
+  echo "    Allowed types: feat, fix, chore, docs, style, refactor, perf, test, ci, build, revert"
+  echo ""
+  exit 1
+fi

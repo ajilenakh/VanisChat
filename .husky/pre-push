@@ -1,0 +1,27 @@
+echo ""
+echo " ⏳ Running pre-push checks..."
+echo ""
+
+echo " ── Lint ──"
+bun run lint
+if [ $? -ne 0 ]; then
+  echo " ❌ Lint failed. Push aborted."
+  exit 1
+fi
+
+echo " ── Typecheck ──"
+bun run typecheck
+if [ $? -ne 0 ]; then
+  echo " ❌ Typecheck failed. Push aborted."
+  exit 1
+fi
+
+echo " ── Tests ──"
+bun run test
+if [ $? -ne 0 ]; then
+  echo " ❌ Tests failed. Push aborted."
+  exit 1
+fi
+
+echo ""
+echo " ✅ All checks passed!"
