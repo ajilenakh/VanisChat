@@ -8,6 +8,7 @@ export function JoinRoomForm() {
   const navigate = useNavigate();
 
   const [nickname, setNickname] = useState('');
+  const [password, setPassword] = useState('');
   const [roomId, setRoomId] = useState('');
   const [inviteToken, setInviteToken] = useState('');
   const [error, setError] = useState('');
@@ -39,6 +40,7 @@ export function JoinRoomForm() {
       const result = await joinRoom(effectiveRoomId, {
         inviteToken: effectiveInviteToken,
         nickname,
+        password,
       });
 
       setRoom({
@@ -48,6 +50,7 @@ export function JoinRoomForm() {
         roomSalt: result.room.salt,
         roomExpiresAt: result.room.expiresAt,
         nickname,
+        roomPassword: password,
       });
 
       navigate(`/room/${effectiveRoomId}`);
@@ -114,6 +117,24 @@ export function JoinRoomForm() {
           />
         </div>
       )}
+
+      <div>
+        <label htmlFor="join-password" className="block text-sm font-medium mb-1">
+          Password
+        </label>
+        <input
+          id="join-password"
+          required
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          className="w-full rounded border px-3 py-2 text-sm"
+          placeholder="Room password"
+        />
+        <p className="text-xs text-gray-500 mt-1">
+          Used to derive the encryption key. Must match the room's password.
+        </p>
+      </div>
 
       {error && <p className="text-sm text-red-600">{error}</p>}
 

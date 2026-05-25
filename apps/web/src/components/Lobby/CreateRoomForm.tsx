@@ -26,6 +26,7 @@ export function CreateRoomForm() {
         roomName: name,
         inviteToken: result.inviteToken,
         nickname,
+        roomPassword: password,
       });
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : 'Failed to create room');

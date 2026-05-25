@@ -8,6 +8,7 @@ interface RoomState {
   roomExpiresAt: number | null;
   nickname: string | null;
   inviteToken: string | null;
+  roomPassword: string | null;
 }
 
 interface RoomContextValue {
@@ -24,6 +25,7 @@ const defaultState: RoomState = {
   roomExpiresAt: null,
   nickname: null,
   inviteToken: null,
+  roomPassword: null,
 };
 
 const RoomContext = createContext<RoomContextValue | null>(null);

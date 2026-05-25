@@ -81,7 +81,7 @@ export function createRoom(data: {
 
 export function joinRoom(
   roomId: string,
-  data: { inviteToken: string; nickname: string },
+  data: { inviteToken: string; nickname: string; password: string },
 ): Promise<JoinRoomResponse> {
   return request(`/api/rooms/${roomId}/join`, {
     method: 'POST',
