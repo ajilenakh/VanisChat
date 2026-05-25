@@ -18,7 +18,7 @@ interface RoomInfo {
   salt: string;
 }
 
-interface Message {
+export interface Message {
   id: string;
   senderName: string;
   content: string;
