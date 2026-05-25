@@ -11,6 +11,7 @@ export function CreateRoomForm() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [inviteUrl, setInviteUrl] = useState('');
+  const [createdRoomId, setCreatedRoomId] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -21,6 +22,7 @@ export function CreateRoomForm() {
       const result = await createRoom({ name, password, expirationMinutes, nickname });
       const url = `${window.location.origin}/room/${result.roomId}?invite=${result.inviteToken}`;
       setInviteUrl(url);
+      setCreatedRoomId(result.roomId);
       setRoom({
         roomId: result.roomId,
         roomName: name,
@@ -56,7 +58,7 @@ export function CreateRoomForm() {
           </button>
         </div>
         <a
-          href={`/room/${inviteUrl.split('/room/')[1]?.split('?')[0]}`}
+          href={`/room/${createdRoomId}`}
           className="inline-block rounded bg-green-600 px-4 py-2 text-sm text-white hover:bg-green-700"
         >
           Enter Room

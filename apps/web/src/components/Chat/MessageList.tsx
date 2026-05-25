@@ -1,10 +1,10 @@
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type { Message } from '../../lib/api';
 import { MessageItem } from './MessageItem';
 
 interface MessageListProps {
   messages: Message[];
-  decryptMessage: (content: string, iv: string) => string | null;
+  decryptMessage: (content: string, iv: string) => Promise<string | null>;
   ownNickname: string;
   loading: boolean;
   hasMore: boolean;
@@ -21,12 +21,30 @@ export function MessageList({
 }: MessageListProps) {
   const bottomRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const [decryptedMap, setDecryptedMap] = useState<Map<string, string>>(new Map());
+
+  // Async decrypt messages as they arrive
+  useEffect(() => {
+    for (const msg of messages) {
+      if (msg.type !== 'text') continue;
+      if (decryptedMap.has(msg.id)) continue;
+
+      decryptMessage(msg.content, msg.iv).then((plaintext) => {
+        if (plaintext !== null) {
+          setDecryptedMap((prev) => {
+            const next = new Map(prev);
+            next.set(msg.id, plaintext);
+            return next;
+          });
+        }
+      });
+    }
+  }, [messages, decryptMessage, decryptedMap]);
 
   // Auto-scroll to bottom on new messages
   const prevLength = useRef(messages.length);
   if (messages.length !== prevLength.current) {
     prevLength.current = messages.length;
-    // Use rAF to scroll after render
     requestAnimationFrame(() => {
       bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
     });
@@ -73,7 +91,7 @@ export function MessageList({
           key={msg.id}
           message={msg}
           isOwn={msg.senderName === ownNickname}
-          decryptedContent={msg.type === 'text' ? decryptMessage(msg.content, msg.iv) : msg.content}
+          decryptedContent={msg.type === 'text' ? (decryptedMap.get(msg.id) ?? null) : msg.content}
         />
       ))}
 

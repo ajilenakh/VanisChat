@@ -17,7 +17,10 @@ setInterval(() => {
 
 export function rateLimit(opts: { max: number; windowMs: number }) {
   return async function rateLimitMiddleware(c: Context, next: Next) {
-    const ip = c.req.header('cf-connecting-ip') || c.req.header('x-forwarded-for') || 'unknown';
+    const ip =
+      c.req.header('cf-connecting-ip') ||
+      c.req.header('x-forwarded-for') ||
+      `unknown:${c.req.path}`;
 
     const now = Date.now();
     const entry = ipMap.get(ip);

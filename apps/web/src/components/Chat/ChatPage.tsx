@@ -1,7 +1,8 @@
-import { deriveKey, encrypt } from '@vanischat/crypto';
+import { encrypt } from '@vanischat/crypto';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useRoomContext } from '../../context/RoomContext';
+import { useCryptoKey } from '../../hooks/useCryptoKey';
 import { useMessages } from '../../hooks/useMessages';
 import { usePresence } from '../../hooks/usePresence';
 import { useRoom } from '../../hooks/useRoom';
@@ -14,25 +15,13 @@ export function ChatPage() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { state, clearRoom } = useRoomContext();
-  const [encryptionKey, setEncryptionKey] = useState<CryptoKey | null>(null);
   const [expired, setExpired] = useState(false);
 
   const roomId = id || state.roomId || '';
   const sessionToken = state.sessionToken || '';
-  const passwordRef = useRef<string>('');
 
-  // Derive encryption key from password + room salt
-  useEffect(() => {
-    if (!state.roomSalt || !sessionToken) return;
-
-    const saltBytes = new Uint8Array(
-      state.roomSalt.match(/.{1,2}/g)!.map((byte) => Number.parseInt(byte, 16)),
-    );
-
-    // Use the room password provided during join/create
-    const password = passwordRef.current || sessionToken.slice(0, 32);
-    deriveKey(password, saltBytes).then(setEncryptionKey);
-  }, [state.roomSalt, sessionToken]);
+  // Derive encryption key from the actual room password (not session token)
+  const { ready: keyReady, decryptMessage } = useCryptoKey(state.roomPassword, state.roomSalt);
 
   const { onlineCount, typingUsers, handlePresenceMessage } = usePresence();
 
@@ -55,26 +44,23 @@ export function ChatPage() {
 
   const { messages, loading, hasMore, appendMessage, loadMore } = useMessages(roomId, sessionToken);
 
-  const decryptMessage = useCallback(
-    (_content: string, _iv: string): string | null => {
-      if (!encryptionKey) return null;
-      // decrypt is async — will be wired properly in a follow-up
-      return '[encrypted]';
-    },
-    [encryptionKey],
-  );
-
   const handleSend = useCallback(
     async (text: string) => {
-      if (!encryptionKey) return;
+      if (!keyReady) return;
       try {
-        const result = await encrypt(text, encryptionKey);
+        const saltBytes = new Uint8Array(
+          state.roomSalt!.match(/.{1,2}/g)!.map((byte) => Number.parseInt(byte, 16)),
+        );
+        // Re-derive for encrypt (or cache it — simplified for now)
+        const { deriveKey } = await import('@vanischat/crypto');
+        const key = await deriveKey(state.roomPassword!, saltBytes);
+        const result = await encrypt(text, key);
         sendMessage(result.ciphertext, result.iv);
       } catch {
         // Encryption failed
       }
     },
-    [encryptionKey, sendMessage],
+    [keyReady, sendMessage, state.roomPassword, state.roomSalt],
   );
 
   const handleLeave = async () => {
