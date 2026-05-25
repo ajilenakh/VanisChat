@@ -151,3 +151,6 @@ yarn.lock
 
 # Cloudflare
 .wrangler/
+
+# Drizzle generated migrations
+packages/api/drizzle/

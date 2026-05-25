@@ -10,7 +10,9 @@
     "build": "tsup src/index.ts --format esm --outDir dist",
     "dev": "bun run src/dev.ts",
     "dev:wrangler": "wrangler dev src/index.ts",
-    "db:push": "drizzle-kit push"
+    "db:push": "drizzle-kit push",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate"
   },
   "dependencies": {
     "hono": "^4.7.0",

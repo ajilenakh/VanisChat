@@ -31,6 +31,6 @@
     }
   },
   "files": {
-    "ignore": ["node_modules", "dist", ".turbo"]
+    "ignore": ["node_modules", "dist", ".turbo", "server.js", "public/**"]
   }
 }
