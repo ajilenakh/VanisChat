@@ -2,11 +2,13 @@ import { encrypt } from '@vanischat/crypto';
 import { useCallback, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useRoomContext } from '../../context/RoomContext';
+import { useTheme } from '../../context/ThemeContext';
 import { useCryptoKey } from '../../hooks/useCryptoKey';
 import { useMessages } from '../../hooks/useMessages';
 import { usePresence } from '../../hooks/usePresence';
 import { useRoom } from '../../hooks/useRoom';
 import { leaveRoom } from '../../lib/api';
+import { useToast } from '../../lib/toast';
 import { ChatHeader } from './ChatHeader';
 import { MessageInput } from './MessageInput';
 import { MessageList } from './MessageList';
@@ -15,6 +17,8 @@ export function ChatPage() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { state, clearRoom } = useRoomContext();
+  const { theme, toggleTheme } = useTheme();
+  const { addToast } = useToast();
   const [expired, setExpired] = useState(false);
 
   const roomId = id || state.roomId || '';
@@ -29,8 +33,14 @@ export function ChatPage() {
     (msg: Parameters<typeof handlePresenceMessage>[0]) => {
       handlePresenceMessage(msg);
       if (msg.type === 'room_expired') setExpired(true);
+      if (msg.type === 'user_joined' && msg.nickname) {
+        addToast(`${msg.nickname} joined`, 'info');
+      }
+      if (msg.type === 'user_left' && msg.nickname) {
+        addToast(`${msg.nickname} left`, 'info');
+      }
     },
-    [handlePresenceMessage],
+    [handlePresenceMessage, addToast],
   );
 
   const { connected, sendMessage, sendTyping } = useRoom({
@@ -63,6 +73,15 @@ export function ChatPage() {
     [keyReady, sendMessage, state.roomPassword, state.roomSalt],
   );
 
+  const handleFileSend = useCallback(
+    (fileUrl: string, fileType: string) => {
+      if (!keyReady) return;
+      // For file messages, send empty encrypted payload
+      sendMessage('', '', fileUrl, fileType);
+    },
+    [keyReady, sendMessage],
+  );
+
   const handleLeave = async () => {
     try {
       if (sessionToken) await leaveRoom(roomId, sessionToken);
@@ -76,13 +95,15 @@ export function ChatPage() {
   const typingNicknames = Array.from(typingUsers.keys()).filter((n) => n !== state.nickname);
 
   return (
-    <div className="h-screen flex flex-col bg-gray-50">
+    <div className="h-screen flex flex-col bg-white dark:bg-slate-900">
       <ChatHeader
         roomName={state.roomName || 'Chat Room'}
         expiresAt={state.roomExpiresAt || 0}
         onlineCount={onlineCount}
         roomId={roomId}
         onLeave={handleLeave}
+        theme={theme}
+        onToggleTheme={toggleTheme}
       />
 
       <MessageList
@@ -95,21 +116,26 @@ export function ChatPage() {
       />
 
       {typingNicknames.length > 0 && (
-        <div className="px-4 py-1 text-xs text-gray-400 italic">
+        <div className="px-4 py-1 text-xs text-gray-400 dark:text-slate-500 italic">
           {typingNicknames.join(', ')} typing...
         </div>
       )}
 
-      <MessageInput onSend={handleSend} onTyping={sendTyping} disabled={expired || !connected} />
+      <MessageInput
+        onSend={handleSend}
+        onTyping={sendTyping}
+        disabled={expired || !connected}
+        onFileSend={handleFileSend}
+      />
 
       {expired && (
-        <div className="text-center text-sm text-red-600 py-2 bg-red-50 border-t border-red-200">
+        <div className="text-center text-sm text-red-600 py-2 bg-red-50 dark:bg-red-950 dark:text-red-400 border-t border-red-200 dark:border-red-800">
           This room has expired.
         </div>
       )}
 
       {!connected && !expired && (
-        <div className="text-center text-sm text-amber-600 py-2 bg-amber-50 border-t border-amber-200">
+        <div className="text-center text-sm text-amber-600 py-2 bg-amber-50 dark:bg-amber-950 dark:text-amber-400 border-t border-amber-200 dark:border-amber-800">
           Reconnecting...
         </div>
       )}

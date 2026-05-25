@@ -32,6 +32,13 @@ export function useMessages(roomId: string, sessionToken: string) {
     if (seenIds.current.has(msg.id)) return;
 
     seenIds.current.add(msg.id);
+
+    const messageType = msg.fileUrl
+      ? msg.fileType?.startsWith('image/')
+        ? ('image' as const)
+        : ('file' as const)
+      : ('text' as const);
+
     setMessages((prev) => [
       ...prev,
       {
@@ -39,8 +46,10 @@ export function useMessages(roomId: string, sessionToken: string) {
         senderName: msg.senderName,
         content: msg.content,
         iv: msg.iv,
-        type: 'text' as const,
+        type: messageType,
         createdAt: msg.createdAt,
+        fileUrl: msg.fileUrl,
+        fileType: msg.fileType,
       },
     ]);
   }, []);

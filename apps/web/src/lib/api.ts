@@ -23,8 +23,10 @@ export interface Message {
   senderName: string;
   content: string;
   iv: string;
-  type: 'text' | 'system';
+  type: 'text' | 'image' | 'file' | 'system';
   createdAt: number;
+  fileUrl?: string;
+  fileType?: string;
 }
 
 interface MessagesResponse {
@@ -109,6 +111,25 @@ export function getMessages(
 
   return request(`/api/rooms/${roomId}/messages${qs ? `?${qs}` : ''}`, {
     headers: { 'x-session-token': sessionToken },
+  });
+}
+
+interface UploadUrlResponse {
+  uploadUrl: string;
+  fileUrl: string;
+  key: string;
+  expiresIn: number;
+}
+
+export function requestUploadUrl(
+  roomId: string,
+  sessionToken: string,
+  data: { fileName: string; fileType: string; fileSize: number },
+): Promise<UploadUrlResponse> {
+  return request(`/api/rooms/${roomId}/upload-url`, {
+    method: 'POST',
+    headers: { 'x-session-token': sessionToken },
+    body: JSON.stringify(data),
   });
 }
 

@@ -3,8 +3,9 @@ import { generateSalt } from '@vanischat/crypto';
 import { and, desc, eq, lt } from 'drizzle-orm';
 import { Hono } from 'hono';
 import { getDb, schema } from '../db';
+import { generatePresignedPutUrl } from '../lib/r2';
 import { createInviteToken, createSessionToken } from '../lib/token';
-import { createRoomSchema, joinRoomSchema } from '../lib/validate';
+import { createRoomSchema, joinRoomSchema, uploadUrlSchema } from '../lib/validate';
 import { requireSession } from '../middleware/auth';
 import { rateLimit } from '../middleware/rate-limit';
 
@@ -137,12 +138,67 @@ roomRoutes.post('/rooms/:id/join', rateLimit({ max: 20, windowMs: 60_000 }), asy
       iv: m.iv,
       type: m.type,
       createdAt: m.createdAt,
+      fileUrl: m.fileUrl,
+      fileType: m.fileType,
     })),
     room: {
       name: room.name,
       expiresAt: room.expiresAt,
       salt: room.salt,
     },
+  });
+});
+
+// POST /api/rooms/:id/upload-url — request presigned R2 upload URL
+roomRoutes.post('/rooms/:id/upload-url', requireSession, async (c) => {
+  const roomId = c.req.param('id');
+  const parsed = uploadUrlSchema.safeParse(await c.req.json());
+  if (!parsed.success) {
+    return c.json({ error: 'validation_error', details: parsed.error }, 400);
+  }
+
+  const { fileName, fileType, fileSize: _fileSize } = parsed.data;
+
+  // Validate file type
+  const allowedTypes = ['image/', 'application/pdf', 'text/', 'application/zip'];
+  const isAllowed = allowedTypes.some((prefix) => fileType.startsWith(prefix));
+  if (!isAllowed && !fileType.startsWith('image/')) {
+    return c.json({ error: 'file_type_not_allowed', message: 'File type not allowed' }, 400);
+  }
+
+  // Generate a unique key for R2
+  const key = `${roomId}/${crypto.randomUUID()}-${fileName}`;
+
+  const accountId = process.env.CLOUDFLARE_ACCOUNT_ID;
+  const accessKeyId = process.env.R2_ACCESS_KEY_ID;
+  const secretAccessKey = process.env.R2_SECRET_ACCESS_KEY;
+  const bucketName = process.env.R2_BUCKET_NAME || 'vanischat-uploads';
+
+  if (!accountId || !accessKeyId || !secretAccessKey) {
+    return c.json({ error: 'storage_not_configured', message: 'File upload not configured' }, 500);
+  }
+
+  // Generate presigned PUT URL using S3-compatible endpoint
+  const endpoint = `https://${accountId}.r2.cloudflarestorage.com`;
+  const url = new URL(`${endpoint}/${bucketName}/${key}`);
+
+  const expiresIn = 300; // 5 minutes
+  const encodedUrl = await generatePresignedPutUrl({
+    url: url.toString(),
+    accessKeyId,
+    secretAccessKey,
+    region: 'auto',
+    expiresIn,
+    fileType,
+  });
+
+  const publicUrl = `https://${bucketName}.${accountId}.r2.cloudflarestorage.com/${key}`;
+
+  return c.json({
+    uploadUrl: encodedUrl,
+    fileUrl: publicUrl,
+    key,
+    expiresIn,
   });
 });
 
@@ -194,6 +250,8 @@ roomRoutes.get('/rooms/:id/messages', requireSession, async (c) => {
       iv: m.iv,
       type: m.type,
       createdAt: m.createdAt,
+      fileUrl: m.fileUrl,
+      fileType: m.fileType,
     })),
     hasMore,
   });

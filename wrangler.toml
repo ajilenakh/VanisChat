@@ -13,3 +13,8 @@ vars = { NODE_ENV = "production" }
 # TURSO_DB_URL and TURSO_AUTH_TOKEN must be set:
 #   npx wrangler secret put TURSO_DB_URL
 #   npx wrangler secret put TURSO_AUTH_TOKEN
+
+# R2 bucket for file uploads
+[[r2_buckets]]
+binding = "R2_BUCKET"
+bucket_name = "vanischat-uploads"

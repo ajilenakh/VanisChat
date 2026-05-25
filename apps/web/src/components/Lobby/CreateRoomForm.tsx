@@ -1,3 +1,4 @@
+import { Loader2 } from 'lucide-react';
 import { useState } from 'react';
 import { useRoomContext } from '../../context/RoomContext';
 import { createRoom } from '../../lib/api';
@@ -40,13 +41,15 @@ export function CreateRoomForm() {
   if (inviteUrl) {
     return (
       <div className="space-y-4">
-        <h2 className="text-lg font-semibold">Room Created!</h2>
-        <p className="text-sm text-gray-600">Share this invite link with others:</p>
+        <h2 className="text-lg font-semibold dark:text-slate-100">Room Created!</h2>
+        <p className="text-sm text-gray-600 dark:text-slate-400">
+          Share this invite link with others:
+        </p>
         <div className="flex gap-2">
           <input
             readOnly
             value={inviteUrl}
-            className="flex-1 rounded border px-3 py-2 text-sm font-mono bg-gray-50"
+            className="flex-1 rounded border px-3 py-2 text-sm font-mono bg-gray-50 dark:bg-slate-700 dark:border-slate-600 dark:text-slate-200 dark:placeholder-slate-400"
             onClick={(e) => e.currentTarget.select()}
           />
           <button
@@ -69,10 +72,13 @@ export function CreateRoomForm() {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      <h2 className="text-lg font-semibold">Create a Room</h2>
+      <h2 className="text-lg font-semibold dark:text-slate-100">Create a Room</h2>
 
       <div>
-        <label htmlFor="create-nickname" className="block text-sm font-medium mb-1">
+        <label
+          htmlFor="create-nickname"
+          className="block text-sm font-medium mb-1 dark:text-slate-300"
+        >
           Nickname
         </label>
         <input
@@ -80,14 +86,17 @@ export function CreateRoomForm() {
           required
           value={nickname}
           onChange={(e) => setNickname(e.target.value)}
-          className="w-full rounded border px-3 py-2 text-sm"
+          className="w-full rounded border px-3 py-2 text-sm dark:bg-slate-700 dark:border-slate-600 dark:text-slate-200 dark:placeholder-slate-400"
           placeholder="Your display name"
           maxLength={50}
         />
       </div>
 
       <div>
-        <label htmlFor="create-room-name" className="block text-sm font-medium mb-1">
+        <label
+          htmlFor="create-room-name"
+          className="block text-sm font-medium mb-1 dark:text-slate-300"
+        >
           Room Name
         </label>
         <input
@@ -95,14 +104,17 @@ export function CreateRoomForm() {
           required
           value={name}
           onChange={(e) => setName(e.target.value)}
-          className="w-full rounded border px-3 py-2 text-sm"
+          className="w-full rounded border px-3 py-2 text-sm dark:bg-slate-700 dark:border-slate-600 dark:text-slate-200 dark:placeholder-slate-400"
           placeholder="e.g. Project Discussion"
           maxLength={100}
         />
       </div>
 
       <div>
-        <label htmlFor="create-room-password" className="block text-sm font-medium mb-1">
+        <label
+          htmlFor="create-room-password"
+          className="block text-sm font-medium mb-1 dark:text-slate-300"
+        >
           Password
         </label>
         <input
@@ -111,16 +123,19 @@ export function CreateRoomForm() {
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="w-full rounded border px-3 py-2 text-sm"
+          className="w-full rounded border px-3 py-2 text-sm dark:bg-slate-700 dark:border-slate-600 dark:text-slate-200 dark:placeholder-slate-400"
           placeholder="Shared room password"
         />
-        <p className="text-xs text-gray-500 mt-1">
+        <p className="text-xs text-gray-500 mt-1 dark:text-slate-400">
           Used to derive the encryption key. Share with people you invite.
         </p>
       </div>
 
       <div>
-        <label htmlFor="create-expiration" className="block text-sm font-medium mb-1">
+        <label
+          htmlFor="create-expiration"
+          className="block text-sm font-medium mb-1 dark:text-slate-300"
+        >
           Room expires in: {expirationMinutes} min
         </label>
         <input
@@ -130,22 +145,29 @@ export function CreateRoomForm() {
           max={1440}
           value={expirationMinutes}
           onChange={(e) => setExpirationMinutes(Number(e.target.value))}
-          className="w-full"
+          className="w-full dark:accent-blue-400"
         />
-        <div className="flex justify-between text-xs text-gray-400">
+        <div className="flex justify-between text-xs text-gray-400 dark:text-slate-500">
           <span>1 min</span>
           <span>24 hrs</span>
         </div>
       </div>
 
-      {error && <p className="text-sm text-red-600">{error}</p>}
+      {error && <p className="text-sm text-red-600 dark:text-red-400">{error}</p>}
 
       <button
         type="submit"
         disabled={loading}
-        className="w-full rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 disabled:opacity-50"
+        className="w-full rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 disabled:opacity-50 flex items-center justify-center gap-2"
       >
-        {loading ? 'Creating...' : 'Create Room'}
+        {loading ? (
+          <>
+            <Loader2 size={16} className="animate-spin" />
+            Creating...
+          </>
+        ) : (
+          'Create Room'
+        )}
       </button>
     </form>
   );

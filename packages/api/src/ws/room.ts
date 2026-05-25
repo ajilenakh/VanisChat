@@ -18,7 +18,7 @@ const userSockets = new Map<string, RoomClient>();
 
 type WSMessage =
   | { type: 'auth'; sessionToken: string }
-  | { type: 'send_message'; content: string; iv: string }
+  | { type: 'send_message'; content: string; iv: string; fileUrl?: string; fileType?: string }
   | { type: 'typing'; isTyping: boolean }
   | { type: 'heartbeat_ack' };
 
@@ -46,7 +46,7 @@ async function handleMessage(ws: ServerWebSocket, raw: string) {
       await handleAuth(ws, msg.sessionToken);
       break;
     case 'send_message':
-      if (client) await handleSendMessage(client, msg.content, msg.iv);
+      if (client) await handleSendMessage(client, msg.content, msg.iv, msg.fileUrl, msg.fileType);
       break;
     case 'typing':
       if (client) handleTyping(client, msg.isTyping);
@@ -132,7 +132,13 @@ async function handleAuth(ws: ServerWebSocket, sessionToken: string) {
   }
 }
 
-async function handleSendMessage(client: RoomClient, content: string, iv: string) {
+async function handleSendMessage(
+  client: RoomClient,
+  content: string,
+  iv: string,
+  fileUrl?: string,
+  fileType?: string,
+) {
   const db = getDb();
   const now = Math.floor(Date.now() / 1000);
 
@@ -154,13 +160,13 @@ async function handleSendMessage(client: RoomClient, content: string, iv: string
   }
 
   const messageId = createId();
-  const msg = {
-    id: messageId,
-    senderName: client.nickname,
-    content,
-    iv,
-    createdAt: now,
-  };
+
+  const isFile = fileUrl && fileType;
+  const messageType = isFile
+    ? fileType.startsWith('image/')
+      ? ('image' as const)
+      : ('file' as const)
+    : ('text' as const);
 
   // Persist to DB
   await db.insert(schema.messages).values({
@@ -169,11 +175,22 @@ async function handleSendMessage(client: RoomClient, content: string, iv: string
     senderName: client.nickname,
     content,
     iv,
-    type: 'text',
+    type: messageType,
+    fileUrl: fileUrl || null,
+    fileType: fileType || null,
   });
 
-  // Relay to all clients in room (type override is intentional: db uses 'text', ws uses 'message')
-  broadcastToRoom(client.roomId, { type: 'message', ...msg });
+  // Relay to WS clients — msg payload without type (WS envelope provides 'message' discriminator)
+  broadcastToRoom(client.roomId, {
+    type: 'message',
+    id: messageId,
+    senderName: client.nickname,
+    content,
+    iv,
+    createdAt: now,
+    fileUrl,
+    fileType,
+  });
 }
 
 function handleTyping(client: RoomClient, isTyping: boolean) {

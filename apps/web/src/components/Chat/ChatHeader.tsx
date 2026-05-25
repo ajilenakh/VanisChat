@@ -1,5 +1,6 @@
-import { Clock, Copy, LogOut, Users } from 'lucide-react';
+import { Clock, Copy, LogOut, Moon, Sun, Users } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import { useToast } from '../../lib/toast';
 
 interface ChatHeaderProps {
   roomName: string;
@@ -7,11 +8,21 @@ interface ChatHeaderProps {
   onlineCount: number;
   roomId: string;
   onLeave: () => void;
+  theme: 'light' | 'dark';
+  onToggleTheme: () => void;
 }
 
-export function ChatHeader({ roomName, expiresAt, onlineCount, roomId, onLeave }: ChatHeaderProps) {
+export function ChatHeader({
+  roomName,
+  expiresAt,
+  onlineCount,
+  roomId,
+  onLeave,
+  theme,
+  onToggleTheme,
+}: ChatHeaderProps) {
   const [timeLeft, setTimeLeft] = useState('');
-  const [copied, setCopied] = useState(false);
+  const { addToast } = useToast();
 
   useEffect(() => {
     const update = () => {
@@ -32,46 +43,67 @@ export function ChatHeader({ roomName, expiresAt, onlineCount, roomId, onLeave }
   }, [expiresAt]);
 
   const copyInviteLink = async () => {
-    const url = `${window.location.origin}/room/${roomId}`;
+    const inviteToken = new URLSearchParams(window.location.search).get('invite');
+    const url = inviteToken
+      ? `${window.location.origin}/room/${roomId}?invite=${inviteToken}`
+      : `${window.location.origin}/room/${roomId}`;
     await navigator.clipboard.writeText(url);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    addToast('Invite link copied!', 'success');
   };
 
+  const diff = expiresAt - Math.floor(Date.now() / 1000);
+  const isWarning = diff > 0 && diff < 300; // < 5 minutes
+
   return (
-    <header className="flex items-center justify-between border-b px-4 py-3 bg-white">
-      <div className="flex items-center gap-3">
-        <h2 className="font-semibold text-lg truncate max-w-40">{roomName}</h2>
-        <span className="flex items-center gap-1 text-sm text-gray-500">
+    <header className="flex items-center justify-between border-b px-4 py-3 bg-white dark:bg-slate-900 dark:border-slate-700">
+      <div className="flex items-center gap-3 min-w-0">
+        <h2 className="font-semibold text-lg truncate dark:text-slate-100">{roomName}</h2>
+        <span className="flex items-center gap-1 text-sm text-gray-500 dark:text-slate-400">
           <Users size={14} />
-          {onlineCount}
+          <span className="hidden sm:inline">{onlineCount} online</span>
+          <span className="sm:hidden">{onlineCount}</span>
         </span>
       </div>
 
-      <div className="flex items-center gap-3">
-        <span className="flex items-center gap-1 text-sm text-gray-500">
+      <div className="flex items-center gap-3 shrink-0">
+        <span
+          className={`flex items-center gap-1 text-sm font-mono ${
+            isWarning
+              ? 'text-red-600 dark:text-red-400 font-semibold'
+              : 'text-gray-500 dark:text-slate-400'
+          }`}
+        >
           <Clock size={14} />
           {timeLeft}
         </span>
 
         <button
           type="button"
+          onClick={onToggleTheme}
+          className="text-gray-500 hover:text-gray-700 dark:text-slate-400 dark:hover:text-slate-200"
+          title="Toggle theme"
+        >
+          {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
+        </button>
+
+        <button
+          type="button"
           onClick={copyInviteLink}
-          className="flex items-center gap-1 text-sm text-blue-600 hover:text-blue-800"
+          className="flex items-center gap-1 text-sm text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
           title="Copy invite link"
         >
           <Copy size={14} />
-          {copied ? 'Copied!' : 'Invite'}
+          <span className="hidden sm:inline">Invite</span>
         </button>
 
         <button
           type="button"
           onClick={onLeave}
-          className="flex items-center gap-1 text-sm text-red-600 hover:text-red-800"
+          className="flex items-center gap-1 text-sm text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-red-300"
           title="Leave room"
         >
           <LogOut size={14} />
-          Leave
+          <span className="hidden sm:inline">Leave</span>
         </button>
       </div>
     </header>

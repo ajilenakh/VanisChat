@@ -1,6 +1,25 @@
 @import "tailwindcss";
 
-/* Base reset — minimal for Phase 1 */
+@custom-variant dark (&:where([data-theme="dark"] *));
+
+:root {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8fafc;
+  --bg-tertiary: #f1f5f9;
+  --text-primary: #0f172a;
+  --text-secondary: #64748b;
+  --accent: #6366f1;
+}
+
+[data-theme="dark"] {
+  --bg-primary: #0f172a;
+  --bg-secondary: #1e293b;
+  --bg-tertiary: #334155;
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --accent: #818cf8;
+}
+
 *,
 *::before,
 *::after {
@@ -14,4 +33,20 @@ body {
   background: #f8fafc;
   color: #0f172a;
   -webkit-font-smoothing: antialiased;
+}
+
+/* Toast slide-up animation */
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-slide-up {
+  animation: slide-up 0.2s ease-out;
 }

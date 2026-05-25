@@ -29,3 +29,13 @@ export const messagesQuerySchema = z.object({
 export const validateSessionSchema = z.object({
   // empty body — session token in header
 });
+
+export const uploadUrlSchema = z.object({
+  fileName: z.string().min(1).max(255),
+  fileType: z.string().min(1).max(100),
+  fileSize: z
+    .number()
+    .int()
+    .min(1)
+    .max(10 * 1024 * 1024), // 10MB max
+});

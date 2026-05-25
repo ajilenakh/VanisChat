@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import type { Message } from '../../lib/api';
+import { ChatSkeleton } from '../Skeleton';
 import { MessageItem } from './MessageItem';
 
 interface MessageListProps {
@@ -62,16 +63,12 @@ export function MessageList({
     <div
       ref={containerRef}
       onScroll={handleScroll}
-      className="flex-1 overflow-y-auto px-4 py-2 space-y-1"
+      className="flex-1 overflow-y-auto px-4 py-2 space-y-1 dark:bg-slate-900"
     >
-      {loading && messages.length === 0 && (
-        <div className="flex items-center justify-center h-full text-gray-400">
-          Loading messages...
-        </div>
-      )}
+      {loading && messages.length === 0 && <ChatSkeleton />}
 
       {!loading && messages.length === 0 && (
-        <div className="flex items-center justify-center h-full text-gray-400">
+        <div className="flex items-center justify-center h-full text-gray-400 dark:text-slate-500">
           No messages yet. Say something!
         </div>
       )}
@@ -80,7 +77,7 @@ export function MessageList({
         <button
           type="button"
           onClick={onLoadMore}
-          className="w-full text-center text-sm text-blue-600 py-2 hover:text-blue-800"
+          className="w-full text-center text-sm text-blue-600 py-2 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
         >
           Load older messages
         </button>

@@ -42,9 +42,12 @@ export function useRoom({ roomId, sessionToken, onMessage }: UseRoomOptions) {
     };
   }, [roomId, sessionToken]);
 
-  const sendMessage = useCallback((content: string, iv: string) => {
-    socketRef.current?.send({ type: 'send_message', content, iv });
-  }, []);
+  const sendMessage = useCallback(
+    (content: string, iv: string, fileUrl?: string, fileType?: string) => {
+      socketRef.current?.send({ type: 'send_message', content, iv, fileUrl, fileType });
+    },
+    [],
+  );
 
   const sendTyping = useCallback((isTyping: boolean) => {
     socketRef.current?.send({ type: 'typing', isTyping });

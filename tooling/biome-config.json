@@ -12,6 +12,9 @@
         "noNonNullAssertion": "off",
         "useConst": "error"
       },
+      "suspicious": {
+        "noArrayIndexKey": "off"
+      },
       "correctness": {
         "noUnusedVariables": "error"
       }

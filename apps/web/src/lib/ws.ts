@@ -7,6 +7,8 @@ export type WSInMessage =
       content: string;
       iv: string;
       createdAt: number;
+      fileUrl?: string;
+      fileType?: string;
     }
   | { type: 'user_joined'; nickname: string; onlineCount: number }
   | { type: 'user_left'; nickname: string; onlineCount: number }
@@ -17,7 +19,7 @@ export type WSInMessage =
 
 export type WSOutMessage =
   | { type: 'auth'; sessionToken: string }
-  | { type: 'send_message'; content: string; iv: string }
+  | { type: 'send_message'; content: string; iv: string; fileUrl?: string; fileType?: string }
   | { type: 'typing'; isTyping: boolean }
   | { type: 'heartbeat_ack' };
 

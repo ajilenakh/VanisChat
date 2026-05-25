@@ -1,3 +1,4 @@
+import { Loader2 } from 'lucide-react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRoomContext } from '../../context/RoomContext';
@@ -67,10 +68,13 @@ export function JoinRoomForm() {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      <h2 className="text-lg font-semibold">Join a Room</h2>
+      <h2 className="text-lg font-semibold dark:text-slate-100">Join a Room</h2>
 
       <div>
-        <label htmlFor="join-nickname" className="block text-sm font-medium mb-1">
+        <label
+          htmlFor="join-nickname"
+          className="block text-sm font-medium mb-1 dark:text-slate-300"
+        >
           Nickname
         </label>
         <input
@@ -78,14 +82,17 @@ export function JoinRoomForm() {
           required
           value={nickname}
           onChange={(e) => setNickname(e.target.value)}
-          className="w-full rounded border px-3 py-2 text-sm"
+          className="w-full rounded border px-3 py-2 text-sm dark:bg-slate-700 dark:border-slate-600 dark:text-slate-200 dark:placeholder-slate-400"
           placeholder="Your display name"
           maxLength={50}
         />
       </div>
 
       <div>
-        <label htmlFor="join-invite-token" className="block text-sm font-medium mb-1">
+        <label
+          htmlFor="join-invite-token"
+          className="block text-sm font-medium mb-1 dark:text-slate-300"
+        >
           Room ID or Invite Link
         </label>
         <input
@@ -97,14 +104,17 @@ export function JoinRoomForm() {
             const match = e.target.value.match(/\/room\/([^?]+)/);
             if (match?.[1]) setRoomId(match[1]);
           }}
-          className="w-full rounded border px-3 py-2 text-sm font-mono"
+          className="w-full rounded border px-3 py-2 text-sm font-mono dark:bg-slate-700 dark:border-slate-600 dark:text-slate-200 dark:placeholder-slate-400"
           placeholder="Paste invite link or token"
         />
       </div>
 
       {!roomId && (
         <div>
-          <label htmlFor="join-room-id" className="block text-sm font-medium mb-1">
+          <label
+            htmlFor="join-room-id"
+            className="block text-sm font-medium mb-1 dark:text-slate-300"
+          >
             Room ID
           </label>
           <input
@@ -112,14 +122,17 @@ export function JoinRoomForm() {
             required
             value={roomId}
             onChange={(e) => setRoomId(e.target.value)}
-            className="w-full rounded border px-3 py-2 text-sm font-mono"
+            className="w-full rounded border px-3 py-2 text-sm font-mono dark:bg-slate-700 dark:border-slate-600 dark:text-slate-200 dark:placeholder-slate-400"
             placeholder="room_abc123"
           />
         </div>
       )}
 
       <div>
-        <label htmlFor="join-password" className="block text-sm font-medium mb-1">
+        <label
+          htmlFor="join-password"
+          className="block text-sm font-medium mb-1 dark:text-slate-300"
+        >
           Password
         </label>
         <input
@@ -128,22 +141,29 @@ export function JoinRoomForm() {
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="w-full rounded border px-3 py-2 text-sm"
+          className="w-full rounded border px-3 py-2 text-sm dark:bg-slate-700 dark:border-slate-600 dark:text-slate-200 dark:placeholder-slate-400"
           placeholder="Room password"
         />
-        <p className="text-xs text-gray-500 mt-1">
+        <p className="text-xs text-gray-500 mt-1 dark:text-slate-400">
           Used to derive the encryption key. Must match the room's password.
         </p>
       </div>
 
-      {error && <p className="text-sm text-red-600">{error}</p>}
+      {error && <p className="text-sm text-red-600 dark:text-red-400">{error}</p>}
 
       <button
         type="submit"
         disabled={loading}
-        className="w-full rounded bg-green-600 px-4 py-2 text-white hover:bg-green-700 disabled:opacity-50"
+        className="w-full rounded bg-green-600 px-4 py-2 text-white hover:bg-green-700 disabled:opacity-50 flex items-center justify-center gap-2"
       >
-        {loading ? 'Joining...' : 'Join Room'}
+        {loading ? (
+          <>
+            <Loader2 size={16} className="animate-spin" />
+            Joining...
+          </>
+        ) : (
+          'Join Room'
+        )}
       </button>
     </form>
   );

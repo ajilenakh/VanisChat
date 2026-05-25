@@ -27,9 +27,9 @@ export const messages = sqliteTable(
     senderName: text('sender_name').notNull(),
     content: text('content').notNull(), // base64 AES-GCM ciphertext
     iv: text('iv').notNull(), // base64 IV
-    type: text('type').notNull().default('text').$type<'text' | 'image' | 'system'>(),
-    // fileUrl: text('file_url'),     // Phase 3: file upload
-    // fileType: text('file_type'),   // Phase 3: file upload
+    type: text('type').notNull().default('text').$type<'text' | 'image' | 'file' | 'system'>(),
+    fileUrl: text('file_url'),
+    fileType: text('file_type'),
     createdAt: integer('created_at')
       .notNull()
       .$defaultFn(() => Math.floor(Date.now() / 1000)),
