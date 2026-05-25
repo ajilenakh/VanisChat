@@ -1,6 +1,6 @@
 import { createId } from '@paralleldrive/cuid2';
 import { generateSalt } from '@vanischat/crypto';
-import { eq, lt } from 'drizzle-orm';
+import { and, desc, eq, lt } from 'drizzle-orm';
 import { Hono } from 'hono';
 import { getDb, schema } from '../db';
 import { createInviteToken, createSessionToken } from '../lib/token';
@@ -61,6 +61,7 @@ roomRoutes.post('/rooms/:id/join', rateLimit({ max: 20, windowMs: 60_000 }), asy
 
   const { inviteToken, nickname, password } = parsed.data;
   const roomId = c.req.param('id');
+  if (!roomId) return c.json({ error: 'missing_id' }, 400);
   const db = getDb();
   const now = Math.floor(Date.now() / 1000);
 
@@ -155,11 +156,12 @@ roomRoutes.post('/rooms/:id/leave', requireSession, async (c) => {
 // GET /api/rooms/:id/messages — paginated message history
 roomRoutes.get('/rooms/:id/messages', requireSession, async (c) => {
   const roomId = c.req.param('id');
+  if (!roomId) return c.json({ error: 'missing_id' }, 400);
   const before = c.req.query('before');
   const limit = Math.min(Number(c.req.query('limit')) || 50, 100);
   const db = getDb();
 
-  let query = db.select().from(schema.messages).where(eq(schema.messages.roomId, roomId));
+  const conditions: ReturnType<typeof eq>[] = [eq(schema.messages.roomId, roomId)];
 
   // If before cursor is provided, fetch messages older than that message
   if (before) {
@@ -170,11 +172,16 @@ roomRoutes.get('/rooms/:id/messages', requireSession, async (c) => {
       .limit(1);
 
     if (cursorRows[0]) {
-      query = query.where(lt(schema.messages.createdAt, cursorRows[0].createdAt));
+      conditions.push(lt(schema.messages.createdAt, cursorRows[0].createdAt));
     }
   }
 
-  const rows = await query.orderBy(schema.messages.createdAt, 'desc').limit(limit + 1); // Fetch one extra to detect hasMore
+  const rows = await db
+    .select()
+    .from(schema.messages)
+    .where(and(...conditions))
+    .orderBy(desc(schema.messages.createdAt))
+    .limit(limit + 1); // Fetch one extra to detect hasMore
 
   const hasMore = rows.length > limit;
   const messages = (hasMore ? rows.slice(0, limit) : rows).reverse();

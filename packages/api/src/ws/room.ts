@@ -31,7 +31,9 @@ async function handleMessage(ws: ServerWebSocket, raw: string) {
     return;
   }
 
-  const client = userSockets.get(ws.data?.userId);
+  const wsData = ws.data as { userId?: string } | undefined;
+  const clientId = wsData?.userId;
+  const client = clientId ? userSockets.get(clientId) : undefined;
   if (!client && msg.type !== 'auth') {
     ws.send(
       JSON.stringify({ type: 'error', code: 'not_authenticated', message: 'Send auth first' }),
@@ -106,7 +108,8 @@ async function handleAuth(ws: ServerWebSocket, sessionToken: string) {
     missedHeartbeats: 0,
   };
 
-  ws.data = { userId: sessionToken };
+  // biome-ignore lint/suspicious/noExplicitAny: Bun WS data typing is undefined, we set it
+  ws.data = { userId: sessionToken } as any;
   userSockets.set(sessionToken, client);
 
   if (!rooms.has(token.roomId)) {
@@ -156,7 +159,6 @@ async function handleSendMessage(client: RoomClient, content: string, iv: string
     senderName: client.nickname,
     content,
     iv,
-    type: 'text' as const,
     createdAt: now,
   };
 
@@ -170,7 +172,7 @@ async function handleSendMessage(client: RoomClient, content: string, iv: string
     type: 'text',
   });
 
-  // Relay to all clients in room
+  // Relay to all clients in room (type override is intentional: db uses 'text', ws uses 'message')
   broadcastToRoom(client.roomId, { type: 'message', ...msg });
 }
 
@@ -205,7 +207,8 @@ function broadcastToRoom(roomId: string, message: Record<string, unknown>, exclu
 }
 
 export function handleDisconnect(ws: ServerWebSocket) {
-  const userId = ws.data?.userId;
+  const wsData = ws.data as { userId?: string } | undefined;
+  const userId = wsData?.userId;
   if (!userId) return;
 
   const client = userSockets.get(userId);

@@ -13,7 +13,8 @@ Bun.serve({
     const wsMatch = url.pathname.match(/^\/ws\/room\/([^/]+)$/);
     if (wsMatch) {
       const upgraded = server.upgrade(req, {
-        data: { userId: null },
+        // biome-ignore lint/suspicious/noExplicitAny: Bun WS data typing mismatch
+        data: { userId: null } as any,
       });
       if (upgraded) return undefined; // Socket is being upgraded
       return new Response('WebSocket upgrade failed', { status: 400 });

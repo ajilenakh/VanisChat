@@ -156,3 +156,6 @@ yarn.lock
 packages/api/drizzle/
 
 .tmp
+
+# Local test data
+.test-data
