@@ -10,7 +10,8 @@ Bun.serve({
     const url = new URL(req.url);
 
     // WebSocket upgrade for /ws/room/:id
-    if (url.pathname.startsWith('/ws/room/')) {
+    const wsMatch = url.pathname.match(/^\/ws\/room\/([^/]+)$/);
+    if (wsMatch) {
       const upgraded = server.upgrade(req, {
         data: { userId: null },
       });

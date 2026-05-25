@@ -9,6 +9,7 @@ interface RoomClient {
   nickname: string;
   roomId: string;
   alive: boolean;
+  missedHeartbeats: number;
 }
 
 // In-memory room state: roomId -> Map<userId, RoomClient>
@@ -102,6 +103,7 @@ async function handleAuth(ws: ServerWebSocket, sessionToken: string) {
     nickname,
     roomId: token.roomId,
     alive: true,
+    missedHeartbeats: 0,
   };
 
   ws.data = { userId: sessionToken };
@@ -223,24 +225,29 @@ export function handleDisconnect(ws: ServerWebSocket) {
   userSockets.delete(userId);
 }
 
-// Heartbeat check every 30s
+// Heartbeat check every 30s — disconnect after 3 missed acks
 setInterval(() => {
   for (const [_userId, client] of userSockets) {
     if (!client.alive) {
-      // Missed heartbeat — disconnect
-      try {
-        client.ws.close(4000, 'Heartbeat timeout');
-      } catch {
-        /* ignore */
-      }
-      handleDisconnect(client.ws);
-    } else {
-      client.alive = false;
-      try {
-        client.ws.send(JSON.stringify({ type: 'heartbeat' }));
-      } catch {
+      client.missedHeartbeats++;
+      if (client.missedHeartbeats >= 3) {
+        try {
+          client.ws.close(4000, 'Heartbeat timeout');
+        } catch {
+          /* ignore */
+        }
         handleDisconnect(client.ws);
+        continue;
       }
+    } else {
+      client.missedHeartbeats = 0;
+    }
+
+    client.alive = false;
+    try {
+      client.ws.send(JSON.stringify({ type: 'heartbeat' }));
+    } catch {
+      handleDisconnect(client.ws);
     }
   }
 }, 30_000);
