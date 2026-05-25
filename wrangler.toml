@@ -5,6 +5,10 @@ compatibility_date = "2026-05-01"
 [env.production]
 vars = { NODE_ENV = "production" }
 
+# WebSocket — CF Workers handles WS upgrades natively via fetch event.
+# The Hono app will handle WS in the fetch handler using upgradeWebSocket().
+# Requires compatibility_flags = [ "nodejs_compat" ] for crypto.getRandomValues.
+
 # Turso DB — set via wrangler secret
 # TURSO_DB_URL and TURSO_AUTH_TOKEN must be set:
 #   npx wrangler secret put TURSO_DB_URL
