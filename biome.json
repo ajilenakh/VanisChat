@@ -1,3 +1,6 @@
 {
-  "extends": ["./tooling/biome-config.json"]
+  "extends": ["./tooling/biome-config.json"],
+  "files": {
+    "ignore": ["graphify-out/**"]
+  }
 }
