@@ -13,12 +13,10 @@ describe('token utilities', () => {
     expect(t1).not.toBe(t2);
   });
 
-  it('createInviteToken returns an object with id, token, type, expiresAt', () => {
-    const result = createInviteToken('room_123', 60);
-    expect(result).toHaveProperty('id');
+  it('createInviteToken returns an object with token, type, expiresAt', () => {
+    const result = createInviteToken(60);
     expect(result).toHaveProperty('token');
     expect(result).toHaveProperty('type', 'invite');
-    expect(result).toHaveProperty('expiresAt');
     expect(typeof result.expiresAt).toBe('number');
     // expiresAt should be ~3600 seconds (60 minutes) from now
     expect(result.expiresAt).toBeGreaterThan(Math.floor(Date.now() / 1000) + 3000);
@@ -26,8 +24,8 @@ describe('token utilities', () => {
     expect(result.token).toMatch(/^[0-9a-f]{64}$/);
   });
 
-  it('createSessionToken returns an object with id, token, type, expiresAt', () => {
-    const result = createSessionToken('room_123', 60);
+  it('createSessionToken returns an object with token, type, expiresAt', () => {
+    const result = createSessionToken(60);
     expect(result).toHaveProperty('type', 'session');
     expect(result.token).toMatch(/^[0-9a-f]{64}$/);
   });

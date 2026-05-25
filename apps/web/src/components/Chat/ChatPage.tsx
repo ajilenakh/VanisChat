@@ -1,5 +1,5 @@
 import { encrypt } from '@vanischat/crypto';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useRoomContext } from '../../context/RoomContext';
 import { useCryptoKey } from '../../hooks/useCryptoKey';
