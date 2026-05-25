@@ -1,4 +1,4 @@
-import { base64ToArrayBuffer } from "./utils";
+import { base64ToArrayBuffer } from './utils';
 
 /**
  * Decrypt an AES-GCM encrypted payload using the given key.
@@ -11,7 +11,7 @@ export async function decrypt(
 ): Promise<string> {
   const { ciphertext, iv } = payload;
   const decrypted = await crypto.subtle.decrypt(
-    { name: "AES-GCM", iv: base64ToArrayBuffer(iv) },
+    { name: 'AES-GCM', iv: base64ToArrayBuffer(iv) },
     key,
     base64ToArrayBuffer(ciphertext),
   );

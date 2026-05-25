@@ -3,29 +3,26 @@
  * Salt should be 16 random bytes (use generateSalt()).
  * Iterations: 600,000 — strong enough for chat app, fast enough for UX.
  */
-export async function deriveKey(
-  password: string,
-  salt: Uint8Array,
-): Promise<CryptoKey> {
+export async function deriveKey(password: string, salt: Uint8Array): Promise<CryptoKey> {
   const encoder = new TextEncoder();
   const keyMaterial = await crypto.subtle.importKey(
-    "raw",
+    'raw',
     encoder.encode(password),
-    "PBKDF2",
+    'PBKDF2',
     false,
-    ["deriveKey"],
+    ['deriveKey'],
   );
 
   return crypto.subtle.deriveKey(
     {
       name: "PBKDF2",
-      salt,
+      salt: salt as Uint8Array<ArrayBuffer>,
       iterations: 600_000,
       hash: "SHA-256",
     },
     keyMaterial,
-    { name: "AES-GCM", length: 256 },
+    { name: 'AES-GCM', length: 256 },
     false,
-    ["encrypt", "decrypt"],
+    ['encrypt', 'decrypt'],
   );
 }
