@@ -6,12 +6,21 @@ interface RateLimitEntry {
 }
 
 const ipMap = new Map<string, RateLimitEntry>();
+const MAX_ENTRIES = 10_000;
 
 // Clean up stale entries every 5 minutes
 setInterval(() => {
   const now = Date.now();
-  for (const [key, entry] of ipMap) {
-    if (entry.resetAt < now) ipMap.delete(key);
+  if (ipMap.size > MAX_ENTRIES) {
+    // Evict stale entries when map grows too large
+    for (const [key, entry] of ipMap) {
+      if (entry.resetAt < now) ipMap.delete(key);
+      if (ipMap.size <= MAX_ENTRIES * 0.8) break;
+    }
+  } else {
+    for (const [key, entry] of ipMap) {
+      if (entry.resetAt < now) ipMap.delete(key);
+    }
   }
 }, 300_000);
 

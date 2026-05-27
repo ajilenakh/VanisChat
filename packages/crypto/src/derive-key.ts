@@ -1,7 +1,7 @@
 /**
  * Derive an AES-GCM 256-bit key from a password string and salt using PBKDF2.
  * Salt should be 16 random bytes (use generateSalt()).
- * Iterations: 600,000 — strong enough for chat app, fast enough for UX.
+ * Iterations: 300,000 — OWASP-recommended, faster on mobile.
  */
 export async function deriveKey(password: string, salt: Uint8Array): Promise<CryptoKey> {
   const encoder = new TextEncoder();
@@ -17,7 +17,7 @@ export async function deriveKey(password: string, salt: Uint8Array): Promise<Cry
     {
       name: 'PBKDF2',
       salt: salt as Uint8Array<ArrayBuffer>,
-      iterations: 600_000,
+      iterations: 300_000,
       hash: 'SHA-256',
     },
     keyMaterial,

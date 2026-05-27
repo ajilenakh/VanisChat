@@ -8,17 +8,25 @@ interface MessageInputProps {
   onSend: (text: string) => void;
   onTyping: (isTyping: boolean) => void;
   disabled: boolean;
+  expired?: boolean;
   onFileSend?: (fileUrl: string, fileType: string) => void;
 }
 
 const ENABLE_UPLOAD = import.meta.env.VITE_ENABLE_FILE_UPLOAD === 'true';
 const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
 
-export function MessageInput({ onSend, onTyping, disabled, onFileSend }: MessageInputProps) {
+export function MessageInput({
+  onSend,
+  onTyping,
+  disabled,
+  expired,
+  onFileSend,
+}: MessageInputProps) {
   const [text, setText] = useState('');
   const [uploading, setUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
   const typingTimeout = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+  const typingSentRef = useRef(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { state } = useRoomContext();
   const { addToast } = useToast();
@@ -29,9 +37,15 @@ export function MessageInput({ onSend, onTyping, disabled, onFileSend }: Message
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setText(e.target.value);
-    onTyping(true);
+    if (!typingSentRef.current) {
+      onTyping(true);
+      typingSentRef.current = true;
+    }
     clearTimeout(typingTimeout.current);
-    typingTimeout.current = setTimeout(() => onTyping(false), 2000);
+    typingTimeout.current = setTimeout(() => {
+      onTyping(false);
+      typingSentRef.current = false;
+    }, 2000);
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -40,6 +54,7 @@ export function MessageInput({ onSend, onTyping, disabled, onFileSend }: Message
     onSend(text.trim());
     setText('');
     onTyping(false);
+    typingSentRef.current = false;
     clearTimeout(typingTimeout.current);
   };
 
@@ -137,7 +152,9 @@ export function MessageInput({ onSend, onTyping, disabled, onFileSend }: Message
         value={text}
         onChange={handleChange}
         disabled={disabled}
-        placeholder={disabled ? 'Room expired...' : 'Type a message...'}
+        placeholder={
+          expired ? 'Room expired...' : disabled ? 'Reconnecting...' : 'Type a message...'
+        }
         className="flex-1 rounded-lg border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100 dark:bg-slate-800 dark:border-slate-600 dark:text-slate-200 dark:placeholder-slate-400 dark:disabled:bg-slate-800"
         maxLength={10000}
       />

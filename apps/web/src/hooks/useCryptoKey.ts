@@ -1,4 +1,4 @@
-import { decrypt, deriveKey } from '@vanischat/crypto';
+import { decrypt, deriveKey, hexToUint8Array } from '@vanischat/crypto';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 interface UseCryptoKeyResult {
@@ -7,30 +7,23 @@ interface UseCryptoKeyResult {
   decryptMessage: (content: string, iv: string) => Promise<string | null>;
 }
 
-/**
- * Derive an AES-GCM key from a password and salt.
- * Returns a memoized decrypt callback once the key is ready.
- */
 export function useCryptoKey(password: string | null, salt: string | null): UseCryptoKeyResult {
-  const [key, setKey] = useState<CryptoKey | null>(null);
   const keyRef = useRef<CryptoKey | null>(null);
+  const [, forceUpdate] = useState(0);
 
   useEffect(() => {
     if (!password || !salt) {
-      setKey(null);
       keyRef.current = null;
+      forceUpdate((n) => n + 1);
       return;
     }
 
-    const saltBytes = new Uint8Array(
-      salt.match(/.{1,2}/g)!.map((byte) => Number.parseInt(byte, 16)),
-    );
-
+    const saltBytes = hexToUint8Array(salt);
     let cancelled = false;
     deriveKey(password, saltBytes).then((k) => {
       if (!cancelled) {
-        setKey(k);
         keyRef.current = k;
+        forceUpdate((n) => n + 1);
       }
     });
 
@@ -52,5 +45,5 @@ export function useCryptoKey(password: string | null, salt: string | null): UseC
     [],
   );
 
-  return { key, ready: key !== null, decryptMessage };
+  return { key: keyRef.current, ready: keyRef.current !== null, decryptMessage };
 }

@@ -1,6 +1,6 @@
 import { createId } from '@paralleldrive/cuid2';
 import { generateSalt } from '@vanischat/crypto';
-import { and, desc, eq, lt } from 'drizzle-orm';
+import { and, desc, eq, gt, lt } from 'drizzle-orm';
 import { Hono } from 'hono';
 import { getDb, schema } from '../db';
 import { generatePresignedPutUrl } from '../lib/r2';
@@ -18,7 +18,7 @@ roomRoutes.post('/rooms', rateLimit({ max: 20, windowMs: 60_000 }), async (c) =>
     return c.json({ error: 'validation_error', details: parsed.error }, 400);
   }
 
-  const { name, password, expirationMinutes } = parsed.data;
+  const { name, password, expirationMinutes, nickname } = parsed.data;
   const db = getDb();
   const now = Math.floor(Date.now() / 1000);
   const roomId = createId();
@@ -46,9 +46,22 @@ roomRoutes.post('/rooms', rateLimit({ max: 20, windowMs: 60_000 }), async (c) =>
     usesLeft: 1,
   });
 
+  // Auto-create a session for the room creator
+  const sessionToken = createSessionToken(1440);
+  await db.insert(schema.roomTokens).values({
+    id: sessionToken.token,
+    roomId,
+    type: 'session',
+    expiresAt: sessionToken.expiresAt,
+    usesLeft: null,
+    nickname,
+  });
+
   return c.json({
     roomId,
     inviteToken: inviteToken.token,
+    sessionToken: sessionToken.token,
+    salt: saltHex,
     expiresAt: now + expirationMinutes * 60,
   });
 });
@@ -82,10 +95,6 @@ roomRoutes.post('/rooms/:id/join', rateLimit({ max: 20, windowMs: 60_000 }), asy
     return c.json({ error: 'invalid_token', message: 'Invite token expired' }, 401);
   }
 
-  if (token.usesLeft != null && token.usesLeft <= 0) {
-    return c.json({ error: 'invalid_token', message: 'Invite token already used' }, 401);
-  }
-
   // Check room exists and hasn't expired
   const roomRows = await db.select().from(schema.rooms).where(eq(schema.rooms.id, roomId)).limit(1);
 
@@ -104,11 +113,22 @@ roomRoutes.post('/rooms/:id/join', rateLimit({ max: 20, windowMs: 60_000 }), asy
     return c.json({ error: 'invalid_token', message: 'Invalid room password' }, 401);
   }
 
-  // Mark invite token as used
-  await db
+  // Atomic: mark invite token as used — check + update in one operation
+  const updateResult = await db
     .update(schema.roomTokens)
     .set({ usesLeft: 0 })
-    .where(eq(schema.roomTokens.id, inviteToken));
+    .where(
+      and(
+        eq(schema.roomTokens.id, inviteToken),
+        eq(schema.roomTokens.type, 'invite'),
+        gt(schema.roomTokens.usesLeft, 0),
+      ),
+    )
+    .returning({ id: schema.roomTokens.id });
+
+  if (updateResult.length === 0) {
+    return c.json({ error: 'invalid_token', message: 'Invite token already used' }, 401);
+  }
 
   // Create a session token for this user
   const sessionToken = createSessionToken(1440); // 24-hour session
@@ -204,8 +224,9 @@ roomRoutes.post('/rooms/:id/upload-url', requireSession, async (c) => {
 
 // POST /api/rooms/:id/leave
 roomRoutes.post('/rooms/:id/leave', requireSession, async (c) => {
-  // Session is already validated by requireSession middleware
-  // For now, just acknowledge (WS presence is handled separately)
+  const sessionToken = c.req.header('x-session-token') as string;
+  const db = getDb();
+  await db.delete(schema.roomTokens).where(eq(schema.roomTokens.id, sessionToken));
   return c.json({ ok: true });
 });
 

@@ -24,10 +24,13 @@ export function JoinRoomForm() {
     let effectiveInviteToken = inviteToken;
 
     if (inviteToken.includes('/room/')) {
-      const match = inviteToken.match(/\/room\/([^?]+)\?invite=([^&\s]+)/);
-      if (match) {
-        effectiveRoomId = match[1]!;
-        effectiveInviteToken = match[2]!;
+      const pathMatch = inviteToken.match(/\/room\/([^/?]+)/);
+      if (pathMatch) effectiveRoomId = pathMatch[1]!;
+      const queryIdx = inviteToken.indexOf('?');
+      if (queryIdx !== -1) {
+        const params = new URLSearchParams(inviteToken.slice(queryIdx));
+        const inv = params.get('invite');
+        if (inv) effectiveInviteToken = inv;
       }
     }
 
@@ -101,7 +104,7 @@ export function JoinRoomForm() {
           value={inviteToken}
           onChange={(e) => {
             setInviteToken(e.target.value);
-            const match = e.target.value.match(/\/room\/([^?]+)/);
+            const match = e.target.value.match(/\/room\/([^?/]+)/);
             if (match?.[1]) setRoomId(match[1]);
           }}
           className="w-full rounded border px-3 py-2 text-sm font-mono dark:bg-slate-700 dark:border-slate-600 dark:text-slate-200 dark:placeholder-slate-400"

@@ -3,6 +3,8 @@ const API_BASE = '';
 interface CreateRoomResponse {
   roomId: string;
   inviteToken: string;
+  sessionToken: string;
+  salt: string;
   expiresAt: number;
 }
 

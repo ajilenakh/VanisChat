@@ -1,5 +1,7 @@
 # VanisChat — Agents guide
 
+**Caveman mode: full** — speak terse, drop fluff, keep technical precision. Code/commits/security write normal.
+
 Monorepo (Bun workspaces) — E2EE chat app. Web (React/Vite), API (Hono/Turso), Crypto (Web Crypto).
 
 ---

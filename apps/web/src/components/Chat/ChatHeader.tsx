@@ -1,10 +1,11 @@
 import { Clock, Copy, LogOut, Moon, Sun, Users } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import { useRoomContext } from '../../context/RoomContext';
 import { useToast } from '../../lib/toast';
 
 interface ChatHeaderProps {
   roomName: string;
-  expiresAt: number;
+  expiresAt: number | null;
   onlineCount: number;
   roomId: string;
   onLeave: () => void;
@@ -23,9 +24,14 @@ export function ChatHeader({
 }: ChatHeaderProps) {
   const [timeLeft, setTimeLeft] = useState('');
   const { addToast } = useToast();
+  const { state } = useRoomContext();
 
   useEffect(() => {
     const update = () => {
+      if (expiresAt == null) {
+        setTimeLeft('');
+        return;
+      }
       const now = Math.floor(Date.now() / 1000);
       const diff = expiresAt - now;
       if (diff <= 0) {
@@ -43,16 +49,16 @@ export function ChatHeader({
   }, [expiresAt]);
 
   const copyInviteLink = async () => {
-    const inviteToken = new URLSearchParams(window.location.search).get('invite');
-    const url = inviteToken
-      ? `${window.location.origin}/room/${roomId}?invite=${inviteToken}`
+    const urlToken = new URLSearchParams(window.location.search).get('invite') || state.inviteToken;
+    const url = urlToken
+      ? `${window.location.origin}/room/${roomId}?invite=${urlToken}`
       : `${window.location.origin}/room/${roomId}`;
     await navigator.clipboard.writeText(url);
     addToast('Invite link copied!', 'success');
   };
 
-  const diff = expiresAt - Math.floor(Date.now() / 1000);
-  const isWarning = diff > 0 && diff < 300; // < 5 minutes
+  const diff = expiresAt != null ? expiresAt - Math.floor(Date.now() / 1000) : null;
+  const isWarning = diff != null && diff > 0 && diff < 300; // < 5 minutes
 
   return (
     <header className="flex items-center justify-between border-b px-4 py-3 bg-white dark:bg-slate-900 dark:border-slate-700">

@@ -1,15 +1,3 @@
-export function MessageSkeleton() {
-  return (
-    <div className="flex mb-2 animate-pulse">
-      <div className="max-w-[75%] rounded-lg px-3 py-2 space-y-2">
-        <div className="h-3 w-16 bg-gray-200 dark:bg-slate-700 rounded" />
-        <div className="h-4 w-48 bg-gray-200 dark:bg-slate-700 rounded" />
-        <div className="h-3 w-12 bg-gray-200 dark:bg-slate-700 rounded ml-auto" />
-      </div>
-    </div>
-  );
-}
-
 export function ChatSkeleton() {
   return (
     <div className="flex-1 overflow-y-auto px-4 py-2 space-y-1">

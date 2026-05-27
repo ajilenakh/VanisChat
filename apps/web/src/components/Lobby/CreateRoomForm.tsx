@@ -1,10 +1,12 @@
 import { Loader2 } from 'lucide-react';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useRoomContext } from '../../context/RoomContext';
 import { createRoom } from '../../lib/api';
 
 export function CreateRoomForm() {
   const { setRoom } = useRoomContext();
+  const navigate = useNavigate();
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const [nickname, setNickname] = useState('');
@@ -26,7 +28,10 @@ export function CreateRoomForm() {
       setCreatedRoomId(result.roomId);
       setRoom({
         roomId: result.roomId,
+        sessionToken: result.sessionToken,
         roomName: name,
+        roomSalt: result.salt,
+        roomExpiresAt: result.expiresAt,
         inviteToken: result.inviteToken,
         nickname,
         roomPassword: password,
@@ -60,12 +65,13 @@ export function CreateRoomForm() {
             Copy
           </button>
         </div>
-        <a
-          href={`/room/${createdRoomId}`}
+        <button
+          type="button"
+          onClick={() => navigate(`/room/${createdRoomId}`)}
           className="inline-block rounded bg-green-600 px-4 py-2 text-sm text-white hover:bg-green-700"
         >
           Enter Room
-        </a>
+        </button>
       </div>
     );
   }

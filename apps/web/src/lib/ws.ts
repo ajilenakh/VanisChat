@@ -46,6 +46,7 @@ export class RoomSocket {
     this.ws = new WebSocket(this.url);
 
     this.ws.onopen = () => {
+      if (this.closed) return;
       this.reconnectAttempts = 0;
       this.send({ type: 'auth', sessionToken: this.sessionToken });
     };
@@ -85,7 +86,9 @@ export class RoomSocket {
 
   close() {
     this.closed = true;
-    this.ws?.close();
+    if (this.ws?.readyState === WebSocket.OPEN) {
+      this.ws.close();
+    }
     this.ws = null;
   }
 }

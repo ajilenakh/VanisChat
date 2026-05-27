@@ -25,7 +25,7 @@ export function ChatPage() {
   const sessionToken = state.sessionToken || '';
 
   // Derive encryption key from the actual room password (not session token)
-  const { ready: keyReady, decryptMessage } = useCryptoKey(state.roomPassword, state.roomSalt);
+  const { ready: keyReady, decryptMessage, key } = useCryptoKey(state.roomPassword, state.roomSalt);
 
   const { onlineCount, typingUsers, handlePresenceMessage } = usePresence();
 
@@ -56,21 +56,15 @@ export function ChatPage() {
 
   const handleSend = useCallback(
     async (text: string) => {
-      if (!keyReady) return;
+      if (!keyReady || !key) return;
       try {
-        const saltBytes = new Uint8Array(
-          state.roomSalt!.match(/.{1,2}/g)!.map((byte) => Number.parseInt(byte, 16)),
-        );
-        // Re-derive for encrypt (or cache it — simplified for now)
-        const { deriveKey } = await import('@vanischat/crypto');
-        const key = await deriveKey(state.roomPassword!, saltBytes);
         const result = await encrypt(text, key);
         sendMessage(result.ciphertext, result.iv);
       } catch {
         // Encryption failed
       }
     },
-    [keyReady, sendMessage, state.roomPassword, state.roomSalt],
+    [keyReady, key, sendMessage],
   );
 
   const handleFileSend = useCallback(
@@ -98,7 +92,7 @@ export function ChatPage() {
     <div className="h-screen flex flex-col bg-white dark:bg-slate-900">
       <ChatHeader
         roomName={state.roomName || 'Chat Room'}
-        expiresAt={state.roomExpiresAt || 0}
+        expiresAt={state.roomExpiresAt ?? 0}
         onlineCount={onlineCount}
         roomId={roomId}
         onLeave={handleLeave}
@@ -125,6 +119,7 @@ export function ChatPage() {
         onSend={handleSend}
         onTyping={sendTyping}
         disabled={expired || !connected}
+        expired={expired}
         onFileSend={handleFileSend}
       />
 

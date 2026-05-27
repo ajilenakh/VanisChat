@@ -91,12 +91,6 @@ async function handleAuth(ws: ServerWebSocket, sessionToken: string) {
   const existingClient = userSockets.get(sessionToken);
   const isReconnect = existingClient?.roomId === token.roomId;
 
-  // Clean up old connection if this is a reconnect
-  if (existingClient) {
-    existingClient.ws.close(4000, 'Reconnected elsewhere');
-    rooms.get(token.roomId)?.delete(sessionToken);
-  }
-
   const nickname = token.nickname || `User_${sessionToken.slice(0, 6)}`;
 
   const client: RoomClient = {
@@ -110,12 +104,20 @@ async function handleAuth(ws: ServerWebSocket, sessionToken: string) {
 
   // biome-ignore lint/suspicious/noExplicitAny: Bun WS data typing is undefined, we set it
   ws.data = { userId: sessionToken } as any;
+
+  // Register new client FIRST before closing old connection
+  // Prevents race where two rapid reconnects both see no existing client
   userSockets.set(sessionToken, client);
 
   if (!rooms.has(token.roomId)) {
     rooms.set(token.roomId, new Map());
   }
   rooms.get(token.roomId)!.set(sessionToken, client);
+
+  // Close old connection after new one is fully registered
+  if (existingClient) {
+    existingClient.ws.close(4000, 'Reconnected elsewhere');
+  }
 
   ws.send(JSON.stringify({ type: 'auth_ok', roomId: token.roomId }));
 

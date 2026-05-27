@@ -52,6 +52,8 @@ async function setupDatabase() {
       content TEXT NOT NULL,
       iv TEXT NOT NULL,
       type TEXT NOT NULL DEFAULT 'text',
+      file_url TEXT,
+      file_type TEXT,
       created_at INTEGER NOT NULL DEFAULT (unixepoch())
     )`,
     `CREATE TABLE IF NOT EXISTS room_tokens (
